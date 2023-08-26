@@ -1,0 +1,28 @@
+server:
+  port: 8087
+  servlet:
+    context-path: '/medlinked-service/'
+
+spring:
+  application:
+    name: medlinked-main-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/med-linked
+    username: postgres
+    password: postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+      dialect: org.hibernate.dialect.PostgreSqlDialect
+      jdbc:
+        lob.non-contextual-creation: true
+    properties:
+      hibernate:
+        show_sql: true
+eureka:
+  client:
+    service-url:
+      default-zone: 'http://localhost:8761/eureka'
+  instance:
+    hostname: localhost
+
