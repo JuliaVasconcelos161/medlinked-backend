@@ -7,7 +7,7 @@ spring:
   application:
     name: medlinked-main-service
   datasource:
-    url: jdbc:postgresql://localhost:5432/med-linked
+    url: jdbc:postgresql://localhost:5432/banco-med-linked
     username: postgres
     password: postgres
   jpa:
