@@ -1,11 +1,13 @@
 package com.medlinked.entities;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.math.BigInteger;
 
 @Entity
 @Table(name = "TB_PESSOA")
+@Data
 public class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,11 +17,11 @@ public class Pessoa {
     private String nome;
 
     @Column(nullable = false, unique = true, columnDefinition = "bigint")
-    private BigInteger cpf;
+    private Integer cpf;
 
     @Column(length = 120)
     private String email;
 
     @Column(nullable = false, columnDefinition = "bigint")
-    private BigInteger celular;
+    private Integer celular;
 }
