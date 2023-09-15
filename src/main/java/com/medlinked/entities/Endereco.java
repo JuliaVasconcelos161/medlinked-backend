@@ -2,8 +2,6 @@ package com.medlinked.entities;
 
 import jakarta.persistence.*;
 
-import java.math.BigInteger;
-
 @Entity
 @Table(name = "TB_ENDERECO")
 public class Endereco {
@@ -26,7 +24,7 @@ public class Endereco {
     private String complemento;
 
     @ManyToOne
-    @JoinColumn(name = "uf")
+    @JoinColumn(name = "uf", nullable = false)
     private Estado estado;
 
     @OneToOne
