@@ -1,11 +1,17 @@
 package com.medlinked.entities;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "TB_PESSOA")
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Pessoa {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -15,11 +21,11 @@ public class Pessoa {
     private String nome;
 
     @Column(nullable = false, unique = true, columnDefinition = "bigint")
-    private Integer cpf;
+    private Long cpf;
 
     @Column(length = 120)
     private String email;
 
     @Column(nullable = false, columnDefinition = "bigint")
-    private Integer celular;
+    private Long celular;
 }
