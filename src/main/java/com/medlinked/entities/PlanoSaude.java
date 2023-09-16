@@ -14,7 +14,7 @@ public class PlanoSaude {
     @Column(columnDefinition = "smallint")
     private Integer idPlanoSaude;
 
-    @Column(nullable = false, length = 130)
+    @Column(nullable = false, length = 130, unique = true)
     private String descricao;
 
     @ManyToMany(mappedBy = "planosSaude", fetch = FetchType.LAZY)

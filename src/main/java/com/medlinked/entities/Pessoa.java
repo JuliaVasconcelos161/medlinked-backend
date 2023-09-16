@@ -3,8 +3,6 @@ package com.medlinked.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.math.BigInteger;
-
 @Entity
 @Table(name = "TB_PESSOA")
 @Data
