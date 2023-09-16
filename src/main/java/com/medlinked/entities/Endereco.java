@@ -9,7 +9,7 @@ public class Endereco {
     private Integer idPaciente;
 
     @Column(nullable = false, columnDefinition = "bigint")
-    private Integer cep;
+    private Long cep;
 
     @Column(nullable = false, length = 100)
     private String logradouro;

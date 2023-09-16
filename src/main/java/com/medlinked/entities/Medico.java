@@ -2,11 +2,22 @@ package com.medlinked.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "TB_MEDICO")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Medico {
     @Id
     private Integer idMedico;

@@ -28,7 +28,7 @@ public class PlanoSaudePaciente {
 
 
     @Column(nullable = false, columnDefinition = "bigint")
-    private Integer num_carteirinha;
+    private Long num_carteirinha;
 
     @ManyToOne
     @JoinColumn(name = "id_tipo_plano_saude")
