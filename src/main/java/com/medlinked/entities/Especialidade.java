@@ -13,7 +13,7 @@ public class Especialidade {
     @Column(columnDefinition = "smallint")
     private Integer idEspecialidade;
 
-    @Column(nullable = false, length = 60)
+    @Column(nullable = false, length = 60, unique = true)
     private String descricao;
 
     @ManyToMany(mappedBy = "especialidades", fetch = FetchType.LAZY)

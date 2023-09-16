@@ -9,6 +9,6 @@ public class Estado {
     @Column(length = 2)
     private Character uf;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 20, unique = true)
     private String descricao;
 }
