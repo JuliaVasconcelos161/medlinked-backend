@@ -3,6 +3,7 @@ package com.medlinked.services.impl;
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.Pessoa;
 import com.medlinked.entities.dtos.MedicoDto;
+import com.medlinked.exceptions.ExistsCpf;
 import com.medlinked.repositories.MedicoRepositoryClass;
 import com.medlinked.services.MedicoService;
 import jakarta.transaction.Transactional;
@@ -22,6 +23,8 @@ public class MedicoServiceImpl implements MedicoService {
     @Override
     @Transactional
     public Medico save(MedicoDto medicoDto) {
+        if(this.existsMedicoByCpf(medicoDto.getCpf()))
+            throw new ExistsCpf("Medico");
         Medico medico = Medico.builder()
                 .pessoa(
                         Pessoa.builder()
@@ -37,5 +40,21 @@ public class MedicoServiceImpl implements MedicoService {
     @Override
     public List<Medico> getAll() {
         return medicoRepositoryClass.getAllMedicos();
+    }
+
+    @Override
+    public Medico getOneMedico(Long idMedico) {
+        return medicoRepositoryClass.getOneMedico(idMedico);
+    }
+
+    @Override
+    public boolean existsMedicoByCpf(Long cpf) {
+        return medicoRepositoryClass.existsMedicoByCpf(cpf);
+    }
+
+    @Override
+    @Transactional
+    public void deleteMedico(Long idMedico) {
+        medicoRepositoryClass.deleteMedico(idMedico);
     }
 }

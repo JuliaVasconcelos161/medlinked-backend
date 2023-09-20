@@ -9,4 +9,10 @@ public interface MedicoService {
     Medico save(MedicoDto medicoDto);
 
     List<Medico> getAll();
+
+    Medico getOneMedico(Long idMedico);
+
+    boolean existsMedicoByCpf(Long cpf);
+
+    void deleteMedico(Long idMedico);
 }
