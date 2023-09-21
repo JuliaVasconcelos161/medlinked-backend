@@ -4,7 +4,9 @@ import com.medlinked.entities.Medico;
 import com.medlinked.entities.Pessoa;
 import com.medlinked.entities.dtos.MedicoDto;
 import com.medlinked.exceptions.ExistsCpf;
+import com.medlinked.repositories.MedicoRepository;
 import com.medlinked.repositories.MedicoRepositoryClass;
+import com.medlinked.services.CrmService;
 import com.medlinked.services.MedicoService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -14,10 +16,13 @@ import java.util.List;
 @Service
 public class MedicoServiceImpl implements MedicoService {
 
-    private final MedicoRepositoryClass medicoRepositoryClass;
+    private final CrmService crmService;
 
-    public MedicoServiceImpl(MedicoRepositoryClass medicoRepositoryClass) {
-        this.medicoRepositoryClass = medicoRepositoryClass;
+    private final MedicoRepository medicoRepository;
+
+    public MedicoServiceImpl(CrmService crmService, MedicoRepository medicoRepository) {
+        this.crmService = crmService;
+        this.medicoRepository = medicoRepository;
     }
 
     @Override
@@ -34,27 +39,29 @@ public class MedicoServiceImpl implements MedicoService {
                                 .email(medicoDto.getEmail())
                                 .build())
                 .build();
-        return medicoRepositoryClass.saveMedico(medico);
+        medico = medicoRepository.saveMedico(medico);
+        crmService.createCrmMedico(medico,medicoDto);
+        return medico;
     }
 
     @Override
     public List<Medico> getAll() {
-        return medicoRepositoryClass.getAllMedicos();
+        return medicoRepository.getAllMedicos();
     }
 
     @Override
     public Medico getOneMedico(Long idMedico) {
-        return medicoRepositoryClass.getOneMedico(idMedico);
+        return medicoRepository.getOneMedico(idMedico);
     }
 
     @Override
     public boolean existsMedicoByCpf(String cpf) {
-        return medicoRepositoryClass.existsMedicoByCpf(cpf);
+        return medicoRepository.existsMedicoByCpf(cpf);
     }
 
 //    @Override
 //    @Transactional
 //    public void deleteMedico(Long idMedico) {
-//        medicoRepositoryClass.deleteMedico(idMedico);
+//        medicoRepository.deleteMedico(idMedico);
 //    }
 }
