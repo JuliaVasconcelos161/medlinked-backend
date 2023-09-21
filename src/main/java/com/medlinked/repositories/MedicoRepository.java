@@ -9,4 +9,10 @@ public interface MedicoRepository {
     Medico saveMedico(Medico medico);
 
     List<Medico> getAllMedicos();
+
+    Medico getOneMedico(Long idMedico);
+
+    boolean existsMedicoByCpf(String cpf);
+
+//    void deleteMedico(Long idMedico);
 }

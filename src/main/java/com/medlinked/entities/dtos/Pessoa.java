@@ -2,6 +2,7 @@ package com.medlinked.entities.dtos;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,11 +18,11 @@ public abstract class Pessoa {
 
     @NotBlank
     @CPF
-    protected Long cpf;
+    protected String cpf;
 
     @Email
     protected String email;
 
-    @NotBlank
+    @NotNull
     protected Long celular;
 }
