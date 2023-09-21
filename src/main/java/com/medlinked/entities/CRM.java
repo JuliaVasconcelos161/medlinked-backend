@@ -2,11 +2,17 @@ package com.medlinked.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "TB_CRM")
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CRM {
     @Id
     private Integer idMedico;
