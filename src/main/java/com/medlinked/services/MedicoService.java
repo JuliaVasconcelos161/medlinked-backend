@@ -12,7 +12,7 @@ public interface MedicoService {
 
     Medico getOneMedico(Long idMedico);
 
-    boolean existsMedicoByCpf(Long cpf);
+    boolean existsMedicoByCpf(String cpf);
 
-    void deleteMedico(Long idMedico);
+//    void deleteMedico(Long idMedico);
 }

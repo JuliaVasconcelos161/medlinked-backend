@@ -6,6 +6,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.br.CPF;
 
 @Data
 @NoArgsConstructor
@@ -15,8 +16,9 @@ public abstract class Pessoa {
     @NotBlank
     protected String nome;
 
-    @NotNull
-    protected Long cpf;
+    @NotBlank
+    @CPF
+    protected String cpf;
 
     @Email
     protected String email;

@@ -29,7 +29,7 @@ public class MedicoServiceImpl implements MedicoService {
                 .pessoa(
                         Pessoa.builder()
                                 .nome(medicoDto.getNome())
-                                .cpf(medicoDto.getCpf())
+                                .cpf(Long.parseLong(medicoDto.getCpf()))
                                 .celular(medicoDto.getCelular())
                                 .email(medicoDto.getEmail())
                                 .build())
@@ -48,13 +48,13 @@ public class MedicoServiceImpl implements MedicoService {
     }
 
     @Override
-    public boolean existsMedicoByCpf(Long cpf) {
+    public boolean existsMedicoByCpf(String cpf) {
         return medicoRepositoryClass.existsMedicoByCpf(cpf);
     }
 
-    @Override
-    @Transactional
-    public void deleteMedico(Long idMedico) {
-        medicoRepositoryClass.deleteMedico(idMedico);
-    }
+//    @Override
+//    @Transactional
+//    public void deleteMedico(Long idMedico) {
+//        medicoRepositoryClass.deleteMedico(idMedico);
+//    }
 }

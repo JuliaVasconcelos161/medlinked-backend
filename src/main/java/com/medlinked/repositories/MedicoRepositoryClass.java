@@ -34,7 +34,7 @@ public class MedicoRepositoryClass implements MedicoRepository {
     }
 
     @Override
-    public boolean existsMedicoByCpf(Long cpf) {
+    public boolean existsMedicoByCpf(String cpf) {
         StringBuilder consulta = new StringBuilder(" select count(1) ");
         consulta.append(" from Medico medico ");
         consulta.append(" where medico.pessoa.cpf = :CPF ");
