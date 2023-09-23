@@ -2,7 +2,9 @@ package com.medlinked.services.impl;
 
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.Pessoa;
+import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.MedicoDto;
+import com.medlinked.entities.dtos.MedicoResponseDto;
 import com.medlinked.exceptions.ExistsCpf;
 import com.medlinked.repositories.MedicoRepository;
 import com.medlinked.repositories.MedicoRepositoryClass;
@@ -50,14 +52,18 @@ public class MedicoServiceImpl implements MedicoService {
     }
 
     @Override
-    public Medico getOneMedico(Long idMedico) {
-        return medicoRepository.getOneMedico(idMedico);
+    public MedicoResponseDto getOneMedico(Integer idMedico) {
+        MedicoResponseDto medicoResponseDto = medicoRepository.getOneMedicoByCrm(idMedico);
+        medicoResponseDto.setPlanosSaude(medicoRepository.getPlanosSaudeMedicoByCrm(idMedico));
+        medicoResponseDto.setEspecialidades(medicoRepository.getEspecialidadesMedicoByCrm(idMedico));
+        return medicoResponseDto;
     }
 
     @Override
     public boolean existsMedicoByCpf(String cpf) {
         return medicoRepository.existsMedicoByCpf(cpf);
     }
+
 
 //    @Override
 //    @Transactional
