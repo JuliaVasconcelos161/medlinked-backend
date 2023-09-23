@@ -1,7 +1,9 @@
 package com.medlinked.services;
 
 import com.medlinked.entities.Medico;
+import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.MedicoDto;
+import com.medlinked.entities.dtos.MedicoResponseDto;
 
 import java.util.List;
 
@@ -10,7 +12,7 @@ public interface MedicoService {
 
     List<Medico> getAll();
 
-    Medico getOneMedico(Long idMedico);
+    MedicoResponseDto getOneMedico(Integer idMedico);
 
     boolean existsMedicoByCpf(String cpf);
 

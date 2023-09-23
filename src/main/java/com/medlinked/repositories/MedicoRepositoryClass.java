@@ -1,9 +1,12 @@
 package com.medlinked.repositories;
 
+import com.medlinked.entities.Especialidade;
 import com.medlinked.entities.Medico;
-import com.medlinked.exceptions.NoObjectFound;
+import com.medlinked.entities.PlanoSaude;
+import com.medlinked.entities.dtos.MedicoResponseDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -13,6 +16,7 @@ public class MedicoRepositoryClass implements MedicoRepository {
     @PersistenceContext
     EntityManager entityManager;
     @Override
+    @Transactional
     public Medico saveMedico(Medico medico) {
         entityManager.persist(medico);
         return medico;
@@ -26,11 +30,35 @@ public class MedicoRepositoryClass implements MedicoRepository {
     }
 
     @Override
-    public Medico getOneMedico(Long idMedico) {
-        Medico medico = entityManager.find(Medico.class, idMedico);
-        if(medico == null)
-            throw new NoObjectFound();
-        return medico;
+    public MedicoResponseDto getOneMedicoByCrm(Integer idMedico) {
+        StringBuilder consulta = new StringBuilder(" select new com.medlinked.entities.dtos.MedicoResponseDto(");
+        consulta.append(" crm.idMedico, estado.uf, crm.numeroCrm ");
+        consulta.append(") from CRM crm ");
+        consulta.append(" inner join crm.estado estado ");
+        consulta.append(" where crm.idMedico = :ID ");
+        var query = entityManager.createQuery(consulta.toString(), MedicoResponseDto.class);
+        query.setParameter("ID", idMedico);
+        return query.getSingleResult();
+    }
+
+    @Override
+    public List<PlanoSaude> getPlanosSaudeMedicoByCrm(Integer idMedico) {
+        StringBuilder consulta = new StringBuilder(" select plano from Medico medico ");
+        consulta.append(" inner join medico.planosSaude plano ");
+        consulta.append(" where medico.idMedico = :ID ");
+        var query = entityManager.createQuery(consulta.toString(), PlanoSaude.class);
+        query.setParameter("ID", idMedico);
+        return query.getResultList();
+    }
+
+    @Override
+    public List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico) {
+        StringBuilder consulta = new StringBuilder(" select especialidade from CRM crm ");
+        consulta.append(" inner join crm.especialidades especialidade ");
+        consulta.append(" where crm.idMedico = :ID ");
+        var query = entityManager.createQuery(consulta.toString(), Especialidade.class);
+        query.setParameter("ID", idMedico);
+        return query.getResultList();
     }
 
     @Override

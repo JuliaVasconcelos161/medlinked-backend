@@ -2,11 +2,19 @@ package com.medlinked.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "TB_PLANO_SAUDE")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class PlanoSaude {
 
     @Id

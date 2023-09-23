@@ -7,6 +7,7 @@ import com.medlinked.entities.dtos.MedicoDto;
 import com.medlinked.repositories.CrmRepository;
 import com.medlinked.services.CrmService;
 import com.medlinked.services.EspecialidadeService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,6 +23,7 @@ public class CrmServiceImpl implements CrmService {
     }
 
     @Override
+    @Transactional
     public CRM createCrmMedico(Medico medico, MedicoDto medicoDto) {
         CRM crm = CRM
                 .builder()

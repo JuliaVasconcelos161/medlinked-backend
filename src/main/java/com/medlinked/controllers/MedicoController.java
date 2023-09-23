@@ -36,7 +36,7 @@ public class MedicoController {
     }
 
     @GetMapping("/{idMedico}")
-    public ResponseEntity<Object> getOneMedico(@PathVariable Long idMedico) {
+    public ResponseEntity<Object> getOneMedico(@PathVariable Integer idMedico) {
         try{
             return ResponseEntity.status(HttpStatus.OK).body(medicoService.getOneMedico(idMedico));
         }catch (MedLinkedException e) {
