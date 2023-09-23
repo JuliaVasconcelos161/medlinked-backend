@@ -13,11 +13,10 @@ public interface MedicoRepository {
 
     List<Medico> getAllMedicos();
 
-    MedicoResponseDto getOneMedicoByCrm(Integer idMedico);
+    MedicoResponseDto getOneMedico(Integer idMedico);
 
-    List<PlanoSaude> getPlanosSaudeMedicoByCrm(Integer idMedico);
+    List<PlanoSaude> getPlanosSaudeMedico(Integer idMedico);
 
-    List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico);
 
     boolean existsMedicoByCpf(String cpf);
 

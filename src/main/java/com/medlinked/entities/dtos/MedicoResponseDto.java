@@ -1,5 +1,6 @@
 package com.medlinked.entities.dtos;
 
+import com.medlinked.entities.CRM;
 import com.medlinked.entities.Especialidade;
 import com.medlinked.entities.PlanoSaude;
 import lombok.*;
@@ -10,24 +11,30 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @Builder
-public class MedicoResponseDto {
+public class MedicoResponseDto extends Pessoa {
 
     private Integer idMedico;
 
     private List<PlanoSaude> planosSaude;
 
-    private String ufCrm;
+    private CRM crm;
 
-    private Integer numeroCrm;
-
-    private List<Especialidade> especialidades;
-
-    public MedicoResponseDto(Integer idMedico, String ufCrm, Integer numeroCrm){
+    public MedicoResponseDto(Integer idMedico, String nome, Long cpf, String email, Long celular) {
         this.idMedico = idMedico;
-        this.ufCrm = ufCrm;
-        this.numeroCrm = numeroCrm;
+        this.nome = nome;
+        this.cpf = this.convertCpf(cpf);
+        this.email = email;
+        this.celular = celular;
     }
 
+    private String convertCpf(Long cpf) {
+        StringBuilder cpfStringBuilder = new StringBuilder(cpf.toString());
+        if(cpfStringBuilder.length() != 11) {
+            int diferenca = 11 - cpfStringBuilder.length();
+            for(int i = 0; i < diferenca; i++)
+                cpfStringBuilder.insert(0, "0");
+        }
+        return cpfStringBuilder.toString();
+    }
 }
