@@ -5,10 +5,12 @@ import com.medlinked.entities.Especialidade;
 import com.medlinked.entities.Estado;
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.dtos.MedicoDto;
+import com.medlinked.exceptions.EspecialidadeException;
 import com.medlinked.repositories.CrmRepository;
 import com.medlinked.services.CrmService;
 import com.medlinked.services.EspecialidadeService;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang.BooleanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,6 +30,8 @@ public class CrmServiceImpl implements CrmService {
     @Override
     @Transactional
     public CRM createCrmMedico(Medico medico, MedicoDto medicoDto) {
+        if(BooleanUtils.isTrue(medicoDto.getIdsEspecialidades().size() > 2))
+            throw new EspecialidadeException();
         CRM crm = CRM
                 .builder()
                 .medico(medico)
