@@ -1,0 +1,28 @@
+package com.medlinked.controllers;
+
+import com.medlinked.entities.TipoPlanoSaude;
+import com.medlinked.services.TipoPlanoSaudeService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/tipo-plano-saude")
+public class TipoPlanoSaudeController {
+
+    private final TipoPlanoSaudeService tipoPlanoSaudeService;
+
+    public TipoPlanoSaudeController(TipoPlanoSaudeService tipoPlanoSaudeService) {
+        this.tipoPlanoSaudeService = tipoPlanoSaudeService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<TipoPlanoSaude>> getAllTiposPlanoSaude() {
+        return ResponseEntity.status(HttpStatus.OK).body(tipoPlanoSaudeService.getAllTiposPlanoSaude());
+    }
+
+}
