@@ -1,6 +1,7 @@
 package com.medlinked.services.impl;
 
 import com.medlinked.entities.CRM;
+import com.medlinked.entities.Especialidade;
 import com.medlinked.entities.Estado;
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.dtos.MedicoDto;
@@ -9,6 +10,8 @@ import com.medlinked.services.CrmService;
 import com.medlinked.services.EspecialidadeService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class CrmServiceImpl implements CrmService {
@@ -33,5 +36,15 @@ public class CrmServiceImpl implements CrmService {
                 .especialidades(especialidadeService.createEspecialidades(medicoDto.getIdsEspecialidades()))
                 .build();
         return  crmRepository.saveCrm(crm);
+    }
+
+    @Override
+    public CRM getOneMedicoByCrm(Integer idMedico) {
+        return crmRepository.getOneMedicoByCrm(idMedico);
+    }
+
+    @Override
+    public List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico) {
+        return crmRepository.getEspecialidadesMedicoByCrm(idMedico);
     }
 }

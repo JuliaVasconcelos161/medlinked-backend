@@ -1,6 +1,5 @@
 package com.medlinked.repositories;
 
-import com.medlinked.entities.Especialidade;
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.MedicoResponseDto;
@@ -30,19 +29,18 @@ public class MedicoRepositoryClass implements MedicoRepository {
     }
 
     @Override
-    public MedicoResponseDto getOneMedicoByCrm(Integer idMedico) {
+    public MedicoResponseDto getOneMedico(Integer idMedico) {
         StringBuilder consulta = new StringBuilder(" select new com.medlinked.entities.dtos.MedicoResponseDto(");
-        consulta.append(" crm.idMedico, estado.uf, crm.numeroCrm ");
-        consulta.append(") from CRM crm ");
-        consulta.append(" inner join crm.estado estado ");
-        consulta.append(" where crm.idMedico = :ID ");
+        consulta.append(" medico.idMedico, medico.pessoa.nome, medico.pessoa.cpf, medico.pessoa.email, medico.pessoa.celular ");
+        consulta.append(") from Medico medico ");
+        consulta.append(" where medico.idMedico = :ID ");
         var query = entityManager.createQuery(consulta.toString(), MedicoResponseDto.class);
         query.setParameter("ID", idMedico);
         return query.getSingleResult();
     }
 
     @Override
-    public List<PlanoSaude> getPlanosSaudeMedicoByCrm(Integer idMedico) {
+    public List<PlanoSaude> getPlanosSaudeMedico(Integer idMedico) {
         StringBuilder consulta = new StringBuilder(" select plano from Medico medico ");
         consulta.append(" inner join medico.planosSaude plano ");
         consulta.append(" where medico.idMedico = :ID ");
@@ -51,15 +49,7 @@ public class MedicoRepositoryClass implements MedicoRepository {
         return query.getResultList();
     }
 
-    @Override
-    public List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico) {
-        StringBuilder consulta = new StringBuilder(" select especialidade from CRM crm ");
-        consulta.append(" inner join crm.especialidades especialidade ");
-        consulta.append(" where crm.idMedico = :ID ");
-        var query = entityManager.createQuery(consulta.toString(), Especialidade.class);
-        query.setParameter("ID", idMedico);
-        return query.getResultList();
-    }
+
 
     @Override
     public boolean existsMedicoByCpf(String cpf) {

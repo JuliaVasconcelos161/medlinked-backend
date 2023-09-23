@@ -1,8 +1,6 @@
 package com.medlinked.services.impl;
 
-import com.medlinked.entities.Medico;
-import com.medlinked.entities.Pessoa;
-import com.medlinked.entities.PlanoSaude;
+import com.medlinked.entities.*;
 import com.medlinked.entities.dtos.MedicoDto;
 import com.medlinked.entities.dtos.MedicoResponseDto;
 import com.medlinked.exceptions.ExistsCpf;
@@ -13,7 +11,9 @@ import com.medlinked.services.MedicoService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class MedicoServiceImpl implements MedicoService {
@@ -29,7 +29,7 @@ public class MedicoServiceImpl implements MedicoService {
 
     @Override
     @Transactional
-    public Medico save(MedicoDto medicoDto) {
+    public MedicoResponseDto save(MedicoDto medicoDto) {
         if(this.existsMedicoByCpf(medicoDto.getCpf()))
             throw new ExistsCpf("Medico");
         Medico medico = Medico.builder()
@@ -43,7 +43,7 @@ public class MedicoServiceImpl implements MedicoService {
                 .build();
         medico = medicoRepository.saveMedico(medico);
         crmService.createCrmMedico(medico,medicoDto);
-        return medico;
+        return this.getOneMedico(medico.getIdMedico());
     }
 
     @Override
@@ -53,9 +53,11 @@ public class MedicoServiceImpl implements MedicoService {
 
     @Override
     public MedicoResponseDto getOneMedico(Integer idMedico) {
-        MedicoResponseDto medicoResponseDto = medicoRepository.getOneMedicoByCrm(idMedico);
-        medicoResponseDto.setPlanosSaude(medicoRepository.getPlanosSaudeMedicoByCrm(idMedico));
-        medicoResponseDto.setEspecialidades(medicoRepository.getEspecialidadesMedicoByCrm(idMedico));
+        MedicoResponseDto medicoResponseDto = medicoRepository.getOneMedico(idMedico);
+        medicoResponseDto.setPlanosSaude(medicoRepository.getPlanosSaudeMedico(idMedico));
+        CRM crm = crmService.getOneMedicoByCrm(idMedico);
+        crm.setEspecialidades(new HashSet<>(crmService.getEspecialidadesMedicoByCrm(idMedico)));
+        medicoResponseDto.setCrm(crm);
         return medicoResponseDto;
     }
 
