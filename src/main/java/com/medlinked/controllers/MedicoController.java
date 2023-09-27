@@ -2,6 +2,7 @@ package com.medlinked.controllers;
 
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.dtos.MedicoDto;
+import com.medlinked.entities.dtos.MedicoResponseDto;
 import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.services.MedicoService;
 import jakarta.validation.Valid;
@@ -38,7 +39,8 @@ public class MedicoController {
     @GetMapping("/{idMedico}")
     public ResponseEntity<Object> getOneMedico(@PathVariable Integer idMedico) {
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(medicoService.getOneMedico(idMedico));
+            MedicoResponseDto medicoResponseDto = medicoService.getOneMedico(idMedico);
+            return ResponseEntity.status(HttpStatus.OK).body(medicoResponseDto);
         }catch (MedLinkedException e) {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }

@@ -3,7 +3,9 @@ package com.medlinked.repositories;
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.MedicoResponseDto;
+import com.medlinked.exceptions.NoObjectFound;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
@@ -36,7 +38,11 @@ public class MedicoRepositoryClass implements MedicoRepository {
         consulta.append(" where medico.idMedico = :ID ");
         var query = entityManager.createQuery(consulta.toString(), MedicoResponseDto.class);
         query.setParameter("ID", idMedico);
-        return query.getSingleResult();
+        try {
+            return query.getSingleResult();
+        }catch (NoResultException e) {
+            throw new NoObjectFound();
+        }
     }
 
     @Override
