@@ -1,6 +1,7 @@
 package com.medlinked.services;
 
 import com.medlinked.entities.Medico;
+import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.MedicoDto;
 import com.medlinked.entities.dtos.MedicoResponseDto;
 
@@ -12,5 +13,7 @@ public interface MedicoService {
     List<Medico> getAll();
 
     MedicoResponseDto getOneMedico(Integer idMedico);
+    List<Medico> getAllMedicosPlanoSaude(Integer idPlanoSaude);
 
+    void deleteMedicosPlanoSaude(List<Medico> medicos, PlanoSaude planoSaude);
 }

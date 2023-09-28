@@ -26,7 +26,7 @@ public class Medico {
     private Pessoa pessoa;
 
     @ManyToMany
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    @JsonProperty(access = JsonProperty.Access.READ_WRITE)
     @JoinTable(name = "TB_MEDICO_PLANO_SAUDE",
             joinColumns = @JoinColumn(name = "id_medico"),
             inverseJoinColumns = @JoinColumn(name = "id_plano_saude")

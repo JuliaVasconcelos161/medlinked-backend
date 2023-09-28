@@ -9,4 +9,6 @@ public interface PlanoSaudeService {
     List<PlanoSaude> getAllPlanosSaude();
 
     PlanoSaude createPlanoSaude(PlanoSaudeDto planoSaudeDto);
+
+    void deletePlanoSaude(Integer idPlanoSaude);
 }

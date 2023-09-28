@@ -32,4 +32,14 @@ public class PlanoSaudeController {
     public ResponseEntity<List<PlanoSaude>> getAllPlanosSaude() {
         return ResponseEntity.status(HttpStatus.OK).body(planoSaudeService.getAllPlanosSaude());
     }
+
+    @DeleteMapping("/{idPlanoSaude}")
+    public ResponseEntity<Object> deletePlanoSaude(@PathVariable Integer idPlanoSaude) {
+        try {
+            planoSaudeService.deletePlanoSaude(idPlanoSaude);
+            return ResponseEntity.status(HttpStatus.OK).body("Plano de saúde deletado com sucesso.");
+        } catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
+    }
 }
