@@ -65,15 +65,11 @@ public class MedicoServiceImpl implements MedicoService {
         return medicoResponseDto;
     }
 
-    @Override
-    public boolean existsMedicoByCpf(String cpf) {
+
+    private boolean existsMedicoByCpf(String cpf) {
         return medicoRepository.existsMedicoByCpf(cpf);
     }
 
 
-//    @Override
-//    @Transactional
-//    public void deleteMedico(Long idMedico) {
-//        medicoRepository.deleteMedico(idMedico);
-//    }
+
 }
