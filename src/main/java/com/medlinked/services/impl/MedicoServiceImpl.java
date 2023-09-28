@@ -4,11 +4,14 @@ import com.medlinked.entities.*;
 import com.medlinked.entities.dtos.MedicoDto;
 import com.medlinked.entities.dtos.MedicoResponseDto;
 import com.medlinked.exceptions.ExistsCpf;
+import com.medlinked.exceptions.NoObjectFound;
 import com.medlinked.repositories.MedicoRepository;
 import com.medlinked.repositories.MedicoRepositoryClass;
 import com.medlinked.services.CrmService;
 import com.medlinked.services.MedicoService;
+import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -53,7 +56,8 @@ public class MedicoServiceImpl implements MedicoService {
 
     @Override
     public MedicoResponseDto getOneMedico(Integer idMedico) {
-        MedicoResponseDto medicoResponseDto = medicoRepository.getOneMedico(idMedico);
+        MedicoResponseDto medicoResponseDto;
+        medicoResponseDto = medicoRepository.getOneMedico(idMedico);
         medicoResponseDto.setPlanosSaude(medicoRepository.getPlanosSaudeMedico(idMedico));
         CRM crm = crmService.getOneMedicoByCrm(idMedico);
         crm.setEspecialidades(new HashSet<>(crmService.getEspecialidadesMedicoByCrm(idMedico)));
