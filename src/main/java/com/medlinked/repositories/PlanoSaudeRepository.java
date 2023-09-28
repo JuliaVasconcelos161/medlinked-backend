@@ -11,4 +11,8 @@ public interface PlanoSaudeRepository {
     PlanoSaude save(PlanoSaude planoSaude);
 
     boolean existsPlanoSaudeByDescricao(String descricao);
+
+    PlanoSaude getOnePlanoSaude(Integer idPlanoSaude);
+
+    void delete(PlanoSaude planoSaude);
 }

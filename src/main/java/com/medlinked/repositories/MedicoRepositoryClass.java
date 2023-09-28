@@ -67,5 +67,16 @@ public class MedicoRepositoryClass implements MedicoRepository {
         return query.getSingleResult() > 0;
     }
 
+    @Override
+    public List<Medico> getAllMedicosPlanoSaude(Integer idPlanoSaude) {
+        StringBuilder consulta = new StringBuilder(" select medico ");
+        consulta.append(" from Medico medico ");
+        consulta.append(" inner join medico.planoSaude planoSaude ");
+        consulta.append(" where planoSaude.idPlanoSaude = :IDPLANOSAUDE ");
+        var query = entityManager.createQuery(consulta.toString(), Medico.class);
+        query.setParameter("IDPLANOSAUDE", idPlanoSaude);
+        return query.getResultList();
+    }
+
 
 }

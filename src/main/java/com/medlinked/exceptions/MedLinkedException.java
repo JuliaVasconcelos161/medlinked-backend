@@ -13,4 +13,8 @@ public class MedLinkedException extends RuntimeException {
         this.httpStatus = httpStatus;
     }
 
+    public MedLinkedException() {
+        super("Algo deu errado, tente novamente mais tarde.");
+        this.httpStatus = HttpStatus.BAD_REQUEST;
+    }
 }

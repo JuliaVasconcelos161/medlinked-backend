@@ -20,5 +20,6 @@ public interface MedicoRepository {
 
     boolean existsMedicoByCpf(String cpf);
 
-//    void deleteMedico(Long idMedico);
+    List<Medico> getAllMedicosPlanoSaude(Integer idPlanoSaude);
+
 }

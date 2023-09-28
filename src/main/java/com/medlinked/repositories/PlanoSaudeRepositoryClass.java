@@ -3,7 +3,6 @@ package com.medlinked.repositories;
 import com.medlinked.entities.PlanoSaude;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -35,5 +34,15 @@ public class PlanoSaudeRepositoryClass implements PlanoSaudeRepository {
         var query = entityManager.createQuery(consulta.toString(), Long.class);
         query.setParameter("DESCRICAO", descricao);
         return query.getSingleResult() > 0;
+    }
+
+    @Override
+    public PlanoSaude getOnePlanoSaude(Integer idPlanoSaude) {
+        return entityManager.find(PlanoSaude.class,idPlanoSaude);
+    }
+
+    @Override
+    public void delete(PlanoSaude planoSaude) {
+        entityManager.remove(planoSaude);
     }
 }

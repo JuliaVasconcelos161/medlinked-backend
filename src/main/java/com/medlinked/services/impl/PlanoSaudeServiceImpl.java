@@ -1,12 +1,14 @@
 package com.medlinked.services.impl;
 
+import com.medlinked.entities.Medico;
 import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.PlanoSaudeDto;
 import com.medlinked.exceptions.ExistsDescricao;
+import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.repositories.PlanoSaudeRepository;
+import com.medlinked.services.MedicoService;
 import com.medlinked.services.PlanoSaudeService;
 import jakarta.transaction.Transactional;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,8 +18,11 @@ public class PlanoSaudeServiceImpl implements PlanoSaudeService {
 
     private final PlanoSaudeRepository planoSaudeRepository;
 
-    public PlanoSaudeServiceImpl(PlanoSaudeRepository planoSaudeRepository) {
+    private final MedicoService medicoService;
+
+    public PlanoSaudeServiceImpl(PlanoSaudeRepository planoSaudeRepository, MedicoService medicoService) {
         this.planoSaudeRepository = planoSaudeRepository;
+        this.medicoService = medicoService;
     }
 
     @Override
@@ -28,7 +33,7 @@ public class PlanoSaudeServiceImpl implements PlanoSaudeService {
     @Override
     @Transactional
     public PlanoSaude createPlanoSaude(PlanoSaudeDto planoSaudeDto) {
-        if(this.existsPlanoSaudeByDescricao(planoSaudeDto.getDescricao()))
+        if(planoSaudeRepository.existsPlanoSaudeByDescricao(planoSaudeDto.getDescricao()))
             throw new ExistsDescricao("Plano de Saúde");
         PlanoSaude planoSaude = PlanoSaude
                 .builder()
@@ -37,7 +42,18 @@ public class PlanoSaudeServiceImpl implements PlanoSaudeService {
         return planoSaudeRepository.save(planoSaude);
     }
 
-    private boolean existsPlanoSaudeByDescricao(String descricao) {
-        return planoSaudeRepository.existsPlanoSaudeByDescricao(descricao);
+    @Override
+    @Transactional
+    public void deletePlanoSaude(Integer idPlanoSaude) {
+        try{
+            PlanoSaude planoSaude = planoSaudeRepository.getOnePlanoSaude(idPlanoSaude);
+            List<Medico> medicosPlanoSaude = medicoService.getAllMedicosPlanoSaude(idPlanoSaude);
+            if(!medicosPlanoSaude.isEmpty())
+                medicoService.deleteMedicosPlanoSaude(medicosPlanoSaude, planoSaude);
+            planoSaudeRepository.delete(planoSaude);
+        } catch (Exception e) {
+            throw new MedLinkedException();
+        }
     }
+
 }

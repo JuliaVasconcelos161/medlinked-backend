@@ -4,19 +4,14 @@ import com.medlinked.entities.*;
 import com.medlinked.entities.dtos.MedicoDto;
 import com.medlinked.entities.dtos.MedicoResponseDto;
 import com.medlinked.exceptions.ExistsCpf;
-import com.medlinked.exceptions.NoObjectFound;
 import com.medlinked.repositories.MedicoRepository;
-import com.medlinked.repositories.MedicoRepositoryClass;
 import com.medlinked.services.CrmService;
 import com.medlinked.services.MedicoService;
-import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MedicoServiceImpl implements MedicoService {
@@ -63,6 +58,16 @@ public class MedicoServiceImpl implements MedicoService {
         crm.setEspecialidades(new HashSet<>(crmService.getEspecialidadesMedicoByCrm(idMedico)));
         medicoResponseDto.setCrm(crm);
         return medicoResponseDto;
+    }
+
+    @Override
+    public List<Medico> getAllMedicosPlanoSaude(Integer idPlanoSaude) {
+        return medicoRepository.getAllMedicosPlanoSaude(idPlanoSaude);
+    }
+
+    @Override
+    public void deleteMedicosPlanoSaude(List<Medico> medicos, PlanoSaude planoSaude) {
+        medicos.forEach(medico -> medico.getPlanosSaude().remove(planoSaude));
     }
 
 
