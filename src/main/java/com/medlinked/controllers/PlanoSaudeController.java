@@ -1,12 +1,12 @@
 package com.medlinked.controllers;
 
 import com.medlinked.entities.PlanoSaude;
+import com.medlinked.entities.dtos.PlanoSaudeDto;
+import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.services.PlanoSaudeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,6 +20,14 @@ public class PlanoSaudeController {
         this.planoSaudeService = planoSaudeService;
     }
 
+    @PostMapping
+    public ResponseEntity<Object> createPlanoSaude(@RequestBody PlanoSaudeDto planoSaudeDto) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(planoSaudeService.createPlanoSaude(planoSaudeDto));
+        } catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
+    }
     @GetMapping
     public ResponseEntity<List<PlanoSaude>> getAllPlanosSaude() {
         return ResponseEntity.status(HttpStatus.OK).body(planoSaudeService.getAllPlanosSaude());

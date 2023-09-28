@@ -13,7 +13,4 @@ public interface MedicoService {
 
     MedicoResponseDto getOneMedico(Integer idMedico);
 
-    boolean existsMedicoByCpf(String cpf);
-
-//    void deleteMedico(Long idMedico);
 }

@@ -46,12 +46,4 @@ public class MedicoController {
         }
     }
 
-//    @DeleteMapping("/{idMedico}")
-//    public ResponseEntity<Object> deleteMedico(@PathVariable Long idMedico) {
-//        try{
-//            return ResponseEntity.status(HttpStatus.OK).body(medicoService.deleteMedico(idMedico));
-//        }catch (MedLinkedException e) {
-//            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
-//        }
-//    }
 }
