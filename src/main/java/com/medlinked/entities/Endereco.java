@@ -8,7 +8,7 @@ public class Endereco {
     @Id
     private Integer idPaciente;
 
-    @Column(nullable = false, columnDefinition = "bigint")
+    @Column(nullable = false)
     private Long cep;
 
     @Column(nullable = false, length = 100)

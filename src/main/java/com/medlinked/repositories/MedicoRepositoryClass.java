@@ -3,7 +3,7 @@ package com.medlinked.repositories;
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.MedicoResponseDto;
-import com.medlinked.exceptions.NoObjectFound;
+import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
@@ -33,7 +33,7 @@ public class MedicoRepositoryClass implements MedicoRepository {
         try{
             return entityManager.find(Medico.class, idMedico);
         } catch (NoResultException e) {
-            throw new NoObjectFound("Médico");
+            throw new NoObjectFoundException("Médico");
         }
 
     }
@@ -49,7 +49,7 @@ public class MedicoRepositoryClass implements MedicoRepository {
         try {
             return query.getSingleResult();
         }catch (NoResultException e) {
-            throw new NoObjectFound("Médico");
+            throw new NoObjectFoundException("Médico");
         }
     }
 
