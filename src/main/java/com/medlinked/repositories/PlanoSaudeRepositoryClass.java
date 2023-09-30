@@ -1,7 +1,9 @@
 package com.medlinked.repositories;
 
 import com.medlinked.entities.PlanoSaude;
+import com.medlinked.exceptions.NoObjectFound;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
@@ -38,7 +40,11 @@ public class PlanoSaudeRepositoryClass implements PlanoSaudeRepository {
 
     @Override
     public PlanoSaude getOnePlanoSaude(Integer idPlanoSaude) {
-        return entityManager.find(PlanoSaude.class,idPlanoSaude);
+        try {
+            return entityManager.find(PlanoSaude.class,idPlanoSaude);
+        } catch (NoResultException e) {
+            throw new NoObjectFound("Plano de Saúde");
+        }
     }
 
     @Override

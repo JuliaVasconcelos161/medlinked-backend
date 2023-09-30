@@ -39,7 +39,7 @@ public class MedicoController {
     @GetMapping("/{idMedico}")
     public ResponseEntity<Object> getOneMedico(@PathVariable Integer idMedico) {
         try{
-            MedicoResponseDto medicoResponseDto = medicoService.getOneMedico(idMedico);
+            MedicoResponseDto medicoResponseDto = medicoService.getOneMedicoResponseDto(idMedico);
             return ResponseEntity.status(HttpStatus.OK).body(medicoResponseDto);
         }catch (MedLinkedException e) {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());

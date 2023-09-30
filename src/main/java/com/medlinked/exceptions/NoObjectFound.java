@@ -9,7 +9,7 @@ public class NoObjectFound extends MedLinkedException {
         super(message, httpStatus);
     }
 
-    public NoObjectFound(){
-        super("Nenhum resultado encontrado.", HttpStatus.NOT_FOUND);
+    public NoObjectFound(String object){
+        super(object + " não encontrado(a).", HttpStatus.NOT_FOUND);
     }
 }
