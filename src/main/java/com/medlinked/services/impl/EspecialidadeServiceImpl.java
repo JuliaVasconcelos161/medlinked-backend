@@ -19,19 +19,19 @@ public class EspecialidadeServiceImpl implements EspecialidadeService {
     }
 
     @Override
-    public Set<Especialidade> createEspecialidades(Set<Integer> idsEspecialidades) {
+    public Set<Especialidade> createEspecialidadesMedicoCrm(Set<Integer> idsEspecialidades) {
         Set<Especialidade> especialidades = idsEspecialidades
                 .stream()
-                .map(id -> Especialidade
-                        .builder()
-                        .idEspecialidade(id)
-                        .build())
-                .collect(Collectors.toSet());
+                .map(this::getOneEspecialidade).collect(Collectors.toSet());
         return especialidades;
     }
 
     @Override
     public List<Especialidade> getAllEspecialidades() {
         return especialidadeRepository.getAllEspecialidades();
+    }
+    @Override
+    public Especialidade getOneEspecialidade(Integer idEspecialidade) {
+        return especialidadeRepository.getOneEspecialidade(idEspecialidade);
     }
 }

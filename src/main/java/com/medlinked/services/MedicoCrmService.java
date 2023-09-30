@@ -1,17 +1,17 @@
 package com.medlinked.services;
 
-import com.medlinked.entities.CRM;
+import com.medlinked.entities.MedicoCRM;
 import com.medlinked.entities.Especialidade;
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.dtos.MedicoDto;
 
 import java.util.List;
 
-public interface CrmService {
+public interface MedicoCrmService {
 
-    CRM createCrmMedico(Medico medico, MedicoDto medicoDto);
+    MedicoCRM createCrmMedico(Medico medico, MedicoDto medicoDto);
 
-    CRM getOneMedicoByCrm(Integer idMedico);
+    MedicoCRM getOneCrmByMedico(Integer idMedico);
 
     List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico);
 }

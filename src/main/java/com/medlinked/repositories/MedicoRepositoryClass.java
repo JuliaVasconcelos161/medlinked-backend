@@ -2,7 +2,6 @@ package com.medlinked.repositories;
 
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.PlanoSaude;
-import com.medlinked.entities.dtos.MedicoResponseDto;
 import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
@@ -36,21 +35,6 @@ public class MedicoRepositoryClass implements MedicoRepository {
             throw new NoObjectFoundException("Médico");
         }
 
-    }
-
-    @Override
-    public MedicoResponseDto getOneMedicoResponseDto(Integer idMedico) {
-        StringBuilder consulta = new StringBuilder(" select new com.medlinked.entities.dtos.MedicoResponseDto(");
-        consulta.append(" medico.idMedico, medico.pessoa.nome, medico.pessoa.cpf, medico.pessoa.email, medico.pessoa.celular ");
-        consulta.append(") from Medico medico ");
-        consulta.append(" where medico.idMedico = :ID ");
-        var query = entityManager.createQuery(consulta.toString(), MedicoResponseDto.class);
-        query.setParameter("ID", idMedico);
-        try {
-            return query.getSingleResult();
-        }catch (NoResultException e) {
-            throw new NoObjectFoundException("Médico");
-        }
     }
 
     @Override

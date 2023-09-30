@@ -2,8 +2,8 @@ package com.medlinked.controllers;
 
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.dtos.MedicoDto;
-import com.medlinked.entities.dtos.MedicoResponseDto;
 import com.medlinked.exceptions.MedLinkedException;
+import com.medlinked.services.MedicoCrmService;
 import com.medlinked.services.MedicoService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -18,8 +18,11 @@ public class MedicoController {
 
     private final MedicoService medicoService;
 
-    public MedicoController(MedicoService medicoService) {
+    private final MedicoCrmService medicoCrmService;
+
+    public MedicoController(MedicoService medicoService, MedicoCrmService medicoCrmService) {
         this.medicoService = medicoService;
+        this.medicoCrmService = medicoCrmService;
     }
 
     @PostMapping
@@ -39,8 +42,7 @@ public class MedicoController {
     @GetMapping("/{idMedico}")
     public ResponseEntity<Object> getOneMedico(@PathVariable Integer idMedico) {
         try{
-            MedicoResponseDto medicoResponseDto = medicoService.getOneMedicoResponseDto(idMedico);
-            return ResponseEntity.status(HttpStatus.OK).body(medicoResponseDto);
+            return ResponseEntity.status(HttpStatus.OK).body(medicoCrmService.getOneCrmByMedico(idMedico));
         }catch (MedLinkedException e) {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }

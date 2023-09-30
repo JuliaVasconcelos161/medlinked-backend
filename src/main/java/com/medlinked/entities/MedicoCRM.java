@@ -14,15 +14,14 @@ import java.util.Set;
 @AllArgsConstructor
 @Getter
 @Setter
-public class CRM {
+public class MedicoCRM {
     @Id
     @JsonIgnore
     private Integer idMedico;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     @MapsId
     @JoinColumn(name = "id_medico")
-    @JsonIgnore
     private Medico medico;
 
     @ManyToOne
@@ -38,9 +37,4 @@ public class CRM {
             joinColumns = @JoinColumn(name = "id_medico"),
             inverseJoinColumns = @JoinColumn(name = "id_especialidade"))
     private Set<Especialidade> especialidades;
-
-    public CRM(Estado estado, Integer numeroCrm) {
-        this.estado = estado;
-        this.numeroCrm = numeroCrm;
-    }
 }

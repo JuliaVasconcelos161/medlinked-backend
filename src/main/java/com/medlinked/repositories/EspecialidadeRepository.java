@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface EspecialidadeRepository {
     List<Especialidade> getAllEspecialidades();
+
+    Especialidade getOneEspecialidade(Integer idEspecialidade);
 }

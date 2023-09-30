@@ -1,14 +1,14 @@
 package com.medlinked.repositories;
 
-import com.medlinked.entities.CRM;
+import com.medlinked.entities.MedicoCRM;
 import com.medlinked.entities.Especialidade;
 
 import java.util.List;
 
-public interface CrmRepository {
-    CRM saveCrm(CRM crm);
+public interface MedicoCrmRepository {
+    MedicoCRM saveCrm(MedicoCRM medicoCrm);
 
-    CRM getOneMedicoByCrm(Integer idMedico);
+    MedicoCRM getOneCrmByMedico(Integer idMedico);
 
     List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico);
 }

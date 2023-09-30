@@ -20,4 +20,9 @@ public class EstadoServiceImpl implements EstadoService {
     public List<Estado> getAllEstados() {
         return estadoRepository.getAllEstados();
     }
+
+    @Override
+    public Estado getOneEstado(String uf) {
+        return estadoRepository.getOneEstado(uf);
+    }
 }
