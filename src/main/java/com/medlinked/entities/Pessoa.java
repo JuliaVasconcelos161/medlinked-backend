@@ -24,9 +24,9 @@ public class Pessoa {
     @Column(nullable = false, unique = true, columnDefinition = "bigint")
     private Long cpf;
 
-    @Column(length = 120)
+    @Column(length = 120, unique = true, nullable = false)
     private String email;
 
-    @Column(nullable = false, columnDefinition = "bigint")
+    @Column(nullable = false)
     private Long celular;
 }

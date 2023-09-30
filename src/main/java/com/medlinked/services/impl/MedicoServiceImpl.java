@@ -5,7 +5,7 @@ import com.medlinked.entities.Medico;
 import com.medlinked.entities.Pessoa;
 import com.medlinked.entities.dtos.MedicoDto;
 import com.medlinked.entities.dtos.MedicoResponseDto;
-import com.medlinked.exceptions.ExistsCpf;
+import com.medlinked.exceptions.ExistsCpfException;
 import com.medlinked.repositories.MedicoRepository;
 import com.medlinked.services.CrmService;
 import com.medlinked.services.MedicoService;
@@ -31,7 +31,7 @@ public class MedicoServiceImpl implements MedicoService {
     @Transactional
     public MedicoResponseDto save(MedicoDto medicoDto) {
         if(this.existsMedicoByCpf(medicoDto.getCpf()))
-            throw new ExistsCpf("Medico");
+            throw new ExistsCpfException("Medico");
         Medico medico = Medico.builder()
                 .pessoa(
                         Pessoa.builder()

@@ -27,7 +27,7 @@ public class PlanoSaudePaciente {
     private PlanoSaudePacientePk idPlanoSaudePaciente;
 
 
-    @Column(nullable = false, columnDefinition = "bigint")
+    @Column(nullable = false)
     private Long num_carteirinha;
 
     @ManyToOne

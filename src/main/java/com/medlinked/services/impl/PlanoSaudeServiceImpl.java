@@ -2,7 +2,7 @@ package com.medlinked.services.impl;
 
 import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.PlanoSaudeDto;
-import com.medlinked.exceptions.ExistsDescricao;
+import com.medlinked.exceptions.ExistsDescricaoException;
 import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.repositories.PlanoSaudeRepository;
 import com.medlinked.services.MedicoService;
@@ -30,7 +30,7 @@ public class PlanoSaudeServiceImpl implements PlanoSaudeService {
     @Transactional
     public PlanoSaude createPlanoSaude(PlanoSaudeDto planoSaudeDto) {
         if(planoSaudeRepository.existsPlanoSaudeByDescricao(planoSaudeDto.getDescricao()))
-            throw new ExistsDescricao("Plano de Saúde");
+            throw new ExistsDescricaoException("Plano de Saúde");
         PlanoSaude planoSaude = PlanoSaude
                 .builder()
                 .descricao(planoSaudeDto.getDescricao())

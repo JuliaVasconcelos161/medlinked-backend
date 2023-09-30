@@ -1,7 +1,7 @@
 package com.medlinked.repositories;
 
 import com.medlinked.entities.PlanoSaude;
-import com.medlinked.exceptions.NoObjectFound;
+import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
@@ -43,7 +43,7 @@ public class PlanoSaudeRepositoryClass implements PlanoSaudeRepository {
         try {
             return entityManager.find(PlanoSaude.class,idPlanoSaude);
         } catch (NoResultException e) {
-            throw new NoObjectFound("Plano de Saúde");
+            throw new NoObjectFoundException("Plano de Saúde");
         }
     }
 
