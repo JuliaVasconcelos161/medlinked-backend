@@ -18,4 +18,5 @@ public interface MedicoRepository {
 
     boolean existsMedicoByCpf(String cpf);
 
+    Medico updateMedico(Medico medico);
 }

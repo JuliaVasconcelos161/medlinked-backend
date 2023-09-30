@@ -19,7 +19,7 @@ public class EspecialidadeServiceImpl implements EspecialidadeService {
     }
 
     @Override
-    public Set<Especialidade> createEspecialidadesMedicoCrm(Set<Integer> idsEspecialidades) {
+    public Set<Especialidade> returnEspecialidadesByIds(Set<Integer> idsEspecialidades) {
         Set<Especialidade> especialidades = idsEspecialidades
                 .stream()
                 .map(this::getOneEspecialidade).collect(Collectors.toSet());
