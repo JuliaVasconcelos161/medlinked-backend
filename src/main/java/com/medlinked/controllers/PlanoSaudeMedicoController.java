@@ -1,11 +1,14 @@
 package com.medlinked.controllers;
 
+import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.MedicoPlanoSaudeDto;
 import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.services.PlanoSaudeMedicoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/plano-saude-medico")
@@ -18,7 +21,7 @@ public class PlanoSaudeMedicoController {
     }
 
 
-    @PutMapping("/{idMedico}")
+    @PutMapping("/adiciona-planos-medico/{idMedico}")
     public ResponseEntity<Object> updateMedicoPlanosSaude(@PathVariable Integer idMedico,
                                                           @RequestBody MedicoPlanoSaudeDto medicoPlanoSaudeDto) {
         try {
@@ -28,5 +31,12 @@ public class PlanoSaudeMedicoController {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
 
+    }
+
+    @PutMapping("/update-medico-remove-plano/{idMedico}/{idPlanoSaude}")
+    public ResponseEntity<List<PlanoSaude>> updateMedicoRemovePlanoSaude(
+            @PathVariable Integer idMedico,
+            @PathVariable Integer idPlanoSaude) {
+        return ResponseEntity.status(HttpStatus.OK).body(planoSaudeMedicoService.updateMedicoRemovePlanoSaude(idMedico, idPlanoSaude));
     }
 }

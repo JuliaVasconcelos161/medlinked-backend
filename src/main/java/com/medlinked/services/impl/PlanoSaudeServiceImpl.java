@@ -5,7 +5,6 @@ import com.medlinked.entities.dtos.PlanoSaudeDto;
 import com.medlinked.exceptions.ExistsDescricaoException;
 import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.repositories.PlanoSaudeRepository;
-import com.medlinked.services.MedicoService;
 import com.medlinked.services.PlanoSaudeService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,7 @@ public class PlanoSaudeServiceImpl implements PlanoSaudeService {
 
     private final PlanoSaudeRepository planoSaudeRepository;
 
-    public PlanoSaudeServiceImpl(PlanoSaudeRepository planoSaudeRepository, MedicoService medicoService) {
+    public PlanoSaudeServiceImpl(PlanoSaudeRepository planoSaudeRepository) {
         this.planoSaudeRepository = planoSaudeRepository;
     }
 

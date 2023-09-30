@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface PlanoSaudeMedicoService {
     List<PlanoSaude> updateMedicoPlanosSaude(Integer idMedico, MedicoPlanoSaudeDto medicoPlanoSaudeDto);
+
+    List<PlanoSaude> updateMedicoRemovePlanoSaude(Integer idMedico, Integer idPlanoSaude);
 }
