@@ -49,4 +49,14 @@ public class PlanoSaudeMedicoServiceImpl implements PlanoSaudeMedicoService {
         return planosSaude.stream().toList();
     }
 
+    @Override
+    @Transactional
+    public List<PlanoSaude> updateMedicoRemovePlanoSaude(Integer idMedico, Integer idPlanoSaude) {
+        Medico medico = medicoRepository.getOneMedico(idMedico);
+        PlanoSaude planoSaude = planoSaudeRepository.getOnePlanoSaude(idPlanoSaude);
+        medico.removePlanoSaude(planoSaude);
+        medicoRepository.saveMedico(medico);
+        return medico.getPlanosSaude().stream().toList();
+    }
+
 }
