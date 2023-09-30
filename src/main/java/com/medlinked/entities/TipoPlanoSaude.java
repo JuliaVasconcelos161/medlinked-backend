@@ -1,11 +1,15 @@
 package com.medlinked.entities;
 
 import jakarta.persistence.*;
-import lombok.Data;
+import lombok.*;
 
 @Entity
 @Table(name = "TB_TIPO_PLANO_SAUDE")
-@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class TipoPlanoSaude {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

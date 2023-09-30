@@ -2,11 +2,9 @@ package com.medlinked.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -14,7 +12,9 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode
 public class PlanoSaude {
 
     @Id
@@ -29,4 +29,10 @@ public class PlanoSaude {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private Set<Medico> medicos;
 
+    @PreRemove
+    private void removeAssociacaoMedico() {
+        for(Medico medico: this.getMedicos()) {
+            medico.getPlanosSaude().remove(this);
+        }
+    }
 }

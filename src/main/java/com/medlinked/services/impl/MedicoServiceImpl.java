@@ -1,6 +1,8 @@
 package com.medlinked.services.impl;
 
-import com.medlinked.entities.*;
+import com.medlinked.entities.CRM;
+import com.medlinked.entities.Medico;
+import com.medlinked.entities.Pessoa;
 import com.medlinked.entities.dtos.MedicoDto;
 import com.medlinked.entities.dtos.MedicoResponseDto;
 import com.medlinked.exceptions.ExistsCpf;
@@ -41,7 +43,7 @@ public class MedicoServiceImpl implements MedicoService {
                 .build();
         medico = medicoRepository.saveMedico(medico);
         crmService.createCrmMedico(medico,medicoDto);
-        return this.getOneMedico(medico.getIdMedico());
+        return this.getOneMedicoResponseDto(medico.getIdMedico());
     }
 
     @Override
@@ -50,9 +52,9 @@ public class MedicoServiceImpl implements MedicoService {
     }
 
     @Override
-    public MedicoResponseDto getOneMedico(Integer idMedico) {
+    public MedicoResponseDto getOneMedicoResponseDto(Integer idMedico) {
         MedicoResponseDto medicoResponseDto;
-        medicoResponseDto = medicoRepository.getOneMedico(idMedico);
+        medicoResponseDto = medicoRepository.getOneMedicoResponseDto(idMedico);
         medicoResponseDto.setPlanosSaude(medicoRepository.getPlanosSaudeMedico(idMedico));
         CRM crm = crmService.getOneMedicoByCrm(idMedico);
         crm.setEspecialidades(new HashSet<>(crmService.getEspecialidadesMedicoByCrm(idMedico)));
@@ -60,21 +62,9 @@ public class MedicoServiceImpl implements MedicoService {
         return medicoResponseDto;
     }
 
-    @Override
-    public List<Medico> getAllMedicosPlanoSaude(Integer idPlanoSaude) {
-        return medicoRepository.getAllMedicosPlanoSaude(idPlanoSaude);
-    }
-
-    @Override
-    public void deleteMedicosPlanoSaude(List<Medico> medicos, PlanoSaude planoSaude) {
-        medicos.forEach(medico -> medico.getPlanosSaude().remove(planoSaude));
-    }
-
 
     private boolean existsMedicoByCpf(String cpf) {
         return medicoRepository.existsMedicoByCpf(cpf);
     }
-
-
 
 }

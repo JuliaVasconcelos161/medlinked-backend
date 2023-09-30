@@ -2,14 +2,16 @@ package com.medlinked.entities.dtos;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
-import lombok.Data;
+import lombok.*;
 
 import java.util.Set;
 
-@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class MedicoDto extends Pessoa {
-
-    private Set<Integer> idsPlanosSaude;
 
     @NotNull
     private String ufCrm;

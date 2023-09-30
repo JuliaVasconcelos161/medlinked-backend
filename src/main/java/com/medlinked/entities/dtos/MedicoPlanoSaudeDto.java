@@ -1,15 +1,15 @@
 package com.medlinked.entities.dtos;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.*;
+
+import java.util.List;
 
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class PlanoSaudeDto {
+public class MedicoPlanoSaudeDto {
 
-    @NotBlank
-    private String descricao;
+    private List<Integer> idsPlanosSaude;
 }

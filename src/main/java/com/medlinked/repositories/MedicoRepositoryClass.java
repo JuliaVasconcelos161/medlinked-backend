@@ -7,7 +7,6 @@ import com.medlinked.exceptions.NoObjectFound;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,7 +16,6 @@ public class MedicoRepositoryClass implements MedicoRepository {
     @PersistenceContext
     EntityManager entityManager;
     @Override
-    @Transactional
     public Medico saveMedico(Medico medico) {
         entityManager.persist(medico);
         return medico;
@@ -31,7 +29,17 @@ public class MedicoRepositoryClass implements MedicoRepository {
     }
 
     @Override
-    public MedicoResponseDto getOneMedico(Integer idMedico) {
+    public Medico getOneMedico(Integer idMedico) {
+        try{
+            return entityManager.find(Medico.class, idMedico);
+        } catch (NoResultException e) {
+            throw new NoObjectFound("Médico");
+        }
+
+    }
+
+    @Override
+    public MedicoResponseDto getOneMedicoResponseDto(Integer idMedico) {
         StringBuilder consulta = new StringBuilder(" select new com.medlinked.entities.dtos.MedicoResponseDto(");
         consulta.append(" medico.idMedico, medico.pessoa.nome, medico.pessoa.cpf, medico.pessoa.email, medico.pessoa.celular ");
         consulta.append(") from Medico medico ");
@@ -41,7 +49,7 @@ public class MedicoRepositoryClass implements MedicoRepository {
         try {
             return query.getSingleResult();
         }catch (NoResultException e) {
-            throw new NoObjectFound();
+            throw new NoObjectFound("Médico");
         }
     }
 
@@ -65,17 +73,6 @@ public class MedicoRepositoryClass implements MedicoRepository {
         var query = entityManager.createQuery(consulta.toString(), Long.class);
         query.setParameter("CPF", cpf);
         return query.getSingleResult() > 0;
-    }
-
-    @Override
-    public List<Medico> getAllMedicosPlanoSaude(Integer idPlanoSaude) {
-        StringBuilder consulta = new StringBuilder(" select medico ");
-        consulta.append(" from Medico medico ");
-        consulta.append(" inner join medico.planoSaude planoSaude ");
-        consulta.append(" where planoSaude.idPlanoSaude = :IDPLANOSAUDE ");
-        var query = entityManager.createQuery(consulta.toString(), Medico.class);
-        query.setParameter("IDPLANOSAUDE", idPlanoSaude);
-        return query.getResultList();
     }
 
 

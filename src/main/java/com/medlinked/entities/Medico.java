@@ -1,13 +1,10 @@
 package com.medlinked.entities;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -15,7 +12,9 @@ import java.util.Set;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(exclude = "planosSaude")
 public class Medico {
     @Id
     private Integer idMedico;
@@ -32,4 +31,10 @@ public class Medico {
             inverseJoinColumns = @JoinColumn(name = "id_plano_saude")
     )
     private Set<PlanoSaude> planosSaude;
+
+
+    public void removePlanoSaude(PlanoSaude planoSaude) {
+        this.planosSaude.remove(planoSaude);
+        planoSaude.getMedicos().remove(this);
+    }
 }

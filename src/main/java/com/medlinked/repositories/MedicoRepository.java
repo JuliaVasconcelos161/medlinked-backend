@@ -1,6 +1,5 @@
 package com.medlinked.repositories;
 
-import com.medlinked.entities.Especialidade;
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.MedicoResponseDto;
@@ -13,13 +12,13 @@ public interface MedicoRepository {
 
     List<Medico> getAllMedicos();
 
-    MedicoResponseDto getOneMedico(Integer idMedico);
+    Medico getOneMedico(Integer idMedico);
+
+    MedicoResponseDto getOneMedicoResponseDto(Integer idMedico);
 
     List<PlanoSaude> getPlanosSaudeMedico(Integer idMedico);
 
 
     boolean existsMedicoByCpf(String cpf);
-
-    List<Medico> getAllMedicosPlanoSaude(Integer idPlanoSaude);
 
 }
