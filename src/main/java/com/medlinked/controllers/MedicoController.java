@@ -48,4 +48,12 @@ public class MedicoController {
         }
     }
 
+    @PutMapping("/{idMedico}")
+    public ResponseEntity<Object> updateMedico(@PathVariable Integer idMedico, @RequestBody @Valid MedicoDto medicoDto) {
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(medicoService.updateMedico(idMedico, medicoDto));
+        }catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
+    }
 }

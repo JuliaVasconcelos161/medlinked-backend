@@ -59,5 +59,12 @@ public class MedicoRepositoryClass implements MedicoRepository {
         return query.getSingleResult() > 0;
     }
 
+    @Override
+    public Medico updateMedico(Medico medico) {
+        entityManager.merge(medico);
+        entityManager.flush();
+        return medico;
+    }
+
 
 }

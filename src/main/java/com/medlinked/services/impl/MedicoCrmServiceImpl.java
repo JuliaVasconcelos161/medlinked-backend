@@ -40,9 +40,9 @@ public class MedicoCrmServiceImpl implements MedicoCrmService {
                 .medico(medico)
                 .numeroCrm(medicoDto.getNumeroCrm())
                 .estado(estadoService.getOneEstado(medicoDto.getUfCrm()))
-                .especialidades(especialidadeService.createEspecialidadesMedicoCrm(medicoDto.getIdsEspecialidades()))
+                .especialidades(especialidadeService.returnEspecialidadesByIds(medicoDto.getIdsEspecialidades()))
                 .build();
-        return  medicoCrmRepository.saveCrm(medicoCrm);
+        return medicoCrmRepository.saveCrm(medicoCrm);
     }
 
     @Override
@@ -53,5 +53,18 @@ public class MedicoCrmServiceImpl implements MedicoCrmService {
     @Override
     public List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico) {
         return medicoCrmRepository.getEspecialidadesMedicoByCrm(idMedico);
+    }
+
+    @Override
+    @Transactional
+    public MedicoCRM updateMedicoCrm(Medico medico, MedicoDto medicoDto) {
+        if(BooleanUtils.isTrue(medicoDto.getIdsEspecialidades().size() > 2))
+            throw new EspecialidadeException();
+        MedicoCRM medicoCRM = medicoCrmRepository.getOneCrmByMedico(medico.getIdMedico());
+        medicoCRM.setMedico(medico);
+        medicoCRM.setNumeroCrm(medicoDto.getNumeroCrm());
+        medicoCRM.setEstado(estadoService.getOneEstado(medicoDto.getUfCrm()));
+        medicoCRM.setEspecialidades(especialidadeService.returnEspecialidadesByIds(medicoDto.getIdsEspecialidades()));
+        return medicoCrmRepository.updateMedicoCrm(medicoCRM);
     }
 }

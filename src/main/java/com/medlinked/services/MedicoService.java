@@ -11,4 +11,5 @@ public interface MedicoService {
 
     List<Medico> getAll();
 
+    MedicoCRM updateMedico(Integer idMedico, MedicoDto medicoDto);
 }

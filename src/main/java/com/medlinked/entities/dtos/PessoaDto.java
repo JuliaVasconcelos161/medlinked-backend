@@ -14,7 +14,7 @@ import org.hibernate.validator.constraints.br.CPF;
 @NoArgsConstructor
 @Getter
 @Setter
-public abstract class Pessoa {
+public abstract class PessoaDto {
 
     @NotBlank
     protected String nome;

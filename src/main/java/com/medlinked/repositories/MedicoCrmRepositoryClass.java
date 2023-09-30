@@ -17,7 +17,6 @@ public class MedicoCrmRepositoryClass implements MedicoCrmRepository {
     @PersistenceContext
     EntityManager entityManager;
     @Override
-    @Transactional
     public MedicoCRM saveCrm(MedicoCRM medicoCrm) {
         entityManager.persist(medicoCrm);
         return medicoCrm;
@@ -40,5 +39,13 @@ public class MedicoCrmRepositoryClass implements MedicoCrmRepository {
         var query = entityManager.createQuery(consulta.toString(), Especialidade.class);
         query.setParameter("ID", idMedico);
         return query.getResultList();
+    }
+
+    @Override
+    @Transactional
+    public MedicoCRM updateMedicoCrm(MedicoCRM medicoCrm) {
+        entityManager.merge(medicoCrm);
+        entityManager.flush();
+        return medicoCrm;
     }
 }
