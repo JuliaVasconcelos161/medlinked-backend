@@ -1,7 +1,9 @@
 package com.medlinked.repositories;
 
 import com.medlinked.entities.Especialidade;
+import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
@@ -18,5 +20,14 @@ public class EspecialidadeRepositoryClass implements EspecialidadeRepository {
         StringBuilder consulta = new StringBuilder(" select especialidade from Especialidade especialidade ");
         var query = entityManager.createQuery(consulta.toString(), Especialidade.class);
         return query.getResultList();
+    }
+
+    @Override
+    public Especialidade getOneEspecialidade(Integer idEspecialidade) {
+        try{
+            return entityManager.find(Especialidade.class, idEspecialidade);
+        }catch (NoResultException e) {
+            throw new NoObjectFoundException("Especialidade");
+        }
     }
 }

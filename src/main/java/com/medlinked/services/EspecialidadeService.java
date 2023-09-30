@@ -6,7 +6,9 @@ import java.util.List;
 import java.util.Set;
 
 public interface EspecialidadeService {
-    Set<Especialidade> createEspecialidades(Set<Integer> idsEspecialidades);
+    Set<Especialidade> createEspecialidadesMedicoCrm(Set<Integer> idsEspecialidades);
 
     List<Especialidade> getAllEspecialidades();
+
+    Especialidade getOneEspecialidade(Integer idEspecialidade);
 }

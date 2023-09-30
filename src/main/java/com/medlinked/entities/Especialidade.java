@@ -26,5 +26,5 @@ public class Especialidade {
 
     @ManyToMany(mappedBy = "especialidades", fetch = FetchType.LAZY)
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private Set<CRM> medicosCrm;
+    private Set<MedicoCRM> medicosCrm;
 }

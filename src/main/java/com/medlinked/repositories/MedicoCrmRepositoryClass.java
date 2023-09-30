@@ -1,8 +1,10 @@
 package com.medlinked.repositories;
 
-import com.medlinked.entities.CRM;
+import com.medlinked.entities.MedicoCRM;
 import com.medlinked.entities.Especialidade;
+import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Repository;
@@ -10,27 +12,24 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public class CrmRepositoryClass implements CrmRepository {
+public class MedicoCrmRepositoryClass implements MedicoCrmRepository {
 
     @PersistenceContext
     EntityManager entityManager;
     @Override
     @Transactional
-    public CRM saveCrm(CRM crm) {
-        entityManager.persist(crm);
-        return crm;
+    public MedicoCRM saveCrm(MedicoCRM medicoCrm) {
+        entityManager.persist(medicoCrm);
+        return medicoCrm;
     }
 
     @Override
-    public CRM getOneMedicoByCrm(Integer idMedico) {
-        StringBuilder consulta = new StringBuilder(" select new com.medlinked.entities.CRM(");
-        consulta.append(" estado, crm.numeroCrm ");
-        consulta.append(") from CRM crm ");
-        consulta.append(" inner join crm.estado estado ");
-        consulta.append(" where crm.idMedico = :ID ");
-        var query = entityManager.createQuery(consulta.toString(), CRM.class);
-        query.setParameter("ID", idMedico);
-        return query.getSingleResult();
+    public MedicoCRM getOneCrmByMedico(Integer idMedico) {
+        try{
+            return entityManager.find(MedicoCRM.class, idMedico);
+        }catch (NoResultException e) {
+            throw  new NoObjectFoundException("CRM");
+        }
     }
 
     @Override
