@@ -4,6 +4,7 @@ import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.MedicoPlanoSaudeDto;
 import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.services.PlanoSaudeMedicoService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class PlanoSaudeMedicoController {
     }
 
 
+    @Operation(summary = "Atualiza o médico vinculando-o aos planos de saúde recebidos, e retorna os planos vinculados.")
     @PutMapping("/adiciona-planos-medico/{idMedico}")
     public ResponseEntity<Object> updateMedicoPlanosSaude(@PathVariable Integer idMedico,
                                                           @RequestBody @Valid MedicoPlanoSaudeDto medicoPlanoSaudeDto) {
@@ -34,6 +36,7 @@ public class PlanoSaudeMedicoController {
 
     }
 
+    @Operation(summary = "Atualiza o médico removendo plano de saúde utilizando o idPlanoSaude informado.")
     @PutMapping("/update-medico-remove-plano/{idMedico}/{idPlanoSaude}")
     public ResponseEntity<List<PlanoSaude>> updateMedicoRemovePlanoSaude(
             @PathVariable Integer idMedico,

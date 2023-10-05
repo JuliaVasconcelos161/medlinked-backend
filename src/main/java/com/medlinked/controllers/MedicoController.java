@@ -5,6 +5,7 @@ import com.medlinked.entities.dtos.MedicoDto;
 import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.services.MedicoCrmService;
 import com.medlinked.services.MedicoService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +26,7 @@ public class MedicoController {
         this.medicoCrmService = medicoCrmService;
     }
 
+    @Operation(summary = "Cria um novo médico e o retorna.")
     @PostMapping
     public ResponseEntity<Object> createMedico(@RequestBody @Valid MedicoDto medicoDto) {
         try{
@@ -34,11 +36,13 @@ public class MedicoController {
         }
     }
 
+    @Operation(summary = "Retorna todos os médicos cadastrados no sistema.")
     @GetMapping
     public ResponseEntity<List<Medico>> getAllMedicos(){
         return ResponseEntity.status(HttpStatus.OK).body(medicoService.getAll());
     }
 
+    @Operation(summary = "Retorna médico utilizando idMedico.")
     @GetMapping("/{idMedico}")
     public ResponseEntity<Object> getOneMedico(@PathVariable Integer idMedico) {
         try{
@@ -48,6 +52,7 @@ public class MedicoController {
         }
     }
 
+    @Operation(summary = "Altera dados de um médico utilizando o idMedico informado, e retorna os dados alterados.")
     @PutMapping("/{idMedico}")
     public ResponseEntity<Object> updateMedico(@PathVariable Integer idMedico, @RequestBody @Valid MedicoDto medicoDto) {
         try{
