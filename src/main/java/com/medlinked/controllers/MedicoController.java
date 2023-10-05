@@ -28,7 +28,7 @@ public class MedicoController {
     @PostMapping
     public ResponseEntity<Object> createMedico(@RequestBody @Valid MedicoDto medicoDto) {
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(medicoService.save(medicoDto));
+            return ResponseEntity.status(HttpStatus.OK).body(medicoService.createMedico(medicoDto));
         }catch (MedLinkedException e) {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }

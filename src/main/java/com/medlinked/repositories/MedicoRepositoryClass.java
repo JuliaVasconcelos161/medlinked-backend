@@ -47,18 +47,6 @@ public class MedicoRepositoryClass implements MedicoRepository {
         return query.getResultList();
     }
 
-
-
-    @Override
-    public boolean existsMedicoByCpf(String cpf) {
-        StringBuilder consulta = new StringBuilder(" select count(1) ");
-        consulta.append(" from Medico medico ");
-        consulta.append(" where medico.pessoa.cpf = :CPF ");
-        var query = entityManager.createQuery(consulta.toString(), Long.class);
-        query.setParameter("CPF", cpf);
-        return query.getSingleResult() > 0;
-    }
-
     @Override
     public Medico updateMedico(Medico medico) {
         entityManager.merge(medico);

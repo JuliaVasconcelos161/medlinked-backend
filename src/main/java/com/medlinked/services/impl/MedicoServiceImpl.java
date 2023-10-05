@@ -4,7 +4,6 @@ import com.medlinked.entities.MedicoCRM;
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.Pessoa;
 import com.medlinked.entities.dtos.MedicoDto;
-import com.medlinked.exceptions.ExistsCpfException;
 import com.medlinked.repositories.MedicoRepository;
 import com.medlinked.services.MedicoCrmService;
 import com.medlinked.services.MedicoService;
@@ -31,17 +30,11 @@ public class MedicoServiceImpl implements MedicoService {
 
     @Override
     @Transactional
-    public MedicoCRM save(MedicoDto medicoDto) {
-        if(this.existsMedicoByCpf(medicoDto.getCpf()))
-            throw new ExistsCpfException("Medico");
+    public MedicoCRM createMedico(MedicoDto medicoDto) {
+        pessoaService.validateNewEspecializacaoPessoa(medicoDto.getCpf(), medicoDto.getEmail(), "Medico");
+        Pessoa pessoa = pessoaService.returnPessoaByCpf(medicoDto.getCpf());
         Medico medico = Medico.builder()
-                .pessoa(
-                        Pessoa.builder()
-                                .nome(medicoDto.getNome())
-                                .cpf(Long.parseLong(medicoDto.getCpf()))
-                                .celular(medicoDto.getCelular())
-                                .email(medicoDto.getEmail())
-                                .build())
+                .pessoa(pessoa == null ? pessoaService.createPessoa(medicoDto, "Medico") : pessoa)
                 .build();
         medico = medicoRepository.saveMedico(medico);
         medicoCrmService.createCrmMedico(medico,medicoDto);
@@ -57,16 +50,9 @@ public class MedicoServiceImpl implements MedicoService {
     @Transactional
     public MedicoCRM updateMedico(Integer idMedico, MedicoDto medicoDto) {
         Medico medico = medicoRepository.getOneMedico(idMedico);
-        boolean isMedicoCpfEqualsMedicoDtoCpf = medico.getPessoa().getCpf().equals(Long.parseLong(medicoDto.getCpf()));
-        if(this.existsMedicoByCpf(medicoDto.getCpf()) && !isMedicoCpfEqualsMedicoDtoCpf)
-            throw new ExistsCpfException("Medico");
-        medico.setPessoa(pessoaService.updatePessoa(idMedico, medicoDto));
+        medico.setPessoa(pessoaService.updatePessoa(idMedico, medicoDto, "Medico"));
         medicoRepository.updateMedico(medico);
         return medicoCrmService.updateMedicoCrm(medico, medicoDto);
-    }
-
-    private boolean existsMedicoByCpf(String cpf) {
-        return medicoRepository.existsMedicoByCpf(cpf);
     }
 
 }
