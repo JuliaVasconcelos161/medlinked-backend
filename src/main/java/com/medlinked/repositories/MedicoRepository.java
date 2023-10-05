@@ -15,8 +15,5 @@ public interface MedicoRepository {
 
     List<PlanoSaude> getPlanosSaudeMedico(Integer idMedico);
 
-
-    boolean existsMedicoByCpf(String cpf);
-
     Medico updateMedico(Medico medico);
 }
