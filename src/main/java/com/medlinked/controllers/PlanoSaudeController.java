@@ -4,6 +4,7 @@ import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.PlanoSaudeDto;
 import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.services.PlanoSaudeService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +22,7 @@ public class PlanoSaudeController {
     }
 
     @PostMapping
-    public ResponseEntity<Object> createPlanoSaude(@RequestBody PlanoSaudeDto planoSaudeDto) {
+    public ResponseEntity<Object> createPlanoSaude(@RequestBody @Valid PlanoSaudeDto planoSaudeDto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(planoSaudeService.createPlanoSaude(planoSaudeDto));
         } catch (MedLinkedException e) {
