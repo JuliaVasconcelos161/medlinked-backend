@@ -4,6 +4,7 @@ import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.MedicoPlanoSaudeDto;
 import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.services.PlanoSaudeMedicoService;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class PlanoSaudeMedicoController {
 
     @PutMapping("/adiciona-planos-medico/{idMedico}")
     public ResponseEntity<Object> updateMedicoPlanosSaude(@PathVariable Integer idMedico,
-                                                          @RequestBody MedicoPlanoSaudeDto medicoPlanoSaudeDto) {
+                                                          @RequestBody @Valid MedicoPlanoSaudeDto medicoPlanoSaudeDto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(
                     planoSaudeMedicoService.updateMedicoPlanosSaude(idMedico, medicoPlanoSaudeDto));
