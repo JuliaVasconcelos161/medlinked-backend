@@ -2,6 +2,7 @@ package com.medlinked.controllers;
 
 import com.medlinked.entities.Estado;
 import com.medlinked.services.EstadoService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ public class EstadoController {
         this.estadoService = estadoService;
     }
 
+    @Operation(summary = "Retorna todos os estados cadastrados no sistema.")
     @GetMapping
     public ResponseEntity<List<Estado>> getAllEstados() {
         return ResponseEntity.status(HttpStatus.OK).body(estadoService.getAllEstados());

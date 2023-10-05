@@ -2,6 +2,7 @@ package com.medlinked.controllers;
 
 import com.medlinked.entities.Especialidade;
 import com.medlinked.services.EspecialidadeService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ public class EspecialidadeController {
         this.especialidadeService = especialidadeService;
     }
 
+    @Operation(summary = "Retorna todas as especialidades cadastradas no sistema.")
     @GetMapping
     public ResponseEntity<List<Especialidade>> getAllEspecialidades() {
         return ResponseEntity.status(HttpStatus.OK).body(especialidadeService.getAllEspecialidades());

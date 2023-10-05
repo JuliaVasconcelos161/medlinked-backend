@@ -2,6 +2,7 @@ package com.medlinked.controllers;
 
 import com.medlinked.entities.TipoPlanoSaude;
 import com.medlinked.services.TipoPlanoSaudeService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,7 @@ public class TipoPlanoSaudeController {
         this.tipoPlanoSaudeService = tipoPlanoSaudeService;
     }
 
+    @Operation(summary = "Retorna todos os tipos de plano de saúde cadastrados no sistema.")
     @GetMapping
     public ResponseEntity<List<TipoPlanoSaude>> getAllTiposPlanoSaude() {
         return ResponseEntity.status(HttpStatus.OK).body(tipoPlanoSaudeService.getAllTiposPlanoSaude());
