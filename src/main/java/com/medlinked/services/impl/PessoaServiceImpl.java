@@ -51,9 +51,9 @@ public class PessoaServiceImpl implements PessoaService {
     @Override
     public void validateNewEspecializacaoPessoa(String cpfDto, String emailDto, String especializacaoPessoa) {
         if(pessoaRepository.existsEspecializacaoPessoaByCpf(cpfDto, especializacaoPessoa))
-            throw new ExistsException("Médico", "CPF");
+            throw new ExistsException(especializacaoPessoa, "CPF");
         if(pessoaRepository.existsEspecializacaoPessoaByEmail(emailDto, especializacaoPessoa))
-            throw new ExistsException("Médico", "Email");
+            throw new ExistsException(especializacaoPessoa, "Email");
     }
 
     private void validatePessoaUpdate(Long cpfPessoa, String cpfDto, String especializacaoPessoa,
@@ -65,13 +65,13 @@ public class PessoaServiceImpl implements PessoaService {
     private void validateCpfUpdatePessoa(Long cpfPessoa, String cpfDto, String especializacaoPessoa) {
         boolean isPessoaCpfEqualsPessoaDtoCpf = cpfPessoa.equals(Long.parseLong(cpfDto));
         if(pessoaRepository.existsEspecializacaoPessoaByCpf(cpfDto, especializacaoPessoa) && !isPessoaCpfEqualsPessoaDtoCpf)
-            throw new ExistsException("Médico", "CPF");
+            throw new ExistsException(especializacaoPessoa, "CPF");
     }
 
     private void validateEmailUpdatePessoa(String emailPessoa, String emailDto, String especializacaoPessoa) {
         boolean isPessoaEmailEqualsPessoaDtoEmail = emailPessoa.equals(emailDto);
         if(pessoaRepository.existsEspecializacaoPessoaByEmail(emailDto, especializacaoPessoa) && !isPessoaEmailEqualsPessoaDtoEmail)
-            throw new ExistsException("Médico", "Email");
+            throw new ExistsException(especializacaoPessoa, "Email");
     }
 
 }

@@ -1,9 +1,17 @@
 package com.medlinked.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import lombok.*;
 
 @Entity
 @Table(name = "TB_ENDERECO")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
 public class Endereco {
     @Id
     private Integer idPaciente;
@@ -17,6 +25,9 @@ public class Endereco {
     @Column(nullable = false, length = 100)
     private String cidade;
 
+    @Column(nullable = false, length = 120)
+    private String bairro;
+
     @Column(nullable = false, columnDefinition = "smallint")
     private Integer numero;
 
@@ -27,8 +38,9 @@ public class Endereco {
     @JoinColumn(name = "uf", nullable = false)
     private Estado estado;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @MapsId
     @JoinColumn(name = "id_paciente")
+    @JsonIgnore
     private Paciente paciente;
 }
