@@ -3,6 +3,7 @@ package com.medlinked.controllers;
 import com.medlinked.entities.dtos.PacienteDto;
 import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.services.PacienteService;
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +19,7 @@ public class PacienteController {
         this.pacienteService = pacienteService;
     }
 
+    @Operation(summary = "Cria um novo paciente com seu endereço e o retorna.")
     @PostMapping
     public ResponseEntity<Object> createPaciente(@RequestBody @Valid PacienteDto pacienteDto) {
         try{
@@ -27,6 +29,7 @@ public class PacienteController {
         }
     }
 
+    @Operation(summary = "Retorna um paciente e seu endereço utilizando idPaciente.")
     @GetMapping("/{idPaciente}")
     public ResponseEntity<Object> getOnePaciente(@PathVariable Integer idPaciente) {
         try{
