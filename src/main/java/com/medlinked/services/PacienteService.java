@@ -1,8 +1,8 @@
 package com.medlinked.services;
 
-import com.medlinked.entities.Paciente;
 import com.medlinked.entities.dtos.PacienteDto;
+import com.medlinked.entities.dtos.PacienteResponseDto;
 
 public interface PacienteService {
-    Paciente createPaciente(PacienteDto pacienteDto);
+    PacienteResponseDto createPaciente(PacienteDto pacienteDto);
 }

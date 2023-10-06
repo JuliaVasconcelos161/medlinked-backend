@@ -1,8 +1,10 @@
 package com.medlinked.services.impl;
 
+import com.medlinked.entities.Endereco;
 import com.medlinked.entities.Paciente;
 import com.medlinked.entities.Pessoa;
 import com.medlinked.entities.dtos.PacienteDto;
+import com.medlinked.entities.dtos.PacienteResponseDto;
 import com.medlinked.repositories.PacienteRepository;
 import com.medlinked.services.EnderecoService;
 import com.medlinked.services.PacienteService;
@@ -27,7 +29,7 @@ public class PacienteServiceImpl implements PacienteService {
 
     @Transactional
     @Override
-    public Paciente createPaciente(PacienteDto pacienteDto) {
+    public PacienteResponseDto createPaciente(PacienteDto pacienteDto) {
         pessoaService.validateNewEspecializacaoPessoa(
                 pacienteDto.getCpf(), pacienteDto.getEmail(), "Paciente");
         Pessoa pessoa = pessoaService.returnPessoaByCpf(pacienteDto.getCpf());
@@ -35,7 +37,11 @@ public class PacienteServiceImpl implements PacienteService {
                 .pessoa(pessoa == null ? pessoaService.createPessoa(pacienteDto, "Paciente") : pessoa)
                 .build();
         paciente = pacienteRepository.savePaciente(paciente);
-        enderecoService.createEndereco(pacienteDto.getEnderecoDto(), paciente);
-        return paciente;
+        Endereco endereco = enderecoService.createEndereco(pacienteDto.getEnderecoDto(), paciente);
+        PacienteResponseDto pacienteResponseDto = PacienteResponseDto.builder()
+                .paciente(paciente)
+                .endereco(endereco)
+                .build();
+        return pacienteResponseDto;
     }
 }
