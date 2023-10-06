@@ -33,7 +33,7 @@ public class MedicoCrmRepositoryClass implements MedicoCrmRepository {
 
     @Override
     public List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico) {
-        StringBuilder consulta = new StringBuilder(" select especialidade from CRM crm ");
+        StringBuilder consulta = new StringBuilder(" select especialidade from MedicoCRM crm ");
         consulta.append(" inner join crm.especialidades especialidade ");
         consulta.append(" where crm.idMedico = :ID ");
         var query = entityManager.createQuery(consulta.toString(), Especialidade.class);
@@ -42,7 +42,16 @@ public class MedicoCrmRepositoryClass implements MedicoCrmRepository {
     }
 
     @Override
-    @Transactional
+    public boolean existsMedicoByNumeroCrm(Integer numeroCrm) {
+        StringBuilder consulta = new StringBuilder(" select count(1) ");
+        consulta.append(" from MedicoCRM crm ");
+        consulta.append(" where crm.numeroCrm = :NUMEROCRM ");
+        var query = entityManager.createQuery(consulta.toString(), Long.class);
+        query.setParameter("NUMEROCRM", numeroCrm);
+        return query.getSingleResult() > 0;
+    }
+
+    @Override
     public MedicoCRM updateMedicoCrm(MedicoCRM medicoCrm) {
         entityManager.merge(medicoCrm);
         entityManager.flush();

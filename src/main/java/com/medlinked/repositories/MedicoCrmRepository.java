@@ -13,6 +13,8 @@ public interface MedicoCrmRepository {
 
     List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico);
 
+    boolean existsMedicoByNumeroCrm(Integer numeroCrm);
+
     @Transactional
     MedicoCRM updateMedicoCrm(MedicoCRM medicoCrm);
 }
