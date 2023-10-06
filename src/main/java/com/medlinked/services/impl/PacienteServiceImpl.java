@@ -1,11 +1,10 @@
 package com.medlinked.services.impl;
 
-import com.medlinked.entities.Endereco;
 import com.medlinked.entities.Paciente;
 import com.medlinked.entities.Pessoa;
 import com.medlinked.entities.dtos.PacienteDto;
 import com.medlinked.repositories.PacienteRepository;
-import com.medlinked.services.EstadoService;
+import com.medlinked.services.EnderecoService;
 import com.medlinked.services.PacienteService;
 import com.medlinked.services.PessoaService;
 import jakarta.transaction.Transactional;
@@ -18,12 +17,12 @@ public class PacienteServiceImpl implements PacienteService {
 
     private final PessoaService pessoaService;
 
-    private final EstadoService estadoService;
+    private final EnderecoService enderecoService;
 
-    public PacienteServiceImpl(PacienteRepository pacienteRepository, PessoaService pessoaService, EstadoService estadoService) {
+    public PacienteServiceImpl(PacienteRepository pacienteRepository, PessoaService pessoaService, EnderecoService enderecoService) {
         this.pacienteRepository = pacienteRepository;
         this.pessoaService = pessoaService;
-        this.estadoService = estadoService;
+        this.enderecoService = enderecoService;
     }
 
     @Transactional
@@ -35,6 +34,8 @@ public class PacienteServiceImpl implements PacienteService {
         Paciente paciente = Paciente.builder()
                 .pessoa(pessoa == null ? pessoaService.createPessoa(pacienteDto, "Paciente") : pessoa)
                 .build();
-        return pacienteRepository.savePaciente(paciente);
+        paciente = pacienteRepository.savePaciente(paciente);
+        enderecoService.createEndereco(pacienteDto.getEnderecoDto(), paciente);
+        return paciente;
     }
 }

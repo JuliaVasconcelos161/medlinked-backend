@@ -17,6 +17,9 @@ public class EnderecoDto {
     private String logradouro;
 
     @NotBlank
+    private String bairro;
+
+    @NotBlank
     private String cidade;
 
     @NotNull

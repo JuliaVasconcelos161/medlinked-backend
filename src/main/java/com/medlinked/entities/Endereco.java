@@ -25,6 +25,9 @@ public class Endereco {
     @Column(nullable = false, length = 100)
     private String cidade;
 
+    @Column(nullable = false, length = 120)
+    private String bairro;
+
     @Column(nullable = false, columnDefinition = "smallint")
     private Integer numero;
 
