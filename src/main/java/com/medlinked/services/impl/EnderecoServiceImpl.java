@@ -36,4 +36,9 @@ public class EnderecoServiceImpl implements EnderecoService {
                 .build();
         return enderecoRepository.saveEndereco(endereco);
     }
+
+    @Override
+    public Endereco getOneEndereco(Integer idPaciente) {
+        return enderecoRepository.getOneEndereco(idPaciente);
+    }
 }
