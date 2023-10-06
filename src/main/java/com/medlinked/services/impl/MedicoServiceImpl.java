@@ -32,6 +32,7 @@ public class MedicoServiceImpl implements MedicoService {
     @Transactional
     public MedicoCRM createMedico(MedicoDto medicoDto) {
         pessoaService.validateNewEspecializacaoPessoa(medicoDto.getCpf(), medicoDto.getEmail(), "Medico");
+        medicoCrmService.validateCrm(medicoDto);
         Pessoa pessoa = pessoaService.returnPessoaByCpf(medicoDto.getCpf());
         Medico medico = Medico.builder()
                 .pessoa(pessoa == null ? pessoaService.createPessoa(medicoDto, "Medico") : pessoa)
@@ -49,6 +50,7 @@ public class MedicoServiceImpl implements MedicoService {
     @Override
     @Transactional
     public MedicoCRM updateMedico(Integer idMedico, MedicoDto medicoDto) {
+        medicoCrmService.validateCrm(medicoDto);
         Medico medico = medicoRepository.getOneMedico(idMedico);
         medico.setPessoa(pessoaService.updatePessoa(idMedico, medicoDto, "Medico"));
         medicoRepository.updateMedico(medico);
