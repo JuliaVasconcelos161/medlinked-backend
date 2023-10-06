@@ -4,4 +4,6 @@ import com.medlinked.entities.Endereco;
 
 public interface EnderecoRepository {
     Endereco saveEndereco(Endereco endereco);
+
+    Endereco getOneEndereco(Integer idPaciente);
 }

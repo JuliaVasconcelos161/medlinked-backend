@@ -5,4 +5,6 @@ import com.medlinked.entities.dtos.PacienteResponseDto;
 
 public interface PacienteService {
     PacienteResponseDto createPaciente(PacienteDto pacienteDto);
+
+    PacienteResponseDto getOnePaciente(Integer idPaciente);
 }

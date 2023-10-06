@@ -38,10 +38,13 @@ public class PacienteServiceImpl implements PacienteService {
                 .build();
         paciente = pacienteRepository.savePaciente(paciente);
         Endereco endereco = enderecoService.createEndereco(pacienteDto.getEnderecoDto(), paciente);
-        PacienteResponseDto pacienteResponseDto = PacienteResponseDto.builder()
-                .paciente(paciente)
-                .endereco(endereco)
-                .build();
-        return pacienteResponseDto;
+        return new PacienteResponseDto(paciente, endereco);
+    }
+
+    @Override
+    public PacienteResponseDto getOnePaciente(Integer idPaciente) {
+        Paciente paciente = pacienteRepository.getOnePaciente(idPaciente);
+        Endereco endereco = enderecoService.getOneEndereco(idPaciente);
+        return new PacienteResponseDto(paciente, endereco);
     }
 }

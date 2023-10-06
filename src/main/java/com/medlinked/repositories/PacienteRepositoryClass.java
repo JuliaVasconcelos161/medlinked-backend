@@ -1,7 +1,9 @@
 package com.medlinked.repositories;
 
 import com.medlinked.entities.Paciente;
+import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
@@ -15,5 +17,14 @@ public class PacienteRepositoryClass implements PacienteRepository {
     public Paciente savePaciente(Paciente paciente) {
         entityManager.persist(paciente);
         return paciente;
+    }
+
+    @Override
+    public Paciente getOnePaciente(Integer idPaciente) {
+        try{
+            return entityManager.find(Paciente.class, idPaciente);
+        } catch (NoResultException e) {
+            throw new NoObjectFoundException("Paciente");
+        }
     }
 }
