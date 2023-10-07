@@ -38,4 +38,15 @@ public class PacienteController {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
     }
+
+    @Operation(summary = "Atualiza os dados de um paciente utilizando o idPaciente.")
+    @PutMapping("/{idPaciente}")
+    public ResponseEntity<Object> updatePaciente(@PathVariable Integer idPaciente,
+                                                 @RequestBody @Valid PacienteDto pacienteDto) {
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(pacienteService.updatePaciente(idPaciente, pacienteDto));
+        }catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
+    }
 }

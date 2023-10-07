@@ -27,4 +27,11 @@ public class EnderecoRepositoryClass implements EnderecoRepository {
             throw new NoObjectFoundException("Endereco");
         }
     }
+
+    @Override
+    public Endereco updateEndereco(Endereco endereco) {
+        entityManager.merge(endereco);
+        entityManager.flush();
+        return endereco;
+    }
 }
