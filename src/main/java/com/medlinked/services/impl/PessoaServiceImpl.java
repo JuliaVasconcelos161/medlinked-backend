@@ -23,6 +23,8 @@ public class PessoaServiceImpl implements PessoaService {
         Pessoa pessoa = pessoaRepository.getOnePessoa(idPessoa);
         this.validatePessoaUpdate(pessoa.getCpf(), pessoaDto.getCpf(), especializacaoPessoa,
                 pessoa.getEmail(), pessoaDto.getEmail());
+        this.validatePessoaUpdate(pessoa.getCpf(), pessoaDto.getCpf(), "Pessoa",
+                pessoa.getEmail(), pessoaDto.getEmail());
         pessoa.setCelular(pessoaDto.getCelular());
         pessoa.setCpf(Long.parseLong(pessoaDto.getCpf()));
         pessoa.setNome(pessoaDto.getNome());
@@ -33,6 +35,7 @@ public class PessoaServiceImpl implements PessoaService {
     @Override
     @Transactional
     public Pessoa createPessoa(PessoaDto pessoaDto, String especializacaoPessoa) {
+        this.validateNewEspecializacaoPessoa(pessoaDto.getCpf(), pessoaDto.getEmail(), "Pessoa");
         Pessoa pessoa = Pessoa.builder()
                 .nome(pessoaDto.getNome())
                 .cpf(Long.parseLong(pessoaDto.getCpf()))
