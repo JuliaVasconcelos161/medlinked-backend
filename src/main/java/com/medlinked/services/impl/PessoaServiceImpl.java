@@ -59,6 +59,11 @@ public class PessoaServiceImpl implements PessoaService {
             throw new ExistsException(especializacaoPessoa, "Email");
     }
 
+    @Override
+    public Pessoa getPessoaByCpf(Long cpf) {
+        return pessoaRepository.returnPessoaByCpf(cpf.toString());
+    }
+
     private void validatePessoaUpdate(Long cpfPessoa, String cpfDto, String especializacaoPessoa,
                                       String emailPessoa, String emailDto) {
         this.validateCpfUpdatePessoa(cpfPessoa, cpfDto, especializacaoPessoa);
