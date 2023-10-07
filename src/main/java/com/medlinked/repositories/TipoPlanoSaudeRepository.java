@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface TipoPlanoSaudeRepository {
     List<TipoPlanoSaude> getAllTiposPlanoSaude();
+
+    TipoPlanoSaude getOneTipoPlanoSaude(Integer idTipoPlanoSaude);
 }

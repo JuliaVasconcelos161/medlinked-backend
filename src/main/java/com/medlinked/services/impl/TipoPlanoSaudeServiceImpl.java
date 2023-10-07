@@ -20,4 +20,9 @@ public class TipoPlanoSaudeServiceImpl implements TipoPlanoSaudeService {
     public List<TipoPlanoSaude> getAllTiposPlanoSaude() {
         return tipoPlanoSaudeRepository.getAllTiposPlanoSaude();
     }
+
+    @Override
+    public TipoPlanoSaude getOneTipoPlanoSaude(Integer idTipoPlanoSaude) {
+        return tipoPlanoSaudeRepository.getOneTipoPlanoSaude(idTipoPlanoSaude);
+    }
 }

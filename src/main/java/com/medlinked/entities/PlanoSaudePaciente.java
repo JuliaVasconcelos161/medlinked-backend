@@ -1,16 +1,25 @@
 package com.medlinked.entities;
 
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 
 @Entity
 @Table(name = "TB_PLANO_SAUDE_PACIENTE")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+@EqualsAndHashCode
 public class PlanoSaudePaciente {
     @Embeddable
+    @Builder
+    @AllArgsConstructor
     @NoArgsConstructor
+    @Getter
+    @Setter
     @EqualsAndHashCode
     public static class PlanoSaudePacientePk implements Serializable {
         @ManyToOne
@@ -28,7 +37,7 @@ public class PlanoSaudePaciente {
 
 
     @Column(nullable = false)
-    private Long num_carteirinha;
+    private Long numeroCarteirinha;
 
     @ManyToOne
     @JoinColumn(name = "id_tipo_plano_saude")
