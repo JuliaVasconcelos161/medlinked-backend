@@ -6,4 +6,6 @@ public interface EnderecoRepository {
     Endereco saveEndereco(Endereco endereco);
 
     Endereco getOneEndereco(Integer idPaciente);
+
+    Endereco updateEndereco(Endereco endereco);
 }

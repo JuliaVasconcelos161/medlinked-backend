@@ -41,4 +41,19 @@ public class EnderecoServiceImpl implements EnderecoService {
     public Endereco getOneEndereco(Integer idPaciente) {
         return enderecoRepository.getOneEndereco(idPaciente);
     }
+
+    @Transactional
+    @Override
+    public Endereco updateEndereco(EnderecoDto enderecoDto, Paciente paciente) {
+        Endereco endereco = enderecoRepository.getOneEndereco(paciente.getIdPaciente());
+        endereco.setCep(Long.parseLong(enderecoDto.getCep()));
+        endereco.setLogradouro(enderecoDto.getLogradouro());
+        endereco.setBairro(enderecoDto.getBairro());
+        endereco.setCidade(enderecoDto.getCidade());
+        endereco.setEstado(estadoService.getOneEstado(enderecoDto.getUfEstado()));
+        endereco.setComplemento(enderecoDto.getComplemento());
+        endereco.setNumero(enderecoDto.getNumero());
+        endereco.setPaciente(paciente);
+        return enderecoRepository.updateEndereco(endereco);
+    }
 }

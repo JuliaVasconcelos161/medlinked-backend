@@ -27,4 +27,11 @@ public class PacienteRepositoryClass implements PacienteRepository {
             throw new NoObjectFoundException("Paciente");
         }
     }
+
+    @Override
+    public Paciente updatePaciente(Paciente paciente) {
+        entityManager.merge(paciente);
+        entityManager.flush();
+        return paciente;
+    }
 }

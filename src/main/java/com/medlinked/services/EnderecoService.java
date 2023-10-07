@@ -8,4 +8,5 @@ public interface EnderecoService {
     Endereco createEndereco(EnderecoDto enderecoDto, Paciente paciente);
 
     Endereco getOneEndereco(Integer idPaciente);
+    Endereco updateEndereco(EnderecoDto enderecoDto, Paciente paciente);
 }

@@ -47,4 +47,14 @@ public class PacienteServiceImpl implements PacienteService {
         Endereco endereco = enderecoService.getOneEndereco(idPaciente);
         return new PacienteResponseDto(paciente, endereco);
     }
+
+    @Transactional
+    @Override
+    public PacienteResponseDto updatePaciente(Integer idPaciente, PacienteDto pacienteDto) {
+        Paciente paciente = pacienteRepository.getOnePaciente(idPaciente);
+        paciente.setPessoa(pessoaService.updatePessoa(idPaciente, pacienteDto, "Paciente"));
+        paciente = pacienteRepository.updatePaciente(paciente);
+        Endereco endereco = enderecoService.updateEndereco(pacienteDto.getEnderecoDto(), paciente);
+        return new PacienteResponseDto(paciente, endereco);
+    }
 }
