@@ -1,23 +1,17 @@
 package com.medlinked.entities.dtos;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import org.hibernate.validator.constraints.br.CPF;
+import lombok.*;
 
-public class SecretariaDto extends UsuarioRegisterDto {
-    @NotBlank
-    protected String nome;
-
-    @NotBlank
-    @CPF
-    protected String cpf;
-
-    @Email
-    protected String email;
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
+public class SecretariaDto extends PessoaDto {
 
     @NotNull
-    protected Long celular;
+    private UsuarioRegisterDto usuarioRegisterDto;
 
 
 }

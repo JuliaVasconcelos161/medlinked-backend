@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/medico")
+@CrossOrigin(origins = "*", maxAge = 4600, allowedHeaders = "*")
 public class MedicoController {
 
     private final MedicoService medicoService;

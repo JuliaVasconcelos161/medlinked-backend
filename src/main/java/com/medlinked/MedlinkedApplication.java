@@ -6,7 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-@OpenAPIDefinition(info = @Info(title = "Medlinked API", version = "1.0", description = "Aplicação de agendamento de consultas."))
+@OpenAPIDefinition(info = @Info(title = "Medlinked System", version = "1.0", description = "Aplicação de agendamento de consultas."))
 public class MedlinkedApplication {
 
 	public static void main(String[] args) {
