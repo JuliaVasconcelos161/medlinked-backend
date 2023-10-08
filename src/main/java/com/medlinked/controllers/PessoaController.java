@@ -1,7 +1,7 @@
 package com.medlinked.controllers;
 
 import com.medlinked.entities.dtos.PessoaCpfDto;
-import com.medlinked.services.PessoaService;
+import com.medlinked.services.pessoa_service.PessoaService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

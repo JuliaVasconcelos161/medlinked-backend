@@ -2,7 +2,7 @@ package com.medlinked.controllers;
 
 import com.medlinked.entities.dtos.PlanoSaudePacienteDto;
 import com.medlinked.exceptions.MedLinkedException;
-import com.medlinked.services.PlanoSaudePacienteService;
+import com.medlinked.services.planosaude_paciente_service.PlanoSaudePacienteService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
 package com.medlinked.controllers;
 
 import com.medlinked.entities.Especialidade;
-import com.medlinked.services.EspecialidadeService;
+import com.medlinked.services.especialidade_service.EspecialidadeService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

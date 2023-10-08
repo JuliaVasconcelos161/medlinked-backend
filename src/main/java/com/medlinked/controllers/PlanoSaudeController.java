@@ -3,7 +3,7 @@ package com.medlinked.controllers;
 import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.PlanoSaudeDto;
 import com.medlinked.exceptions.MedLinkedException;
-import com.medlinked.services.PlanoSaudeService;
+import com.medlinked.services.planosaude_service.PlanoSaudeService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
