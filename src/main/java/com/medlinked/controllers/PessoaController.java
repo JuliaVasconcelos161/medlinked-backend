@@ -1,6 +1,8 @@
 package com.medlinked.controllers;
 
 import com.medlinked.entities.dtos.PessoaCpfDto;
+import com.medlinked.entities.dtos.UsuarioRegisterDto;
+import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.services.pessoa_service.PessoaService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
@@ -23,5 +25,15 @@ public class PessoaController {
     @GetMapping("/cpf")
     public ResponseEntity<Object> getPessoaByCpf(@RequestBody @Valid PessoaCpfDto pessoaCpfDto) {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.getPessoaByCpf(pessoaCpfDto.getCpf()));
+    }
+
+    @Operation(summary = "Autentica usuário e retorna jwt.")
+    @PostMapping("/authenticate")
+    public ResponseEntity<Object> authenticatePessoa(@RequestBody @Valid UsuarioRegisterDto usuarioRegisterDto) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(pessoaService.authenticatePessoa(usuarioRegisterDto));
+        }catch (MedLinkedException e){
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
     }
 }

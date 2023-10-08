@@ -8,4 +8,6 @@ import jakarta.transaction.Transactional;
 public interface UsuarioService {
 
     UsuarioResponseDto register(UsuarioRegisterDto usuarioRegisterDto, Pessoa pessoa);
+
+    UsuarioResponseDto authenticate(UsuarioRegisterDto usuarioRegisterDto);
 }

@@ -13,4 +13,6 @@ public interface PessoaService {
     void validateNewEspecializacaoPessoa(String cpfDto, String emailDto, String especializacaoPessoa);
 
     Pessoa getPessoaByCpf(Long cpf);
+
+    Pessoa getOnePessoa(Integer idPessoa);
 }
