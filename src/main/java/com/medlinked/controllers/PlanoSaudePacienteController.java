@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/plano-saude/paciente")
+@CrossOrigin(origins = "*", maxAge = 4600, allowedHeaders = "*")
 public class PlanoSaudePacienteController {
 
     private final PlanoSaudePacienteService planoSaudePacienteService;
