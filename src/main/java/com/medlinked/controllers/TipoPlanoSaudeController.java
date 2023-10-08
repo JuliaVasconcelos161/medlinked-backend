@@ -1,7 +1,7 @@
 package com.medlinked.controllers;
 
 import com.medlinked.entities.TipoPlanoSaude;
-import com.medlinked.services.TipoPlanoSaudeService;
+import com.medlinked.services.tipoplanosaude_service.TipoPlanoSaudeService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

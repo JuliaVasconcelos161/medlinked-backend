@@ -2,7 +2,7 @@ package com.medlinked.controllers;
 
 import com.medlinked.entities.dtos.PacienteDto;
 import com.medlinked.exceptions.MedLinkedException;
-import com.medlinked.services.PacienteService;
+import com.medlinked.services.paciente_service.PacienteService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

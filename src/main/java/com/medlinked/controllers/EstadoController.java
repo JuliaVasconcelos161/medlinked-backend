@@ -1,7 +1,7 @@
 package com.medlinked.controllers;
 
 import com.medlinked.entities.Estado;
-import com.medlinked.services.EstadoService;
+import com.medlinked.services.estado_service.EstadoService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
