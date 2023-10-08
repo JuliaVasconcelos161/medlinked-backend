@@ -2,11 +2,17 @@ package com.medlinked.entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import lombok.*;
 
 import java.util.Set;
 
 @Entity
 @Table(name = "TB_SECRETARIA")
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class Secretaria {
     @Id
     private Integer idSecretaria;
