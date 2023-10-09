@@ -10,7 +10,7 @@ import com.medlinked.repositories.medicocrm_repository.MedicoCrmRepository;
 import com.medlinked.services.especialidade_service.EspecialidadeService;
 import com.medlinked.services.estado_service.EstadoService;
 import jakarta.transaction.Transactional;
-import org.apache.commons.lang.BooleanUtils;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

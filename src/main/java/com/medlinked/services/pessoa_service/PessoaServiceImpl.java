@@ -4,7 +4,6 @@ import com.medlinked.entities.Pessoa;
 import com.medlinked.entities.dtos.PessoaDto;
 import com.medlinked.exceptions.ExistsException;
 import com.medlinked.repositories.pessoa_repository.PessoaRepository;
-import com.medlinked.services.pessoa_service.PessoaService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -62,6 +61,11 @@ public class PessoaServiceImpl implements PessoaService {
     @Override
     public Pessoa getPessoaByCpf(Long cpf) {
         return pessoaRepository.returnPessoaByCpf(cpf.toString());
+    }
+
+    @Override
+    public Pessoa getOnePessoa(Integer idPessoa) {
+        return pessoaRepository.getOnePessoa(idPessoa);
     }
 
     private void validatePessoaUpdate(Long cpfPessoa, String cpfDto, String especializacaoPessoa,

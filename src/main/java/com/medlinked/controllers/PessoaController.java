@@ -1,6 +1,8 @@
 package com.medlinked.controllers;
 
 import com.medlinked.entities.dtos.PessoaCpfDto;
+import com.medlinked.entities.dtos.UsuarioRegisterDto;
+import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.services.pessoa_service.PessoaService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;

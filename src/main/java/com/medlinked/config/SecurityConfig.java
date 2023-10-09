@@ -45,6 +45,7 @@ public class SecurityConfig {
 
     private static final String[] AUTH_WHITELIST = {
             "/secretaria/create",
+            "/usuario/authenticate",
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/pessoa/cpf"
