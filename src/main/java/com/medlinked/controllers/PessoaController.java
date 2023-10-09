@@ -26,14 +26,4 @@ public class PessoaController {
     public ResponseEntity<Object> getPessoaByCpf(@RequestBody @Valid PessoaCpfDto pessoaCpfDto) {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.getPessoaByCpf(pessoaCpfDto.getCpf()));
     }
-
-    @Operation(summary = "Autentica usuário e retorna jwt.")
-    @PostMapping("/authenticate")
-    public ResponseEntity<Object> authenticatePessoa(@RequestBody @Valid UsuarioRegisterDto usuarioRegisterDto) {
-        try {
-            return ResponseEntity.status(HttpStatus.OK).body(pessoaService.authenticatePessoa(usuarioRegisterDto));
-        }catch (MedLinkedException e){
-            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
-        }
-    }
 }
