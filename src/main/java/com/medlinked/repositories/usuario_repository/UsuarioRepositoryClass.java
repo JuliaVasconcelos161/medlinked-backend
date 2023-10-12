@@ -36,11 +36,9 @@ public class UsuarioRepositoryClass implements UsuarioRepository {
         consulta.append(" where usuario.username = :USERNAME ");
         var query = entityManager.createQuery(consulta.toString(), Usuario.class);
         query.setParameter("USERNAME", username);
-        try{
-            return query.getSingleResult();
-        }catch (NoResultException e) {
-            throw new  NoObjectFoundException("Usuário");
-        }
-
+        Usuario usuario = query.getSingleResult();
+        if(usuario == null)
+            throw new NoObjectFoundException("Usuário");
+        return usuario;
     }
 }

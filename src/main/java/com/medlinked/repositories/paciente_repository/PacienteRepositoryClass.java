@@ -21,11 +21,10 @@ public class PacienteRepositoryClass implements PacienteRepository {
 
     @Override
     public Paciente getOnePaciente(Integer idPaciente) {
-        try{
-            return entityManager.find(Paciente.class, idPaciente);
-        } catch (NoResultException e) {
+        Paciente paciente = entityManager.find(Paciente.class, idPaciente);
+        if(paciente == null)
             throw new NoObjectFoundException("Paciente");
-        }
+        return paciente;
     }
 
     @Override

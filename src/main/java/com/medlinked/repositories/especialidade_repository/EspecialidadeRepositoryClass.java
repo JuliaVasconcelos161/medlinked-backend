@@ -24,10 +24,9 @@ public class EspecialidadeRepositoryClass implements EspecialidadeRepository {
 
     @Override
     public Especialidade getOneEspecialidade(Integer idEspecialidade) {
-        try{
-            return entityManager.find(Especialidade.class, idEspecialidade);
-        }catch (NoResultException e) {
+        Especialidade especialidade = entityManager.find(Especialidade.class, idEspecialidade);
+        if(especialidade == null)
             throw new NoObjectFoundException("Especialidade");
-        }
+        return especialidade;
     }
 }

@@ -23,10 +23,9 @@ public class TipoPlanoSaudeRepositoryClass implements TipoPlanoSaudeRepository {
 
     @Override
     public TipoPlanoSaude getOneTipoPlanoSaude(Integer idTipoPlanoSaude) {
-        try {
-            return entityManager.find(TipoPlanoSaude.class, idTipoPlanoSaude);
-        }catch (NoResultException e) {
+        TipoPlanoSaude tipoPlanoSaude = entityManager.find(TipoPlanoSaude.class, idTipoPlanoSaude);
+        if(tipoPlanoSaude == null)
             throw new NoObjectFoundException("Tipo Plano Saúde");
-        }
+        return tipoPlanoSaude;
     }
 }

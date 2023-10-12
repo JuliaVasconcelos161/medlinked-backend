@@ -1,10 +1,9 @@
 package com.medlinked.repositories.medicocrm_repository;
 
-import com.medlinked.entities.MedicoCRM;
 import com.medlinked.entities.Especialidade;
+import com.medlinked.entities.MedicoCRM;
 import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
@@ -23,11 +22,10 @@ public class MedicoCrmRepositoryClass implements MedicoCrmRepository {
 
     @Override
     public MedicoCRM getOneCrmByMedico(Integer idMedico) {
-        try{
-            return entityManager.find(MedicoCRM.class, idMedico);
-        }catch (NoResultException e) {
-            throw  new NoObjectFoundException("CRM");
-        }
+        MedicoCRM medicoCRM = entityManager.find(MedicoCRM.class, idMedico);
+        if(medicoCRM == null)
+            throw new NoObjectFoundException("Medico");
+        return medicoCRM;
     }
 
     @Override

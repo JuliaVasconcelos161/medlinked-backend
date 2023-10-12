@@ -29,11 +29,10 @@ public class MedicoRepositoryClass implements MedicoRepository {
 
     @Override
     public Medico getOneMedico(Integer idMedico) {
-        try{
-            return entityManager.find(Medico.class, idMedico);
-        } catch (NoResultException e) {
+        Medico medico = entityManager.find(Medico.class, idMedico);
+        if(medico == null)
             throw new NoObjectFoundException("Médico");
-        }
+        return medico;
 
     }
 
