@@ -3,6 +3,7 @@ package com.medlinked.controllers;
 import com.medlinked.entities.dtos.PlanoSaudePacienteDto;
 import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.services.planosaude_paciente_service.PlanoSaudePacienteService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,6 +19,7 @@ public class PlanoSaudePacienteController {
         this.planoSaudePacienteService = planoSaudePacienteService;
     }
 
+    @Operation(summary = "Associa paciente ao plano de saúde informado.")
     @PutMapping("associate/{idPaciente}/{idPlanoSaude}")
     public ResponseEntity<Object> associatePacientePlanoSaude(@PathVariable Integer idPaciente,
                                                               @PathVariable Integer idPlanoSaude,
@@ -31,6 +33,7 @@ public class PlanoSaudePacienteController {
         }
     }
 
+    @Operation(summary = "Desvincula paciente de plano de saúde informado.")
     @PutMapping("disassociate/{idPaciente}/{idPlanoSaude}")
     public ResponseEntity<Object> disassociatePacientePlanoSaude(@PathVariable Integer idPaciente,
                                                                  @PathVariable Integer idPlanoSaude) {
