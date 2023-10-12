@@ -1,5 +1,6 @@
 package com.medlinked.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -29,6 +30,7 @@ public class Usuario implements UserDetails {
     @Column(nullable = false, length = 120)
     private String username;
 
+    @JsonIgnore
     @Column(nullable = false, length = 200)
     private String password;
 
