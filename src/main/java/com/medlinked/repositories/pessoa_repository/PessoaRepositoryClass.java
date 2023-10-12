@@ -15,11 +15,10 @@ public class PessoaRepositoryClass implements PessoaRepository {
 
     @Override
     public Pessoa getOnePessoa(Integer idPessoa) {
-        try {
-            return entityManager.find(Pessoa.class, idPessoa);
-        } catch (NoResultException e) {
+        Pessoa pessoa = entityManager.find(Pessoa.class, idPessoa);
+        if(pessoa == null)
             throw new NoObjectFoundException("Pessoa");
-        }
+        return pessoa;
     }
     @Override
     public Pessoa updatePessoa(Pessoa pessoa) {

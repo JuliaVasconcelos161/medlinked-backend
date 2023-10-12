@@ -40,11 +40,10 @@ public class PlanoSaudeRepositoryClass implements PlanoSaudeRepository {
 
     @Override
     public PlanoSaude getOnePlanoSaude(Integer idPlanoSaude) {
-        try {
-            return entityManager.find(PlanoSaude.class,idPlanoSaude);
-        } catch (NoResultException e) {
-            throw new NoObjectFoundException("Plano de Saúde");
-        }
+        PlanoSaude planoSaude = entityManager.find(PlanoSaude.class,idPlanoSaude);
+        if(planoSaude == null)
+            throw new NoObjectFoundException("Plano Saúde");
+        return planoSaude;
     }
 
     @Override

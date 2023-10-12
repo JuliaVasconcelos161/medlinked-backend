@@ -24,10 +24,9 @@ public class EstadoRepositoryClass implements EstadoRepository {
 
     @Override
     public Estado getOneEstado(String uf) {
-        try{
-            return entityManager.find(Estado.class, uf);
-        }catch (NoResultException e) {
+        Estado estado = entityManager.find(Estado.class, uf);
+        if(estado == null)
             throw new NoObjectFoundException("Estado");
-        }
+        return estado;
     }
 }

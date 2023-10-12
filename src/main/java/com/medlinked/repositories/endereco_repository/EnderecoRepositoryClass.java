@@ -21,11 +21,10 @@ public class EnderecoRepositoryClass implements EnderecoRepository {
 
     @Override
     public Endereco getOneEndereco(Integer idPaciente) {
-        try{
-            return entityManager.find(Endereco.class, idPaciente);
-        }catch (NoResultException e) {
-            throw new NoObjectFoundException("Endereco");
-        }
+        Endereco endereco = entityManager.find(Endereco.class, idPaciente);
+        if(endereco == null)
+            throw new NoObjectFoundException("Endereço");
+        return endereco;
     }
 
     @Override

@@ -5,6 +5,7 @@ import com.medlinked.entities.Usuario;
 import com.medlinked.entities.dtos.UsuarioRegisterDto;
 import com.medlinked.entities.dtos.UsuarioResponseDto;
 import com.medlinked.exceptions.ExistsException;
+import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.repositories.usuario_repository.UsuarioRepository;
 import com.medlinked.services.jwt_service.JwtService;
 import com.medlinked.services.pessoa_service.PessoaService;
@@ -62,7 +63,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 
     @Transactional
     @Override
-    public UsuarioResponseDto authenticate(UsuarioRegisterDto usuarioRegisterDto) {
+    public UsuarioResponseDto authenticate(UsuarioRegisterDto usuarioRegisterDto) throws MedLinkedException {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
                         usuarioRegisterDto.getUsername(),
