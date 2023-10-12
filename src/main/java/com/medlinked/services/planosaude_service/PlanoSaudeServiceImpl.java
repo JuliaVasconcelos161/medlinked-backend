@@ -4,8 +4,8 @@ import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.PlanoSaudeDto;
 import com.medlinked.exceptions.ExistsDescricaoException;
 import com.medlinked.exceptions.MedLinkedException;
+import com.medlinked.repositories.planosaude_paciente_repository.PlanoSaudePacienteRepository;
 import com.medlinked.repositories.planosaude_repository.PlanoSaudeRepository;
-import com.medlinked.services.planosaude_service.PlanoSaudeService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -16,8 +16,12 @@ public class PlanoSaudeServiceImpl implements PlanoSaudeService {
 
     private final PlanoSaudeRepository planoSaudeRepository;
 
-    public PlanoSaudeServiceImpl(PlanoSaudeRepository planoSaudeRepository) {
+    private final PlanoSaudePacienteRepository planoSaudePacienteRepository;
+
+    public PlanoSaudeServiceImpl(PlanoSaudeRepository planoSaudeRepository,
+                                 PlanoSaudePacienteRepository planoSaudePacienteRepository) {
         this.planoSaudeRepository = planoSaudeRepository;
+        this.planoSaudePacienteRepository = planoSaudePacienteRepository;
     }
 
     @Override
@@ -42,6 +46,7 @@ public class PlanoSaudeServiceImpl implements PlanoSaudeService {
     public void deletePlanoSaude(Integer idPlanoSaude) {
         try{
             PlanoSaude planoSaude = planoSaudeRepository.getOnePlanoSaude(idPlanoSaude);
+            planoSaudePacienteRepository.desassociatePlanoSaudeAllPacientes(idPlanoSaude);
             planoSaudeRepository.delete(planoSaude);
         } catch (Exception e) {
             throw new MedLinkedException();
