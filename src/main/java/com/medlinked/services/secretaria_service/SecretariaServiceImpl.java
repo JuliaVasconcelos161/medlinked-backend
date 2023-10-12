@@ -3,6 +3,7 @@ package com.medlinked.services.secretaria_service;
 import com.medlinked.entities.Pessoa;
 import com.medlinked.entities.Secretaria;
 import com.medlinked.entities.dtos.SecretariaDto;
+import com.medlinked.entities.dtos.SecretariaUpdateDto;
 import com.medlinked.entities.dtos.UsuarioResponseDto;
 import com.medlinked.repositories.secretaria_repository.SecretariaRepository;
 import com.medlinked.services.pessoa_service.PessoaService;
@@ -39,5 +40,13 @@ public class SecretariaServiceImpl implements SecretariaService {
         UsuarioResponseDto usuarioResponseDto =
                 usuarioService.register(secretariaDto.getUsuarioRegisterDto(), secretaria.getPessoa());
         return usuarioResponseDto;
+    }
+
+    @Transactional
+    @Override
+    public Secretaria updateSecretaria(SecretariaUpdateDto secretariaUpdateDto, Integer idSecretaria) {
+        Secretaria secretaria = secretariaRepository.getOneSecretaria(idSecretaria);
+        secretaria.setPessoa(pessoaService.updatePessoa(idSecretaria, secretariaUpdateDto, "Secretaria"));
+        return secretariaRepository.updateSecretaria(secretaria);
     }
 }

@@ -1,6 +1,7 @@
 package com.medlinked.controllers;
 
 import com.medlinked.entities.dtos.SecretariaDto;
+import com.medlinked.entities.dtos.SecretariaUpdateDto;
 import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.services.secretaria_service.SecretariaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -25,6 +26,17 @@ public class SecretariaController {
     public ResponseEntity<Object> createSecretaria(@RequestBody @Valid SecretariaDto secretariaDto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(secretariaService.createSecretaria(secretariaDto));
+        }catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
+    }
+
+    @Operation(summary = "Atualiza secretária e retorna secretaria com dados atualizados.")
+    @PutMapping("/update/{idSecretaria}")
+    public ResponseEntity<Object> updateSecretaria(@PathVariable Integer idSecretaria,
+                                                   @RequestBody @Valid SecretariaUpdateDto secretariaUpdateDto) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK).body(secretariaService.updateSecretaria(secretariaUpdateDto, idSecretaria));
         }catch (MedLinkedException e) {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
