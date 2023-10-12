@@ -16,4 +16,15 @@ public class PlanoSaudePacienteRepositoryClass implements PlanoSaudePacienteRepo
         entityManager.persist(planoSaudePaciente);
         return planoSaudePaciente;
     }
+
+    @Override
+    public void disassociatePacientePlanoSaude(Integer idPaciente, Integer idPlanoSaude) {
+        StringBuilder consulta = new StringBuilder(" delete from PlanoSaudePaciente planoSaudePaciente ");
+        consulta.append(" where planoSaudePaciente.idPlanoSaudePaciente.paciente.idPaciente = :IDPACIENTE ");
+        consulta.append(" and planoSaudePaciente.idPlanoSaudePaciente.planoSaude.idPlanoSaude = :IDPLANOSAUDE ");
+        var query = entityManager.createQuery(consulta.toString());
+        query.setParameter("IDPACIENTE", idPaciente);
+        query.setParameter("IDPLANOSAUDE", idPlanoSaude);
+        query.executeUpdate();
+    }
 }

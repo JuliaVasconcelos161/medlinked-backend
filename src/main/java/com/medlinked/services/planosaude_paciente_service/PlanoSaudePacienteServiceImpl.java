@@ -53,4 +53,9 @@ public class PlanoSaudePacienteServiceImpl implements PlanoSaudePacienteService 
         return planoSaudePacienteRepository.savePlanoSaudePaciente(planoSaudePaciente);
 
     }
+    @Transactional
+    @Override
+    public void disassociatePacientePlanoSaude(Integer idPaciente, Integer idPlanoSaude) {
+        planoSaudePacienteRepository.disassociatePacientePlanoSaude(idPaciente, idPlanoSaude);
+    }
 }

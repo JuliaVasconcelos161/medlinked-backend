@@ -4,4 +4,6 @@ import com.medlinked.entities.PlanoSaudePaciente;
 
 public interface PlanoSaudePacienteRepository {
     PlanoSaudePaciente savePlanoSaudePaciente(PlanoSaudePaciente planoSaudePaciente);
+
+    void disassociatePacientePlanoSaude(Integer idPaciente, Integer idPlanoSaude);
 }
