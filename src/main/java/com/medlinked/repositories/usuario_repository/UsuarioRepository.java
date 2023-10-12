@@ -8,4 +8,8 @@ public interface UsuarioRepository {
     void saveUsuario(Usuario usuario);
 
     Usuario returnUsuarioByUsername(String username);
+
+    Usuario getOneUsuario(Integer idUsuario);
+
+    Usuario updateUsuario(Usuario usuario);
 }

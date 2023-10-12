@@ -2,10 +2,12 @@ package com.medlinked.services.usuario_service;
 
 import com.medlinked.entities.Pessoa;
 import com.medlinked.entities.Usuario;
+import com.medlinked.entities.dtos.UpdateSenhaUsuarioDto;
 import com.medlinked.entities.dtos.UsuarioRegisterDto;
 import com.medlinked.entities.dtos.UsuarioResponseDto;
 import com.medlinked.exceptions.ExistsException;
 import com.medlinked.exceptions.MedLinkedException;
+import com.medlinked.exceptions.PasswordNotMatchingException;
 import com.medlinked.repositories.usuario_repository.UsuarioRepository;
 import com.medlinked.services.jwt_service.JwtService;
 import com.medlinked.services.pessoa_service.PessoaService;
@@ -77,6 +79,16 @@ public class UsuarioServiceImpl implements UsuarioService {
         mapExtraClaims.put("nome", pessoa.getNome());
         String jwtToken = jwtService.generateToken(mapExtraClaims, usuario);
         return new UsuarioResponseDto(jwtToken);
+    }
+
+    @Transactional
+    @Override
+    public Usuario updateSenhaUsuario(UpdateSenhaUsuarioDto updateSenhaUsuarioDto, Integer idUsuario) {
+        Usuario usuario = usuarioRepository.getOneUsuario(idUsuario);
+        if(!passwordEncoder.matches(updateSenhaUsuarioDto.getOldPassword(), usuario.getPassword()))
+            throw new PasswordNotMatchingException();
+        usuario.setPassword(passwordEncoder.encode(updateSenhaUsuarioDto.getNewPassword()));
+        return usuarioRepository.updateUsuario(usuario);
     }
 
 }

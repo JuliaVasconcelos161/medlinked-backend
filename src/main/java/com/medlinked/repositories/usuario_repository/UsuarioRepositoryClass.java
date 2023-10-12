@@ -41,4 +41,19 @@ public class UsuarioRepositoryClass implements UsuarioRepository {
             throw new NoObjectFoundException("Usuário");
         return usuario;
     }
+
+    @Override
+    public Usuario getOneUsuario(Integer idUsuario) {
+        Usuario usuario = entityManager.find(Usuario.class, idUsuario);
+        if(usuario == null)
+            throw new NoObjectFoundException("Usuário");
+        return usuario;
+    }
+
+    @Override
+    public Usuario updateUsuario(Usuario usuario) {
+        entityManager.merge(usuario);
+        entityManager.flush();
+        return usuario;
+    }
 }
