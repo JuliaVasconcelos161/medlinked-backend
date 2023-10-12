@@ -7,6 +7,8 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
+import java.util.Set;
+
 @Repository
 public class PacienteRepositoryClass implements PacienteRepository {
 
@@ -32,5 +34,13 @@ public class PacienteRepositoryClass implements PacienteRepository {
         entityManager.merge(paciente);
         entityManager.flush();
         return paciente;
+    }
+
+    @Override
+    public Set<Paciente> getAllPacientes(String nomePaciente, String cpf) {
+        StringBuilder consulta = new StringBuilder(" select paciente ");
+        consulta.append(" from Paciente paciente ");
+        consulta.append(" where ");
+
     }
 }

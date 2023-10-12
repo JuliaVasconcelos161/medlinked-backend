@@ -9,6 +9,7 @@ import com.medlinked.repositories.paciente_repository.PacienteRepository;
 import com.medlinked.services.endereco_service.EnderecoService;
 import com.medlinked.services.pessoa_service.PessoaService;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -55,5 +56,11 @@ public class PacienteServiceImpl implements PacienteService {
         paciente = pacienteRepository.updatePaciente(paciente);
         Endereco endereco = enderecoService.updateEndereco(pacienteDto.getEnderecoDto(), paciente);
         return new PacienteResponseDto(paciente, endereco);
+    }
+
+    @Override
+    public Page<Paciente> getAllPacientes(String nomePaciente, String cpf, Integer page, Integer pageSize) {
+        pacienteRepository.getAllPacientes(nomePaciente, cpf);
+        return
     }
 }
