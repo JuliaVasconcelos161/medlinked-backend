@@ -6,4 +6,6 @@ public interface PlanoSaudePacienteRepository {
     PlanoSaudePaciente savePlanoSaudePaciente(PlanoSaudePaciente planoSaudePaciente);
 
     void disassociatePacientePlanoSaude(Integer idPaciente, Integer idPlanoSaude);
+
+    void desassociatePlanoSaudeAllPacientes(Integer idPlanoSaude);
 }
