@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/banco-med-linked
     username: postgres
-    password: postgres
+    password: Key123
   jpa:
     hibernate:
       ddl-auto: update
