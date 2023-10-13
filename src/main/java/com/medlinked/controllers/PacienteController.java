@@ -55,8 +55,8 @@ public class PacienteController {
     @GetMapping
     public ResponseEntity<Object> getAllPacientes(@RequestParam(required = false) String nomePaciente,
                                                   @RequestParam(required = false) String cpf,
-                                                  @RequestParam(value = "page", defaultValue = "0") Integer page,
-                                                  @RequestParam(value = "size", defaultValue = "10") Integer pageSize) {
+                                                  @RequestParam(value = "page", defaultValue = "0") int page,
+                                                  @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         return ResponseEntity.status(HttpStatus.OK).body(pacienteService.getAllPacientes(nomePaciente, cpf, page, pageSize));
     }
 }

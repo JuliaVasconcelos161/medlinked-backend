@@ -15,5 +15,5 @@ public interface PacienteService {
     PacienteResponseDto updatePaciente(Integer idPaciente, PacienteDto pacienteDto);
 
 
-    Page<Paciente> getAllPacientes(String nomePaciente, String cpf, Integer page, Integer pageSize);
+    Page<Paciente> getAllPacientes(String nomePaciente, String cpf, int page, int pageSize);
 }

@@ -2,7 +2,7 @@ package com.medlinked.repositories.paciente_repository;
 
 import com.medlinked.entities.Paciente;
 
-import java.util.Set;
+import java.util.List;
 
 public interface PacienteRepository {
     Paciente savePaciente(Paciente paciente);
@@ -11,5 +11,7 @@ public interface PacienteRepository {
 
     Paciente updatePaciente(Paciente paciente);
 
-    Set<Paciente> getAllPacientes(String nomePaciente, String cpf);
+    List<Paciente> getAllPacientes(String nomePaciente, String cpf, int page, int pageSize);
+
+    Long countPacientes();
 }

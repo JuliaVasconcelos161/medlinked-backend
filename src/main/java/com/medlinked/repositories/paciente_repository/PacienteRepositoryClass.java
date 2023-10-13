@@ -7,7 +7,10 @@ import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 @Repository
 public class PacienteRepositoryClass implements PacienteRepository {
@@ -37,10 +40,37 @@ public class PacienteRepositoryClass implements PacienteRepository {
     }
 
     @Override
-    public Set<Paciente> getAllPacientes(String nomePaciente, String cpf) {
+    public List<Paciente> getAllPacientes(String nomePaciente, String cpf, int page, int pageSize) {
+        var query = entityManager.createQuery(this.consultaGetAllPacientes(nomePaciente, cpf), Paciente.class);
+        if(nomePaciente != null)
+            query.setParameter("NOMEPACIENTE", "%"+nomePaciente+"%");
+        if(cpf != null)
+            query.setParameter("CPF", cpf);
+        query.setFirstResult(page * pageSize);
+        query.setMaxResults(pageSize);
+        return query.getResultList();
+    }
+
+    private String consultaGetAllPacientes(String nomePaciente, String cpf) {
         StringBuilder consulta = new StringBuilder(" select paciente ");
         consulta.append(" from Paciente paciente ");
-        consulta.append(" where ");
-
+        consulta.append(" inner join paciente.pessoa pessoa ");
+        if(nomePaciente != null) {
+            consulta.append(" where pessoa.nome like :NOMEPACIENTE ");
+            if(cpf != null)
+                consulta.append(" and pessoa.cpf = :CPF");
+        } else if(cpf != null)
+            consulta.append(" where pessoa.cpf = :CPF ");
+        consulta.append(" order by pessoa.nome ");
+        return consulta.toString();
     }
+
+    @Override
+    public Long countPacientes() {
+        StringBuilder consulta = new StringBuilder(" select count(1) ");
+        consulta.append(" from Paciente paciente ");
+        var query = entityManager.createQuery(consulta.toString(), Long.class);
+        return query.getSingleResult();
+    }
+
 }
