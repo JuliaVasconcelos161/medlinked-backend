@@ -18,6 +18,7 @@ public class EstadoRepositoryClass implements EstadoRepository {
     @Override
     public List<Estado> getAllEstados() {
         StringBuilder consulta = new StringBuilder(" select estado from Estado estado ");
+        consulta.append(" order by estado.descricao ");
         var query = entityManager.createQuery(consulta.toString(), Estado.class);
         return query.getResultList();
     }

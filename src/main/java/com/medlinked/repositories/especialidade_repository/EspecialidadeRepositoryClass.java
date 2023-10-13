@@ -18,6 +18,7 @@ public class EspecialidadeRepositoryClass implements EspecialidadeRepository {
     @Override
     public List<Especialidade> getAllEspecialidades() {
         StringBuilder consulta = new StringBuilder(" select especialidade from Especialidade especialidade ");
+        consulta.append(" order by especialidade.descricao ");
         var query = entityManager.createQuery(consulta.toString(), Especialidade.class);
         return query.getResultList();
     }

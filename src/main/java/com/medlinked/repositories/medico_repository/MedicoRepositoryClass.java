@@ -23,6 +23,7 @@ public class MedicoRepositoryClass implements MedicoRepository {
     @Override
     public List<Medico> getAllMedicos() {
         StringBuilder consulta = new StringBuilder("select medico from Medico medico");
+        consulta.append(" order by medico.pessoa.nome ");
         var query = entityManager.createQuery(consulta.toString(), Medico.class);
         return query.getResultList();
     }
@@ -36,15 +37,6 @@ public class MedicoRepositoryClass implements MedicoRepository {
 
     }
 
-    @Override
-    public List<PlanoSaude> getPlanosSaudeMedico(Integer idMedico) {
-        StringBuilder consulta = new StringBuilder(" select plano from Medico medico ");
-        consulta.append(" inner join medico.planosSaude plano ");
-        consulta.append(" where medico.idMedico = :ID ");
-        var query = entityManager.createQuery(consulta.toString(), PlanoSaude.class);
-        query.setParameter("ID", idMedico);
-        return query.getResultList();
-    }
 
     @Override
     public Medico updateMedico(Medico medico) {
