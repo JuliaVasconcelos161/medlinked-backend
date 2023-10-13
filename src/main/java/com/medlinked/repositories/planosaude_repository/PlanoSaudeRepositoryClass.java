@@ -3,7 +3,6 @@ package com.medlinked.repositories.planosaude_repository;
 import com.medlinked.entities.PlanoSaude;
 import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
@@ -16,9 +15,13 @@ public class PlanoSaudeRepositoryClass implements PlanoSaudeRepository {
     EntityManager entityManager;
 
     @Override
-    public List<PlanoSaude> getAllPlanosSaude() {
+    public List<PlanoSaude> getAllPlanosSaude(Integer page, Integer pageSize) {
         StringBuilder consulta = new StringBuilder(" select planoSaude from PlanoSaude planoSaude ");
         var query = entityManager.createQuery(consulta.toString(), PlanoSaude.class);
+        if(page != null && pageSize != null) {
+            query.setFirstResult(page * pageSize);
+            query.setMaxResults(pageSize);
+        }
         return query.getResultList();
     }
 
@@ -49,5 +52,13 @@ public class PlanoSaudeRepositoryClass implements PlanoSaudeRepository {
     @Override
     public void delete(PlanoSaude planoSaude) {
         entityManager.remove(planoSaude);
+    }
+
+    @Override
+    public Long countPlanosSaude() {
+        StringBuilder consulta = new StringBuilder(" select count(1) ");
+        consulta.append(" from PlanoSaude planoSaude ");
+        var query = entityManager.createQuery(consulta.toString(), Long.class);
+        return query.getSingleResult();
     }
 }

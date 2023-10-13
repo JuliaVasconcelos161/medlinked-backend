@@ -1,5 +1,6 @@
 package com.medlinked.services.planosaude_service;
 
+import com.medlinked.entities.Paciente;
 import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.PlanoSaudeDto;
 import com.medlinked.exceptions.ExistsDescricaoException;
@@ -7,6 +8,9 @@ import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.repositories.planosaude_paciente_repository.PlanoSaudePacienteRepository;
 import com.medlinked.repositories.planosaude_repository.PlanoSaudeRepository;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -26,7 +30,7 @@ public class PlanoSaudeServiceImpl implements PlanoSaudeService {
 
     @Override
     public List<PlanoSaude> getAllPlanosSaude() {
-        return planoSaudeRepository.getAllPlanosSaude();
+        return planoSaudeRepository.getAllPlanosSaude(null, null);
     }
 
     @Override
@@ -51,6 +55,14 @@ public class PlanoSaudeServiceImpl implements PlanoSaudeService {
         } catch (Exception e) {
             throw new MedLinkedException();
         }
+    }
+
+    @Override
+    public Page<PlanoSaude> getAllPlanosSaudePaginado(Integer page, Integer pageSize) {
+        List<PlanoSaude> planosSaude = planoSaudeRepository.getAllPlanosSaude(page, pageSize);
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        Long total =  planoSaudeRepository.countPlanosSaude();
+        return new PageImpl<>(planosSaude, pageRequest, total);
     }
 
 }
