@@ -39,9 +39,23 @@ public class PlanoSaudeMedicoController {
 
     @Operation(summary = "Atualiza o médico removendo plano de saúde utilizando o idPlanoSaude informado.")
     @PutMapping("/update-medico-remove-plano/{idMedico}/{idPlanoSaude}")
-    public ResponseEntity<List<PlanoSaude>> updateMedicoRemovePlanoSaude(
+    public ResponseEntity<Object> updateMedicoRemovePlanoSaude(
             @PathVariable Integer idMedico,
             @PathVariable Integer idPlanoSaude) {
-        return ResponseEntity.status(HttpStatus.OK).body(planoSaudeMedicoService.updateMedicoRemovePlanoSaude(idMedico, idPlanoSaude));
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(planoSaudeMedicoService.updateMedicoRemovePlanoSaude(idMedico, idPlanoSaude));
+        } catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
+    }
+
+    @Operation(summary = "Retorna todos os planos de saúde pelos quais o médico atende.")
+    @GetMapping("/{idMedico}")
+    public ResponseEntity<Object> getAllPlanosSaudeMedico(
+            @PathVariable Integer idMedico,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        return ResponseEntity.status(HttpStatus.OK).body(planoSaudeMedicoService.getAllPlanosSaudeMedico(idMedico, page, pageSize));
     }
 }

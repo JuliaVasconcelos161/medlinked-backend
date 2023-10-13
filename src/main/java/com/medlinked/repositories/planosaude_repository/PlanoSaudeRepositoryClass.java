@@ -17,6 +17,7 @@ public class PlanoSaudeRepositoryClass implements PlanoSaudeRepository {
     @Override
     public List<PlanoSaude> getAllPlanosSaude(Integer page, Integer pageSize) {
         StringBuilder consulta = new StringBuilder(" select planoSaude from PlanoSaude planoSaude ");
+        consulta.append(" order by planoSaude.descricao ");
         var query = entityManager.createQuery(consulta.toString(), PlanoSaude.class);
         if(page != null && pageSize != null) {
             query.setFirstResult(page * pageSize);
