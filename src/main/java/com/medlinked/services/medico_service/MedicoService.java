@@ -8,7 +8,7 @@ import jakarta.transaction.Transactional;
 import java.util.List;
 
 public interface MedicoService {
-    MedicoCRM createMedico(MedicoDto medicoDto);
+    MedicoCRM createMedico(MedicoDto medicoDto, Integer idSecretaria);
 
     List<Medico> getAll();
 
