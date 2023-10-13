@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/plano-saude-medico")
+@RequestMapping("/plano-saude/medico")
 @CrossOrigin(origins = "*", maxAge = 4600, allowedHeaders = "*")
 public class PlanoSaudeMedicoController {
 
