@@ -3,14 +3,10 @@ package com.medlinked.repositories.paciente_repository;
 import com.medlinked.entities.Paciente;
 import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 @Repository
 public class PacienteRepositoryClass implements PacienteRepository {
