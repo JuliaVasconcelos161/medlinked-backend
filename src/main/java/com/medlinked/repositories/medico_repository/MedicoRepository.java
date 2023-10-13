@@ -13,7 +13,5 @@ public interface MedicoRepository {
 
     Medico getOneMedico(Integer idMedico);
 
-    List<PlanoSaude> getPlanosSaudeMedico(Integer idMedico);
-
     Medico updateMedico(Medico medico);
 }

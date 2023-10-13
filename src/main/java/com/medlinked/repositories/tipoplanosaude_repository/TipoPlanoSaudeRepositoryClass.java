@@ -17,6 +17,7 @@ public class TipoPlanoSaudeRepositoryClass implements TipoPlanoSaudeRepository {
     @Override
     public List<TipoPlanoSaude> getAllTiposPlanoSaude() {
         StringBuilder consulta = new StringBuilder(" select tipoPlanoSaude from TipoPlanoSaude tipoPlanoSaude ");
+        consulta.append(" order by tipoPlanoSaude.descricao ");
         var query = entityManager.createQuery(consulta.toString(), TipoPlanoSaude.class);
         return query.getResultList();
     }
