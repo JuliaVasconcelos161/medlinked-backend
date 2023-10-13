@@ -1,6 +1,7 @@
 package com.medlinked.services.planosaude_medico_service;
 
 import com.medlinked.entities.Medico;
+import com.medlinked.entities.Paciente;
 import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.MedicoPlanoSaudeDto;
 import com.medlinked.repositories.medico_repository.MedicoRepository;
@@ -8,6 +9,9 @@ import com.medlinked.repositories.planosaude_medico_repository.PlanoSaudeMedicoR
 import com.medlinked.repositories.planosaude_repository.PlanoSaudeRepository;
 import com.medlinked.services.planosaude_medico_service.PlanoSaudeMedicoService;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
@@ -57,6 +61,14 @@ public class PlanoSaudeMedicoServiceImpl implements PlanoSaudeMedicoService {
         medico.removePlanoSaude(planoSaude);
         medicoRepository.saveMedico(medico);
         return medico.getPlanosSaude().stream().toList();
+    }
+
+    @Override
+    public Page<PlanoSaude> getAllPlanosSaudeMedico(Integer idMedico, int page, int pageSize) {
+        List<PlanoSaude> planosSaude = planoSaudeMedicoRepository.getAllPlanosSaudeMedico(idMedico, page, pageSize);
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        Long total =  planoSaudeMedicoRepository.countPlanosSaudeMedico(idMedico);
+        return new PageImpl<>(planosSaude, pageRequest, total);
     }
 
 }
