@@ -27,11 +27,12 @@ public class MedicoController {
         this.medicoCrmService = medicoCrmService;
     }
 
-    @Operation(summary = "Cria um novo médico e o retorna.")
-    @PostMapping
-    public ResponseEntity<Object> createMedico(@RequestBody @Valid MedicoDto medicoDto) {
+    @Operation(summary = "Cria um novo médico e o retorna, o associando com a secretária que o cadastrou.")
+    @PostMapping("/create/{idSecretaria}")
+    public ResponseEntity<Object> createMedico(@RequestBody @Valid MedicoDto medicoDto,
+                                               @PathVariable Integer idSecretaria) {
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(medicoService.createMedico(medicoDto));
+            return ResponseEntity.status(HttpStatus.OK).body(medicoService.createMedico(medicoDto, idSecretaria));
         }catch (MedLinkedException e) {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
@@ -54,7 +55,7 @@ public class MedicoController {
     }
 
     @Operation(summary = "Altera dados de um médico utilizando o idMedico informado, e retorna os dados alterados.")
-    @PutMapping("/{idMedico}")
+    @PutMapping("/update/{idMedico}")
     public ResponseEntity<Object> updateMedico(@PathVariable Integer idMedico, @RequestBody @Valid MedicoDto medicoDto) {
         try{
             return ResponseEntity.status(HttpStatus.OK).body(medicoService.updateMedico(idMedico, medicoDto));
