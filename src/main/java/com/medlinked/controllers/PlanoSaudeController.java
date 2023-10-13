@@ -39,6 +39,14 @@ public class PlanoSaudeController {
         return ResponseEntity.status(HttpStatus.OK).body(planoSaudeService.getAllPlanosSaude());
     }
 
+    @Operation(summary = "Retorna todos os planos de saúde cadastrados no sistema de forma paginada.")
+    @GetMapping("/paginado")
+    public ResponseEntity<Object> getAllPlanosSaudePaginado(
+            @RequestParam(value = "page", defaultValue = "0") Integer page,
+            @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+        return ResponseEntity.status(HttpStatus.OK).body(planoSaudeService.getAllPlanosSaudePaginado(page, pageSize));
+    }
+
     @Operation(summary = "Deleta o plano de saúde utilizando idPlanoSaude informado.")
     @DeleteMapping("/{idPlanoSaude}")
     public ResponseEntity<Object> deletePlanoSaude(@PathVariable Integer idPlanoSaude) {

@@ -6,7 +6,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface PlanoSaudeRepository {
-    List<PlanoSaude> getAllPlanosSaude();
+    List<PlanoSaude> getAllPlanosSaude(Integer page, Integer pageSize);
 
     PlanoSaude save(PlanoSaude planoSaude);
 
@@ -15,4 +15,6 @@ public interface PlanoSaudeRepository {
     PlanoSaude getOnePlanoSaude(Integer idPlanoSaude);
 
     void delete(PlanoSaude planoSaude);
+
+    Long countPlanosSaude();
 }
