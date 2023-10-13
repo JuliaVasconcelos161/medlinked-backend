@@ -5,10 +5,7 @@ import com.medlinked.services.secretaria_medico_service.SecretariaMedicoService;
 import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/secretaria/medico")
@@ -42,5 +39,15 @@ public class SecretariaMedicoController {
         }catch (MedLinkedException e) {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
+    }
+
+    @Operation(summary = "Retorna todos os médicos de uma secretária.")
+    @GetMapping("/{idSecretaria}")
+    public ResponseEntity<Object> getAllMedicosSecretaria(
+            @PathVariable Integer idSecretaria,
+            @RequestParam(value = "page", defaultValue = "0") int page,
+            @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
+        return ResponseEntity.status(HttpStatus.OK)
+                .body(secretariaMedicoService.getAllMedicosSecretaria(idSecretaria, page, pageSize));
     }
 }
