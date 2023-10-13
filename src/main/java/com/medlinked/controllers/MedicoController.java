@@ -27,7 +27,7 @@ public class MedicoController {
         this.medicoCrmService = medicoCrmService;
     }
 
-    @Operation(summary = "Cria um novo médico e o retorna, o associando com a secretária que o criou.")
+    @Operation(summary = "Cria um novo médico e o retorna, o associando com a secretária que o cadastrou.")
     @PostMapping("/create/{idSecretaria}")
     public ResponseEntity<Object> createMedico(@RequestBody @Valid MedicoDto medicoDto,
                                                @PathVariable Integer idSecretaria) {
