@@ -31,4 +31,16 @@ public class SecretariaMedicoController {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
     }
+
+    @Operation(summary = "Desassocia a secretária do médico informado.")
+    @PutMapping("/disassociate/{idSecretaria}/{idMedico}")
+    public ResponseEntity<Object> disassociateSecretariaMedico(@PathVariable Integer idSecretaria,
+                                                            @PathVariable Integer idMedico) {
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(secretariaMedicoService
+                    .disassociateSecretariaMedico(idSecretaria, idMedico));
+        }catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
+    }
 }

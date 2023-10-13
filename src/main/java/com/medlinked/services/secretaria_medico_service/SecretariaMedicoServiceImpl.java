@@ -35,4 +35,14 @@ public class SecretariaMedicoServiceImpl implements SecretariaMedicoService {
         secretariaRepository.updateSecretaria(secretaria);
         return secretaria.getMedicos();
     }
+
+    @Transactional
+    @Override
+    public Set<Medico> disassociateSecretariaMedico(Integer idSecretaria, Integer idMedico) {
+        Secretaria secretaria = secretariaRepository.getOneSecretaria(idSecretaria);
+        Medico medico = medicoRepository.getOneMedico(idMedico);
+        secretaria.getMedicos().remove(medico);
+        secretariaRepository.updateSecretaria(secretaria);
+        return secretaria.getMedicos();
+    }
 }
