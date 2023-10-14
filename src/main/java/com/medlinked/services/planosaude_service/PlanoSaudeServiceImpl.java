@@ -49,7 +49,7 @@ public class PlanoSaudeServiceImpl implements PlanoSaudeService {
     public void deletePlanoSaude(Integer idPlanoSaude) {
         try{
             PlanoSaude planoSaude = planoSaudeRepository.getOnePlanoSaude(idPlanoSaude);
-            planoSaudePacienteRepository.desassociatePlanoSaudeAllPacientes(idPlanoSaude);
+            planoSaudePacienteRepository.disassociatePlanoSaudeAllPacientes(idPlanoSaude);
             planoSaudeRepository.delete(planoSaude);
         } catch (Exception e) {
             throw new MedLinkedException();

@@ -32,7 +32,7 @@ public class PlanoSaudePacienteRepositoryClass implements PlanoSaudePacienteRepo
     }
 
     @Override
-    public void desassociatePlanoSaudeAllPacientes(Integer idPlanoSaude) {
+    public void disassociatePlanoSaudeAllPacientes(Integer idPlanoSaude) {
         StringBuilder consulta = new StringBuilder(" delete from PlanoSaudePaciente planoSaudePaciente ");
         consulta.append(" where planoSaudePaciente.idPlanoSaudePaciente.planoSaude.idPlanoSaude = :IDPLANOSAUDE ");
         var query = entityManager.createQuery(consulta.toString());
