@@ -10,7 +10,7 @@ public interface PlanoSaudePacienteRepository {
 
     void disassociatePacientePlanoSaude(Integer idPaciente, Integer idPlanoSaude);
 
-    void desassociatePlanoSaudeAllPacientes(Integer idPlanoSaude);
+    void disassociatePlanoSaudeAllPacientes(Integer idPlanoSaude);
 
     List<PlanoSaude> getAllPlanosSaudePaciente(Integer idPaciente);
 }
