@@ -20,7 +20,7 @@ public class PlanoSaudePacienteController {
     }
 
     @Operation(summary = "Associa paciente ao plano de saúde informado.")
-    @PutMapping("associate/{idPaciente}/{idPlanoSaude}")
+    @PutMapping("/associate/{idPaciente}/{idPlanoSaude}")
     public ResponseEntity<Object> associatePacientePlanoSaude(@PathVariable Integer idPaciente,
                                                               @PathVariable Integer idPlanoSaude,
                                                               @RequestBody PlanoSaudePacienteDto planoSaudePacienteDto) {
@@ -34,12 +34,23 @@ public class PlanoSaudePacienteController {
     }
 
     @Operation(summary = "Desvincula paciente de plano de saúde informado.")
-    @PutMapping("disassociate/{idPaciente}/{idPlanoSaude}")
+    @PutMapping("/disassociate/{idPaciente}/{idPlanoSaude}")
     public ResponseEntity<Object> disassociatePacientePlanoSaude(@PathVariable Integer idPaciente,
                                                                  @PathVariable Integer idPlanoSaude) {
         try {
             planoSaudePacienteService.disassociatePacientePlanoSaude(idPaciente, idPlanoSaude);
             return ResponseEntity.status(HttpStatus.OK).body("Plano saúde desvinculado de Paciente com sucesso!");
+        }catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
+    }
+
+    @Operation(summary = "Retorna todos os planos de saude de um paciente.")
+    @GetMapping("/{idPaciente}")
+    public ResponseEntity<Object> getAllPlanosSaudePaciente(@PathVariable Integer idPaciente) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(planoSaudePacienteService.getAllPlanosSaudePaciente(idPaciente));
         }catch (MedLinkedException e) {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }

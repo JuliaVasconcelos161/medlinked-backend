@@ -12,6 +12,8 @@ import com.medlinked.services.tipoplanosaude_service.TipoPlanoSaudeService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PlanoSaudePacienteServiceImpl implements PlanoSaudePacienteService {
 
@@ -57,5 +59,10 @@ public class PlanoSaudePacienteServiceImpl implements PlanoSaudePacienteService 
     @Override
     public void disassociatePacientePlanoSaude(Integer idPaciente, Integer idPlanoSaude) {
         planoSaudePacienteRepository.disassociatePacientePlanoSaude(idPaciente, idPlanoSaude);
+    }
+
+    @Override
+    public List<PlanoSaude> getAllPlanosSaudePaciente(Integer idPaciente) {
+        return planoSaudePacienteRepository.getAllPlanosSaudePaciente(idPaciente);
     }
 }
