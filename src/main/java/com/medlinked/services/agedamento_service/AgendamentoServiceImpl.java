@@ -1,16 +1,14 @@
 package com.medlinked.services.agedamento_service;
 
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.medlinked.entities.*;
 import com.medlinked.entities.dtos.AgendamentoDto;
-import com.medlinked.exceptions.NoObjectFoundException;
+import com.medlinked.exceptions.AgendamentoException;
 import com.medlinked.repositories.agendamento_repository.AgendamentoRepository;
 import com.medlinked.repositories.medico_repository.MedicoRepository;
 import com.medlinked.repositories.paciente_repository.PacienteRepository;
 import com.medlinked.repositories.planosaude_repository.PlanoSaudeRepository;
 import com.medlinked.repositories.secretaria_repository.SecretariaRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.data.jpa.convert.threeten.Jsr310JpaConverters;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -43,15 +41,14 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     @Transactional
     @Override
     public Agendamento createAgendamento(AgendamentoDto agendamentoDto) {
+        this.validateHorarioAgendamento(agendamentoDto.getDataHoraInicioAgendamento(),
+                agendamentoDto.getDataHoraFimAgendamento());
         Secretaria secretaria = secretariaRepository.getOneSecretaria(agendamentoDto.getIdSecretaria());
         Medico medico = medicoRepository.getOneMedico(agendamentoDto.getIdMedico());
         Paciente paciente = pacienteRepository.getOnePaciente(agendamentoDto.getIdPaciente());
-        PlanoSaude planoSaude;
-        try {
-            planoSaude = planoSaudeRepository.getOnePlanoSaude(agendamentoDto.getIdPlanoSaude());
-        }catch (NoObjectFoundException e) {
-            planoSaude = null;
-        }
+        PlanoSaude planoSaude = agendamentoDto.getIdPlanoSaude() != null ?
+                planoSaudeRepository.getOnePlanoSaude(agendamentoDto.getIdPlanoSaude())
+                : null;
         Agendamento agendamento = Agendamento.builder()
                 .tipoAgendamento(agendamentoDto.getTipoAgendamento())
                 .dataHoraInicioAgendamento(LocalDateTime.parse(agendamentoDto.getDataHoraInicioAgendamento(), FORMATTER))
@@ -63,5 +60,13 @@ public class AgendamentoServiceImpl implements AgendamentoService {
                 .planoSaude(planoSaude)
                 .build();
         return agendamentoRepository.saveAgendamento(agendamento);
+    }
+
+    private void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento) {
+        LocalDateTime inicio = LocalDateTime.parse(dataHoraInicioAgendamento, FORMATTER);
+        LocalDateTime fim = LocalDateTime.parse(dataHoraFimAgendamento, FORMATTER);
+        if(inicio.isAfter(fim))
+            throw new AgendamentoException();
+        agendamentoRepository.validateHorarioAgendamento(dataHoraInicioAgendamento, dataHoraFimAgendamento);
     }
 }

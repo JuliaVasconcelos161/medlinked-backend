@@ -7,7 +7,8 @@ public class ExistsException extends MedLinkedException {
         super(message, httpStatus);
     }
 
-    public ExistsException(String especializacaoPessoa, String object){
-        super("Já existe " + especializacaoPessoa + " com " + object + " informado.", HttpStatus.CONFLICT);
+    public ExistsException(String object1, String object2){
+        super("Já existe " + object1 + " com " + object2 + " informado.", HttpStatus.CONFLICT);
     }
 }
+
