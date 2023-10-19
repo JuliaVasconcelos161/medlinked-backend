@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 import static com.medlinked.utils.JavaDateFormatter.FORMATTER;
 
@@ -60,6 +61,37 @@ public class AgendamentoServiceImpl implements AgendamentoService {
                 .planoSaude(planoSaude)
                 .build();
         return agendamentoRepository.saveAgendamento(agendamento);
+    }
+
+    @Transactional
+    @Override
+    public Agendamento updateAgendamento(AgendamentoDto agendamentoDto, Integer idAgendamento) {
+        this.validateHorarioAgendamento(agendamentoDto.getDataHoraInicioAgendamento(),
+                agendamentoDto.getDataHoraFimAgendamento(), agendamentoDto.getIdMedico());
+        Agendamento agendamento = agendamentoRepository.getOneAgendamento(idAgendamento);
+        agendamento.setTipoAgendamento(agendamentoDto.getTipoAgendamento());
+        agendamento.setDataHoraInicioAgendamento(LocalDateTime.parse(agendamentoDto.getDataHoraInicioAgendamento(), FORMATTER));
+        agendamento.setDataHoraFimAgendamento(LocalDateTime.parse(agendamentoDto.getDataHoraFimAgendamento(), FORMATTER));
+        agendamento.setDescricao(agendamentoDto.getDescricao());
+        if(!agendamento.getSecretaria().getIdSecretaria().equals(agendamentoDto.getIdSecretaria())) {
+            Secretaria secretaria = secretariaRepository.getOneSecretaria(agendamentoDto.getIdSecretaria());
+            agendamento.setSecretaria(secretaria);
+        }
+        if(!agendamento.getMedico().getIdMedico().equals(agendamentoDto.getIdMedico())) {
+            Medico medico = medicoRepository.getOneMedico(agendamentoDto.getIdMedico());
+            agendamento.setMedico(medico);
+        }
+        if(!agendamento.getPaciente().getIdPaciente().equals(agendamentoDto.getIdPaciente())) {
+            Paciente paciente = pacienteRepository.getOnePaciente(agendamentoDto.getIdPaciente());
+            agendamento.setPaciente(paciente);
+        }
+        if(!agendamento.getPlanoSaude().getIdPlanoSaude().equals(agendamentoDto.getIdPlanoSaude())) {
+            PlanoSaude planoSaude = agendamentoDto.getIdPlanoSaude() != null ?
+                    planoSaudeRepository.getOnePlanoSaude(agendamentoDto.getIdPlanoSaude())
+                    : null;
+            agendamento.setPlanoSaude(planoSaude);
+        }
+        return agendamentoRepository.updateAgendamento(agendamento);
     }
 
     private void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento, Integer idMedico) {
