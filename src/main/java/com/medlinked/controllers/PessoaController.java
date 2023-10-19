@@ -22,7 +22,7 @@ public class PessoaController {
     }
 
     @Operation(summary = "Retorna pessoa através do cpf.")
-    @GetMapping("/cpf")
+    @PostMapping("/cpf")
     public ResponseEntity<Object> getPessoaByCpf(@RequestBody @Valid PessoaCpfDto pessoaCpfDto) {
         return ResponseEntity.status(HttpStatus.OK).body(pessoaService.getPessoaByCpf(pessoaCpfDto.getCpf()));
     }
