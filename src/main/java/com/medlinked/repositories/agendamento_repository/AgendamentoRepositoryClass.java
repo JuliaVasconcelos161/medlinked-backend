@@ -19,16 +19,19 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
     }
 
     @Override
-    public void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento) {
+    public void validateHorarioAgendamento(String dataHoraInicioAgendamento,
+                                           String dataHoraFimAgendamento, Integer idMedico) {
         StringBuilder consulta = new StringBuilder(" select count(1) ");
         consulta.append(" from Agendamento a ");
-        consulta.append(" where '");
+        consulta.append(" where ('");
         consulta.append(dataHoraInicioAgendamento);
         consulta.append("' between a.dataHoraInicioAgendamento and a.dataHoraFimAgendamento ");
         consulta.append(" or '");
         consulta.append(dataHoraFimAgendamento);
-        consulta.append("' between a.dataHoraInicioAgendamento and a.dataHoraFimAgendamento ");
+        consulta.append("' between a.dataHoraInicioAgendamento and a.dataHoraFimAgendamento) ");
+        consulta.append(" and a.medico.idMedico = :IDMEDICO ");
         var query = entityManager.createQuery(consulta.toString(), Long.class);
+        query.setParameter("IDMEDICO", idMedico);
         if(query.getSingleResult() > 0)
             throw new ExistsException("Agendamento","Horário");
     }
