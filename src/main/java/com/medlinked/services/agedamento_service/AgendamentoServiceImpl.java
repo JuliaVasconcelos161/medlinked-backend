@@ -42,7 +42,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     @Override
     public Agendamento createAgendamento(AgendamentoDto agendamentoDto) {
         this.validateHorarioAgendamento(agendamentoDto.getDataHoraInicioAgendamento(),
-                agendamentoDto.getDataHoraFimAgendamento());
+                agendamentoDto.getDataHoraFimAgendamento(), agendamentoDto.getIdMedico());
         Secretaria secretaria = secretariaRepository.getOneSecretaria(agendamentoDto.getIdSecretaria());
         Medico medico = medicoRepository.getOneMedico(agendamentoDto.getIdMedico());
         Paciente paciente = pacienteRepository.getOnePaciente(agendamentoDto.getIdPaciente());
@@ -62,11 +62,11 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         return agendamentoRepository.saveAgendamento(agendamento);
     }
 
-    private void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento) {
+    private void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento, Integer idMedico) {
         LocalDateTime inicio = LocalDateTime.parse(dataHoraInicioAgendamento, FORMATTER);
         LocalDateTime fim = LocalDateTime.parse(dataHoraFimAgendamento, FORMATTER);
         if(inicio.isAfter(fim))
             throw new AgendamentoException();
-        agendamentoRepository.validateHorarioAgendamento(dataHoraInicioAgendamento, dataHoraFimAgendamento);
+        agendamentoRepository.validateHorarioAgendamento(dataHoraInicioAgendamento, dataHoraFimAgendamento, idMedico);
     }
 }
