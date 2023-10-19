@@ -2,6 +2,7 @@ package com.medlinked.repositories.agendamento_repository;
 
 import com.medlinked.entities.Agendamento;
 import com.medlinked.exceptions.ExistsException;
+import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -34,5 +35,20 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
         query.setParameter("IDMEDICO", idMedico);
         if(query.getSingleResult() > 0)
             throw new ExistsException("Agendamento","Horário");
+    }
+
+    @Override
+    public Agendamento getOneAgendamento(Integer idAgendamento) {
+        Agendamento agendamento = entityManager.find(Agendamento.class, idAgendamento);
+        if(agendamento == null)
+            throw new NoObjectFoundException("Agendamento");
+        return agendamento;
+    }
+
+    @Override
+    public Agendamento updateAgendamento(Agendamento agendamento) {
+        entityManager.merge(agendamento);
+        entityManager.flush();
+        return agendamento;
     }
 }

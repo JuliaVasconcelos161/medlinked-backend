@@ -5,4 +5,6 @@ import com.medlinked.entities.dtos.AgendamentoDto;
 
 public interface AgendamentoService {
     Agendamento createAgendamento(AgendamentoDto agendamentoDto);
+
+    Agendamento updateAgendamento(AgendamentoDto agendamentoDto, Integer idAgendamento);
 }

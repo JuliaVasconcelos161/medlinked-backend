@@ -6,4 +6,8 @@ public interface AgendamentoRepository {
     Agendamento saveAgendamento(Agendamento agendamento);
 
     void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento, Integer idMedico);
+
+    Agendamento getOneAgendamento(Integer idAgendamento);
+
+    Agendamento updateAgendamento(Agendamento agendamento);
 }
