@@ -8,6 +8,7 @@ import com.medlinked.entities.dtos.MedicoDto;
 import com.medlinked.exceptions.EspecialidadeException;
 import com.medlinked.exceptions.ExistsException;
 import com.medlinked.repositories.medicocrm_repository.MedicoCrmRepository;
+import com.medlinked.repositories.planosaude_medico_repository.PlanoSaudeMedicoRepository;
 import com.medlinked.services.especialidade_service.EspecialidadeService;
 import com.medlinked.services.estado_service.EstadoService;
 import jakarta.transaction.Transactional;
@@ -22,12 +23,14 @@ public class MedicoCrmServiceImpl implements MedicoCrmService {
 
     private final EstadoService estadoService;
 
+    private final PlanoSaudeMedicoRepository planoSaudeMedicoRepository;
     private final MedicoCrmRepository medicoCrmRepository;
 
     public MedicoCrmServiceImpl(EspecialidadeService especialidadeService, EstadoService estadoService,
-                                MedicoCrmRepository medicoCrmRepository) {
+                                PlanoSaudeMedicoRepository planoSaudeMedicoRepository, MedicoCrmRepository medicoCrmRepository) {
         this.especialidadeService = especialidadeService;
         this.estadoService = estadoService;
+        this.planoSaudeMedicoRepository = planoSaudeMedicoRepository;
         this.medicoCrmRepository = medicoCrmRepository;
     }
 
@@ -70,6 +73,8 @@ public class MedicoCrmServiceImpl implements MedicoCrmService {
     public MedicoCrmResponseDto buildMedicoCrmResponseDto(Integer idMedico) {
         MedicoCrmResponseDto medicoCrmResponse = medicoCrmRepository.buildMedicoCrmResponseDto(idMedico);
         medicoCrmResponse.setEspecialidades(medicoCrmRepository.getEspecialidadesMedicoByCrm(idMedico));
+        medicoCrmResponse
+                .setPlanosSaudeMedico(planoSaudeMedicoRepository.getAllPlanosSaudeMedico(idMedico, null, null));
         return medicoCrmResponse;
     }
 

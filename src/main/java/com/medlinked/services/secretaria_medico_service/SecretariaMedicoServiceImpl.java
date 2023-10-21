@@ -4,6 +4,7 @@ import com.medlinked.entities.Medico;
 import com.medlinked.entities.Secretaria;
 import com.medlinked.entities.dtos.MedicoCrmResponseDto;
 import com.medlinked.repositories.medico_repository.MedicoRepository;
+import com.medlinked.repositories.planosaude_medico_repository.PlanoSaudeMedicoRepository;
 import com.medlinked.repositories.secretaria_medico_repository.SecretariaMedicoRepository;
 import com.medlinked.repositories.secretaria_repository.SecretariaRepository;
 import com.medlinked.services.medicocrm_service.MedicoCrmService;
@@ -14,12 +15,13 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Set;
 
 @Service
 public class SecretariaMedicoServiceImpl implements SecretariaMedicoService {
 
     private final MedicoCrmService medicoCrmService;
+
+    private final PlanoSaudeMedicoRepository planoSaudeMedicoRepository;
 
     private final SecretariaMedicoRepository secretariaMedicoRepository;
 
@@ -27,9 +29,11 @@ public class SecretariaMedicoServiceImpl implements SecretariaMedicoService {
 
     private final MedicoRepository medicoRepository;
 
-    public SecretariaMedicoServiceImpl(MedicoCrmService medicoCrmService, SecretariaMedicoRepository secretariaMedicoRepository,
+    public SecretariaMedicoServiceImpl(MedicoCrmService medicoCrmService, PlanoSaudeMedicoRepository planoSaudeMedicoRepository,
+                                       SecretariaMedicoRepository secretariaMedicoRepository,
                                        SecretariaRepository secretariaRepository, MedicoRepository medicoRepository) {
         this.medicoCrmService = medicoCrmService;
+        this.planoSaudeMedicoRepository = planoSaudeMedicoRepository;
         this.secretariaMedicoRepository = secretariaMedicoRepository;
         this.secretariaRepository = secretariaRepository;
         this.medicoRepository = medicoRepository;
@@ -37,30 +41,31 @@ public class SecretariaMedicoServiceImpl implements SecretariaMedicoService {
 
     @Transactional
     @Override
-    public Set<Medico> associateSecretariaMedico(Integer idSecretaria, Integer idMedico) {
+    public void associateSecretariaMedico(Integer idSecretaria, Integer idMedico) {
         Secretaria secretaria = secretariaRepository.getOneSecretaria(idSecretaria);
         Medico medico = medicoRepository.getOneMedico(idMedico);
         secretaria.getMedicos().add(medico);
         secretariaRepository.updateSecretaria(secretaria);
-        return secretaria.getMedicos();
     }
 
     @Transactional
     @Override
-    public Set<Medico> disassociateSecretariaMedico(Integer idSecretaria, Integer idMedico) {
+    public void disassociateSecretariaMedico(Integer idSecretaria, Integer idMedico) {
         Secretaria secretaria = secretariaRepository.getOneSecretaria(idSecretaria);
         Medico medico = medicoRepository.getOneMedico(idMedico);
         secretaria.getMedicos().remove(medico);
         secretariaRepository.updateSecretaria(secretaria);
-        return secretaria.getMedicos();
     }
 
     @Override
     public Page<MedicoCrmResponseDto> getAllMedicosSecretaria(Integer idSecretaria, int page, int pageSize) {
         List<MedicoCrmResponseDto> medicos = secretariaMedicoRepository
                 .getAllMedicosSecretaria(idSecretaria, page, pageSize);
-        medicos.forEach(medico ->
-                medico.setEspecialidades(medicoCrmService.getEspecialidadesMedicoByCrm(medico.getIdMedico())));
+        medicos.forEach(medico ->{
+                    medico.setEspecialidades(medicoCrmService.getEspecialidadesMedicoByCrm(medico.getIdMedico()));
+                    medico.setPlanosSaudeMedico(planoSaudeMedicoRepository
+                            .getAllPlanosSaudeMedico(medico.getIdMedico(), null, null));
+                });
         PageRequest pageRequest = PageRequest.of(page, pageSize);
         Long total =  secretariaMedicoRepository.countMedicosSecretaria(idSecretaria);
         return new PageImpl<>(medicos, pageRequest, total);
