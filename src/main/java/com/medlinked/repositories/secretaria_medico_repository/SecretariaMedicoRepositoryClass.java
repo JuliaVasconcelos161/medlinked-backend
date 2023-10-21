@@ -1,6 +1,7 @@
 package com.medlinked.repositories.secretaria_medico_repository;
 
 import com.medlinked.entities.MedicoCRM;
+import com.medlinked.entities.dtos.MedicoCrmResponseDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -13,16 +14,18 @@ public class SecretariaMedicoRepositoryClass implements SecretariaMedicoReposito
     EntityManager entityManager;
 
     @Override
-    public List<MedicoCRM> getAllMedicosSecretaria(Integer idSecretaria, int page, int pageSize) {
+    public List<MedicoCrmResponseDto> getAllMedicosSecretaria(Integer idSecretaria, int page, int pageSize) {
         List<Integer> idsMedicos = this.getAllIdsMedicosSecretaria(idSecretaria);
-        return this.getAllMedicoCRMsByIdsMedicos(idsMedicos, page, pageSize);
+        return this.buildMedicosCrmResponseByIdsMedicos(idsMedicos, page, pageSize);
     }
-    private List<MedicoCRM> getAllMedicoCRMsByIdsMedicos(List<Integer> idsMedicos, int page, int pageSize) {
-        StringBuilder consulta = new StringBuilder(" select medicoCrm ");
-        consulta.append(" from MedicoCRM medicoCrm ");
-        consulta.append(" where medicoCrm.idMedico in (:IDSMEDICOS) ");
-        consulta.append(" order by medicoCrm.medico.pessoa.nome ");
-        var query = entityManager.createQuery(consulta.toString(), MedicoCRM.class);
+    private List<MedicoCrmResponseDto> buildMedicosCrmResponseByIdsMedicos(List<Integer> idsMedicos, int page, int pageSize) {
+        StringBuilder consulta = new StringBuilder(" select new com.medlinked.entities.dtos.MedicoCrmResponseDto( ");
+        consulta.append(" crm.medico.idMedico, crm.medico.pessoa.nome, crm.medico.pessoa.cpf, ");
+        consulta.append(" crm.medico.pessoa.email, crm.medico.pessoa.celular, estado.uf, crm.numeroCrm) ");
+        consulta.append(" from MedicoCRM crm ");
+        consulta.append(" where crm.idMedico in (:IDSMEDICOS) ");
+        consulta.append(" order by crm.medico.pessoa.nome ");
+        var query = entityManager.createQuery(consulta.toString(), MedicoCrmResponseDto.class);
         query.setParameter("IDSMEDICOS", idsMedicos);
         query.setFirstResult(page * pageSize);
         query.setMaxResults(pageSize);

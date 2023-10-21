@@ -19,4 +19,6 @@ public interface MedicoCrmService {
     MedicoCRM updateMedicoCrm(Medico medico, MedicoDto medicoDto);
 
     MedicoCrmResponseDto buildMedicoCrmResponseDto(Integer idMedico);
+
+    List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico);
 }

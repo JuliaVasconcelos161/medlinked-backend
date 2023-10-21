@@ -11,7 +11,6 @@ import com.medlinked.repositories.medicocrm_repository.MedicoCrmRepository;
 import com.medlinked.services.especialidade_service.EspecialidadeService;
 import com.medlinked.services.estado_service.EstadoService;
 import jakarta.transaction.Transactional;
-import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,7 +24,8 @@ public class MedicoCrmServiceImpl implements MedicoCrmService {
 
     private final MedicoCrmRepository medicoCrmRepository;
 
-    public MedicoCrmServiceImpl(EspecialidadeService especialidadeService, EstadoService estadoService, MedicoCrmRepository medicoCrmRepository) {
+    public MedicoCrmServiceImpl(EspecialidadeService especialidadeService, EstadoService estadoService,
+                                MedicoCrmRepository medicoCrmRepository) {
         this.especialidadeService = especialidadeService;
         this.estadoService = estadoService;
         this.medicoCrmRepository = medicoCrmRepository;
@@ -51,7 +51,7 @@ public class MedicoCrmServiceImpl implements MedicoCrmService {
 
     @Override
     public void validateCrm(MedicoDto medicoDto, Integer idMedico) {
-        if(BooleanUtils.isTrue(medicoDto.getIdsEspecialidades().size() > 2))
+        if(medicoDto.getIdsEspecialidades().size() > 2)
             throw new EspecialidadeException();
         if(this.existsMedicoByNumeroCrm(medicoDto.getNumeroCrm(), idMedico))
             throw new ExistsException("Médico", "Número CRM");
@@ -76,5 +76,10 @@ public class MedicoCrmServiceImpl implements MedicoCrmService {
         MedicoCrmResponseDto medicoCrmResponse = medicoCrmRepository.getOneMedicoCrmResponseDto(idMedico);
         medicoCrmResponse.setEspecialidades(medicoCrmRepository.getEspecialidadesMedicoByCrm(idMedico));
         return medicoCrmResponse;
+    }
+
+    @Override
+    public List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico) {
+        return medicoCrmRepository.getEspecialidadesMedicoByCrm(idMedico);
     }
 }
