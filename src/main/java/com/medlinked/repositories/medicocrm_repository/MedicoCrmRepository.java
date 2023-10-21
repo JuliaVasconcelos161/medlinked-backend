@@ -2,7 +2,7 @@ package com.medlinked.repositories.medicocrm_repository;
 
 import com.medlinked.entities.MedicoCRM;
 import com.medlinked.entities.Especialidade;
-import jakarta.transaction.Transactional;
+import com.medlinked.entities.dtos.MedicoCrmResponseDto;
 
 import java.util.List;
 
@@ -13,8 +13,10 @@ public interface MedicoCrmRepository {
 
     List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico);
 
-    boolean existsMedicoByNumeroCrm(Integer numeroCrm);
+    boolean existsMedicoByNumeroCrm(Integer numeroCrm, Integer idMedico);
 
-    @Transactional
+
     MedicoCRM updateMedicoCrm(MedicoCRM medicoCrm);
+
+    MedicoCrmResponseDto buildMedicoCrmResponseDto(Integer idMedico);
 }

@@ -1,7 +1,6 @@
 package com.medlinked.repositories.medico_repository;
 
 import com.medlinked.entities.Medico;
-import com.medlinked.entities.PlanoSaude;
 
 import java.util.List;
 

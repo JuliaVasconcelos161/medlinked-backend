@@ -1,10 +1,8 @@
 package com.medlinked.repositories.medico_repository;
 
 import com.medlinked.entities.Medico;
-import com.medlinked.entities.PlanoSaude;
 import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
