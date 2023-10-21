@@ -43,7 +43,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     @Override
     public Agendamento createAgendamento(AgendamentoDto agendamentoDto) {
         this.validateHorarioAgendamento(agendamentoDto.getDataHoraInicioAgendamento(),
-                agendamentoDto.getDataHoraFimAgendamento(), agendamentoDto.getIdMedico());
+                agendamentoDto.getDataHoraFimAgendamento(), agendamentoDto.getIdMedico(), null);
         Secretaria secretaria = secretariaRepository.getOneSecretaria(agendamentoDto.getIdSecretaria());
         Medico medico = medicoRepository.getOneMedico(agendamentoDto.getIdMedico());
         Paciente paciente = pacienteRepository.getOnePaciente(agendamentoDto.getIdPaciente());
@@ -67,7 +67,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     @Override
     public Agendamento updateAgendamento(AgendamentoDto agendamentoDto, Integer idAgendamento) {
         this.validateHorarioAgendamento(agendamentoDto.getDataHoraInicioAgendamento(),
-                agendamentoDto.getDataHoraFimAgendamento(), agendamentoDto.getIdMedico());
+                agendamentoDto.getDataHoraFimAgendamento(), agendamentoDto.getIdMedico(), idAgendamento);
         Agendamento agendamento = agendamentoRepository.getOneAgendamento(idAgendamento);
         agendamento.setTipoAgendamento(agendamentoDto.getTipoAgendamento());
         agendamento.setDataHoraInicioAgendamento(LocalDateTime.parse(agendamentoDto.getDataHoraInicioAgendamento(), FORMATTER));
@@ -94,11 +94,19 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         return agendamentoRepository.updateAgendamento(agendamento);
     }
 
-    private void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento, Integer idMedico) {
+    private void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento, Integer idMedico,
+                                            Integer idAgendamento) {
+        if(this.validateHorarioInicioDepoisHorarioFim(dataHoraInicioAgendamento, dataHoraFimAgendamento))
+            throw new AgendamentoException();
+        if(idAgendamento != null)
+            agendamentoRepository.validateHorarioAgendamento(dataHoraInicioAgendamento, dataHoraFimAgendamento, idMedico, idAgendamento);
+        else
+            agendamentoRepository.validateHorarioAgendamento(dataHoraInicioAgendamento, dataHoraFimAgendamento, idMedico, null);
+    }
+
+    private boolean validateHorarioInicioDepoisHorarioFim(String dataHoraInicioAgendamento, String dataHoraFimAgendamento) {
         LocalDateTime inicio = LocalDateTime.parse(dataHoraInicioAgendamento, FORMATTER);
         LocalDateTime fim = LocalDateTime.parse(dataHoraFimAgendamento, FORMATTER);
-        if(inicio.isAfter(fim))
-            throw new AgendamentoException();
-        agendamentoRepository.validateHorarioAgendamento(dataHoraInicioAgendamento, dataHoraFimAgendamento, idMedico);
+        return inicio.isAfter(fim);
     }
 }
