@@ -14,7 +14,7 @@ public interface MedicoCrmRepository {
 
     List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico);
 
-    boolean existsMedicoByNumeroCrm(Integer numeroCrm);
+    boolean existsMedicoByNumeroCrm(Integer numeroCrm, Integer idMedico);
 
 
     MedicoCRM updateMedicoCrm(MedicoCRM medicoCrm);

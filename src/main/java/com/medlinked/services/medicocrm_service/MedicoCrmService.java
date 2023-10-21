@@ -14,9 +14,7 @@ public interface MedicoCrmService {
 
     MedicoCRM getOneCrmByMedico(Integer idMedico);
 
-    List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico);
-
-    void validateCrm(MedicoDto medicoDto);
+    void validateCrm(MedicoDto medicoDto, Integer idMedico);
 
     MedicoCRM updateMedicoCrm(Medico medico, MedicoDto medicoDto);
 

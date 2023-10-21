@@ -41,11 +41,15 @@ public class MedicoCrmRepositoryClass implements MedicoCrmRepository {
     }
 
     @Override
-    public boolean existsMedicoByNumeroCrm(Integer numeroCrm) {
+    public boolean existsMedicoByNumeroCrm(Integer numeroCrm, Integer idMedico) {
         StringBuilder consulta = new StringBuilder(" select count(1) ");
         consulta.append(" from MedicoCRM crm ");
         consulta.append(" where crm.numeroCrm = :NUMEROCRM ");
+        if(idMedico != null)
+            consulta.append(" and crm.medico.idMedico != :IDMEDICO ");
         var query = entityManager.createQuery(consulta.toString(), Long.class);
+        if(idMedico != null)
+            query.setParameter("IDMEDICO", idMedico);
         query.setParameter("NUMEROCRM", numeroCrm);
         return query.getSingleResult() > 0;
     }

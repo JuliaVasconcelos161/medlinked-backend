@@ -50,19 +50,14 @@ public class MedicoCrmServiceImpl implements MedicoCrmService {
     }
 
     @Override
-    public List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico) {
-        return medicoCrmRepository.getEspecialidadesMedicoByCrm(idMedico);
-    }
-
-    @Override
-    public void validateCrm(MedicoDto medicoDto) {
+    public void validateCrm(MedicoDto medicoDto, Integer idMedico) {
         if(BooleanUtils.isTrue(medicoDto.getIdsEspecialidades().size() > 2))
             throw new EspecialidadeException();
-        if(this.existsMedicoByNumeroCrm(medicoDto.getNumeroCrm()))
+        if(this.existsMedicoByNumeroCrm(medicoDto.getNumeroCrm(), idMedico))
             throw new ExistsException("Médico", "Número CRM");
     }
-    private boolean existsMedicoByNumeroCrm(Integer idMedico) {
-        return medicoCrmRepository.existsMedicoByNumeroCrm(idMedico);
+    private boolean existsMedicoByNumeroCrm(Integer numeroCrm, Integer idMedico) {
+        return medicoCrmRepository.existsMedicoByNumeroCrm(numeroCrm, idMedico);
     }
 
     @Override
