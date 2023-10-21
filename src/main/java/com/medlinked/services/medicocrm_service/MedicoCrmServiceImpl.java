@@ -45,11 +45,6 @@ public class MedicoCrmServiceImpl implements MedicoCrmService {
     }
 
     @Override
-    public MedicoCRM getOneCrmByMedico(Integer idMedico) {
-        return medicoCrmRepository.getOneCrmByMedico(idMedico);
-    }
-
-    @Override
     public void validateCrm(MedicoDto medicoDto, Integer idMedico) {
         if(medicoDto.getIdsEspecialidades().size() > 2)
             throw new EspecialidadeException();
@@ -73,7 +68,7 @@ public class MedicoCrmServiceImpl implements MedicoCrmService {
 
     @Override
     public MedicoCrmResponseDto buildMedicoCrmResponseDto(Integer idMedico) {
-        MedicoCrmResponseDto medicoCrmResponse = medicoCrmRepository.getOneMedicoCrmResponseDto(idMedico);
+        MedicoCrmResponseDto medicoCrmResponse = medicoCrmRepository.buildMedicoCrmResponseDto(idMedico);
         medicoCrmResponse.setEspecialidades(medicoCrmRepository.getEspecialidadesMedicoByCrm(idMedico));
         return medicoCrmResponse;
     }

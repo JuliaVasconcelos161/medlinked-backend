@@ -62,7 +62,7 @@ public class MedicoCrmRepositoryClass implements MedicoCrmRepository {
     }
 
     @Override
-    public MedicoCrmResponseDto getOneMedicoCrmResponseDto(Integer idMedico) {
+    public MedicoCrmResponseDto buildMedicoCrmResponseDto(Integer idMedico) {
         StringBuilder consulta = new StringBuilder(" select new com.medlinked.entities.dtos.MedicoCrmResponseDto( ");
         consulta.append(" crm.medico.idMedico, crm.medico.pessoa.nome, crm.medico.pessoa.cpf, ");
         consulta.append(" crm.medico.pessoa.email, crm.medico.pessoa.celular, estado.uf, crm.numeroCrm) ");

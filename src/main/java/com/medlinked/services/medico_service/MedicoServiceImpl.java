@@ -1,7 +1,7 @@
 package com.medlinked.services.medico_service;
 
-import com.medlinked.entities.MedicoCRM;
 import com.medlinked.entities.Medico;
+import com.medlinked.entities.MedicoCRM;
 import com.medlinked.entities.Pessoa;
 import com.medlinked.entities.dtos.MedicoCrmResponseDto;
 import com.medlinked.entities.dtos.MedicoDto;
