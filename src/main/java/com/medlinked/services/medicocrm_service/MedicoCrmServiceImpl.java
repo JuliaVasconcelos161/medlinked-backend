@@ -3,6 +3,7 @@ package com.medlinked.services.medicocrm_service;
 import com.medlinked.entities.Especialidade;
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.MedicoCRM;
+import com.medlinked.entities.dtos.MedicoCrmResponseDto;
 import com.medlinked.entities.dtos.MedicoDto;
 import com.medlinked.exceptions.EspecialidadeException;
 import com.medlinked.exceptions.ExistsException;
@@ -73,5 +74,12 @@ public class MedicoCrmServiceImpl implements MedicoCrmService {
         medicoCRM.setEstado(estadoService.getOneEstado(medicoDto.getUfCrm()));
         medicoCRM.setEspecialidades(especialidadeService.returnEspecialidadesByIds(medicoDto.getIdsEspecialidades()));
         return medicoCrmRepository.updateMedicoCrm(medicoCRM);
+    }
+
+    @Override
+    public MedicoCrmResponseDto buildMedicoCrmResponseDto(Integer idMedico) {
+        MedicoCrmResponseDto medicoCrmResponse = medicoCrmRepository.getOneMedicoCrmResponseDto(idMedico);
+        medicoCrmResponse.setEspecialidades(medicoCrmRepository.getEspecialidadesMedicoByCrm(idMedico));
+        return medicoCrmResponse;
     }
 }

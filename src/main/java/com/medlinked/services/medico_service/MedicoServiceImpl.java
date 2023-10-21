@@ -3,6 +3,7 @@ package com.medlinked.services.medico_service;
 import com.medlinked.entities.MedicoCRM;
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.Pessoa;
+import com.medlinked.entities.dtos.MedicoCrmResponseDto;
 import com.medlinked.entities.dtos.MedicoDto;
 import com.medlinked.repositories.medico_repository.MedicoRepository;
 import com.medlinked.services.medicocrm_service.MedicoCrmService;
@@ -34,7 +35,7 @@ public class MedicoServiceImpl implements MedicoService {
 
     @Override
     @Transactional
-    public MedicoCRM createMedico(MedicoDto medicoDto, Integer idSecretaria) {
+    public MedicoCrmResponseDto createMedico(MedicoDto medicoDto, Integer idSecretaria) {
         pessoaService.validateNewEspecializacaoPessoa(medicoDto.getCpf(), medicoDto.getEmail(), "Medico");
         medicoCrmService.validateCrm(medicoDto);
         Pessoa pessoa = pessoaService.returnPessoaByCpf(medicoDto.getCpf());
@@ -43,8 +44,8 @@ public class MedicoServiceImpl implements MedicoService {
                 .build();
         medico = medicoRepository.saveMedico(medico);
         secretariaMedicoService.associateSecretariaMedico(idSecretaria, medico.getIdMedico());
-        medicoCrmService.createCrmMedico(medico,medicoDto);
-        return medicoCrmService.getOneCrmByMedico(medico.getIdMedico());
+        MedicoCRM medicoCrm = medicoCrmService.createCrmMedico(medico,medicoDto);
+        return medicoCrmService.buildMedicoCrmResponseDto(medicoCrm.getIdMedico());
     }
 
     @Override
