@@ -12,7 +12,6 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Objects;
 
 import static com.medlinked.utils.JavaDateFormatter.FORMATTER;
 
@@ -85,7 +84,8 @@ public class AgendamentoServiceImpl implements AgendamentoService {
             Paciente paciente = pacienteRepository.getOnePaciente(agendamentoDto.getIdPaciente());
             agendamento.setPaciente(paciente);
         }
-        if(!agendamento.getPlanoSaude().getIdPlanoSaude().equals(agendamentoDto.getIdPlanoSaude())) {
+        if(agendamento.getPlanoSaude() == null ||
+                !agendamento.getPlanoSaude().getIdPlanoSaude().equals(agendamentoDto.getIdPlanoSaude())) {
             PlanoSaude planoSaude = agendamentoDto.getIdPlanoSaude() != null ?
                     planoSaudeRepository.getOnePlanoSaude(agendamentoDto.getIdPlanoSaude())
                     : null;
@@ -94,14 +94,16 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         return agendamentoRepository.updateAgendamento(agendamento);
     }
 
-    private void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento, Integer idMedico,
-                                            Integer idAgendamento) {
+    private void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
+                                            Integer idMedico, Integer idAgendamento) {
         if(this.validateHorarioInicioDepoisHorarioFim(dataHoraInicioAgendamento, dataHoraFimAgendamento))
             throw new AgendamentoException();
         if(idAgendamento != null)
-            agendamentoRepository.validateHorarioAgendamento(dataHoraInicioAgendamento, dataHoraFimAgendamento, idMedico, idAgendamento);
+            agendamentoRepository
+                    .validateHorarioAgendamento(dataHoraInicioAgendamento, dataHoraFimAgendamento, idMedico, idAgendamento);
         else
-            agendamentoRepository.validateHorarioAgendamento(dataHoraInicioAgendamento, dataHoraFimAgendamento, idMedico, null);
+            agendamentoRepository
+                    .validateHorarioAgendamento(dataHoraInicioAgendamento, dataHoraFimAgendamento, idMedico, null);
     }
 
     private boolean validateHorarioInicioDepoisHorarioFim(String dataHoraInicioAgendamento, String dataHoraFimAgendamento) {
