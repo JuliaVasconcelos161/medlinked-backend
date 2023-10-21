@@ -22,8 +22,8 @@ public class SecretariaMedicoController {
     public ResponseEntity<Object> associateSecretariaMedico(@PathVariable Integer idSecretaria,
                                                             @PathVariable Integer idMedico) {
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(secretariaMedicoService
-                    .associateSecretariaMedico(idSecretaria, idMedico));
+            secretariaMedicoService.associateSecretariaMedico(idSecretaria, idMedico);
+            return ResponseEntity.status(HttpStatus.OK).body("Médico associado com sucesso");
         }catch (MedLinkedException e) {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
@@ -34,8 +34,8 @@ public class SecretariaMedicoController {
     public ResponseEntity<Object> disassociateSecretariaMedico(@PathVariable Integer idSecretaria,
                                                             @PathVariable Integer idMedico) {
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(secretariaMedicoService
-                    .disassociateSecretariaMedico(idSecretaria, idMedico));
+            secretariaMedicoService.disassociateSecretariaMedico(idSecretaria, idMedico);
+            return ResponseEntity.status(HttpStatus.OK).body("Médico disassociado com sucesso.");
         }catch (MedLinkedException e) {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }

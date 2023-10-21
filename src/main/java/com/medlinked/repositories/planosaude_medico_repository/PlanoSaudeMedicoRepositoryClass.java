@@ -14,7 +14,7 @@ public class PlanoSaudeMedicoRepositoryClass implements PlanoSaudeMedicoReposito
     EntityManager entityManager;
 
     @Override
-    public List<PlanoSaude> getAllPlanosSaudeMedico(Integer idMedico, int page, int pageSize) {
+    public List<PlanoSaude> getAllPlanosSaudeMedico(Integer idMedico, Integer page, Integer pageSize) {
         StringBuilder consulta = new StringBuilder(" select planoSaude ");
         consulta.append(" from PlanoSaude planoSaude ");
         consulta.append(" inner join planoSaude.medicos medico ");
@@ -22,8 +22,10 @@ public class PlanoSaudeMedicoRepositoryClass implements PlanoSaudeMedicoReposito
         consulta.append(" order by planoSaude.descricao ");
         var query = entityManager.createQuery(consulta.toString(), PlanoSaude.class);
         query.setParameter("IDMEDICO", idMedico);
-        query.setFirstResult(page * pageSize);
-        query.setMaxResults(pageSize);
+        if(page != null && pageSize != null) {
+            query.setFirstResult(page * pageSize);
+            query.setMaxResults(pageSize);
+        }
         return query.getResultList();
     }
 

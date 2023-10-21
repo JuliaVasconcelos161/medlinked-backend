@@ -1,13 +1,11 @@
 package com.medlinked.services.planosaude_medico_service;
 
 import com.medlinked.entities.Medico;
-import com.medlinked.entities.Paciente;
 import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.MedicoPlanoSaudeDto;
 import com.medlinked.repositories.medico_repository.MedicoRepository;
 import com.medlinked.repositories.planosaude_medico_repository.PlanoSaudeMedicoRepository;
 import com.medlinked.repositories.planosaude_repository.PlanoSaudeRepository;
-import com.medlinked.services.planosaude_medico_service.PlanoSaudeMedicoService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -64,7 +62,7 @@ public class PlanoSaudeMedicoServiceImpl implements PlanoSaudeMedicoService {
     }
 
     @Override
-    public Page<PlanoSaude> getAllPlanosSaudeMedico(Integer idMedico, int page, int pageSize) {
+    public Page<PlanoSaude> getAllPlanosSaudeMedico(Integer idMedico, Integer page, Integer pageSize) {
         List<PlanoSaude> planosSaude = planoSaudeMedicoRepository.getAllPlanosSaudeMedico(idMedico, page, pageSize);
         PageRequest pageRequest = PageRequest.of(page, pageSize);
         Long total =  planoSaudeMedicoRepository.countPlanosSaudeMedico(idMedico);

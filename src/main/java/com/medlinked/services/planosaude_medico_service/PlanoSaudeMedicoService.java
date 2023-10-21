@@ -11,5 +11,5 @@ public interface PlanoSaudeMedicoService {
 
     List<PlanoSaude> updateMedicoRemovePlanoSaude(Integer idMedico, Integer idPlanoSaude);
 
-    Page<PlanoSaude> getAllPlanosSaudeMedico(Integer idMedico, int page, int pageSize);
+    Page<PlanoSaude> getAllPlanosSaudeMedico(Integer idMedico, Integer page, Integer pageSize);
 }
