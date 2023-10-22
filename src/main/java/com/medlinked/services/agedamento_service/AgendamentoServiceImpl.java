@@ -96,8 +96,9 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     }
 
     @Override
-    public List<Agendamento> getAllAgendamentosMedicosSecretaria(Integer idSecretaria) {
-        return agendamentoRepository.getAllAgendamentosMedicosSecretaria(idSecretaria);
+    public List<Agendamento> getAllAgendamentosMedicosSecretaria(Integer idSecretaria, Integer idMedico,
+                                                                 Integer idPaciente) {
+        return agendamentoRepository.getAllAgendamentosMedicosSecretaria(idSecretaria, idMedico, idPaciente);
     }
 
     private void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,

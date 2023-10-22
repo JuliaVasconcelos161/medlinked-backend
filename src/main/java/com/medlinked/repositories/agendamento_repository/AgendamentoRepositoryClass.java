@@ -59,17 +59,28 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
     }
 
     @Override
-    public List<Agendamento> getAllAgendamentosMedicosSecretaria(Integer idSecretaria) {
+    public List<Agendamento> getAllAgendamentosMedicosSecretaria(Integer idSecretaria, Integer idMedico,
+                                                                 Integer idPaciente) {
         StringBuilder consulta = new StringBuilder(" select a ");
         consulta.append(" from Agendamento a ");
         consulta.append(" inner join a.medico medico ");
+        if(idPaciente != null)
+            consulta.append(" inner join a.paciente paciente ");
         consulta.append(" where medico.idMedico in (");
         consulta.append("   select medico.idMedico ");
         consulta.append("   from Secretaria secretaria ");
         consulta.append("   inner join secretaria.medicos medico ");
         consulta.append("   where secretaria.idSecretaria = :IDSECRETARIA) ");
+        if(idMedico != null)
+            consulta.append(" and medico.idMedico = :IDMEDICO ");
+        if(idPaciente != null)
+            consulta.append(" and paciente.idPaciente = :IDPACIENTE ");
         consulta.append(" order by a.dataHoraInicioAgendamento ");
         var query = entityManager.createQuery(consulta.toString(), Agendamento.class);
+        if(idMedico != null)
+            query.setParameter("IDMEDICO", idMedico);
+        if(idPaciente != null)
+            query.setParameter("IDPACIENTE", idPaciente);
         query.setParameter("IDSECRETARIA", idSecretaria);
         return query.getResultList();
     }

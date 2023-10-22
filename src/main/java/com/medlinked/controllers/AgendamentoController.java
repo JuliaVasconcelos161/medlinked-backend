@@ -42,7 +42,10 @@ public class AgendamentoController {
 
     @Operation(summary = "Retorna todos os agendamentos dos médicos de uma secretária.")
     @GetMapping("/{idSecretaria}")
-    public ResponseEntity<Object> getAllAgendamentosMedicosSecretaria(@PathVariable Integer idSecretaria) {
-        return ResponseEntity.status(HttpStatus.OK).body(agendamentoService.getAllAgendamentosMedicosSecretaria(idSecretaria));
+    public ResponseEntity<Object> getAllAgendamentosMedicosSecretaria(@PathVariable Integer idSecretaria,
+                                                                      @RequestParam(required = false) Integer idMedico,
+                                                                      @RequestParam(required = false) Integer idPaciente) {
+        return ResponseEntity.status(HttpStatus.OK).body(agendamentoService
+                .getAllAgendamentosMedicosSecretaria(idSecretaria, idMedico, idPaciente));
     }
 }
