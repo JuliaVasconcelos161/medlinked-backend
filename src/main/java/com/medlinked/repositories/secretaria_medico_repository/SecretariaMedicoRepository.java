@@ -10,7 +10,5 @@ public interface SecretariaMedicoRepository {
 
     List<MedicoCrmResponseDto> getAllMedicosSecretaria(Integer idSecretaria, int page, int pageSize);
 
-    void disassociateMedicoAllSecretarias(Integer idMedico);
-
     List<Secretaria> getAllSecretariasMedico(Integer idMedico);
 }

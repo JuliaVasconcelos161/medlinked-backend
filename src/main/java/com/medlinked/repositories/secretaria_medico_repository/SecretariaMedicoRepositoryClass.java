@@ -1,6 +1,5 @@
 package com.medlinked.repositories.secretaria_medico_repository;
 
-import com.medlinked.entities.MedicoCRM;
 import com.medlinked.entities.Secretaria;
 import com.medlinked.entities.dtos.MedicoCrmResponseDto;
 import jakarta.persistence.EntityManager;
@@ -18,16 +17,6 @@ public class SecretariaMedicoRepositoryClass implements SecretariaMedicoReposito
     public List<MedicoCrmResponseDto> getAllMedicosSecretaria(Integer idSecretaria, int page, int pageSize) {
         List<Integer> idsMedicos = this.getAllIdsMedicosSecretaria(idSecretaria);
         return this.buildMedicosCrmResponseByIdsMedicos(idsMedicos, page, pageSize);
-    }
-
-    @Override
-    public void disassociateMedicoAllSecretarias(Integer idMedico) {
-        StringBuilder consulta = new StringBuilder(" delete medico from Secretaria secretaria ");
-        consulta.append(" inner join secretaria.medicos medico ");
-        consulta.append(" where medico.idMedico = :IDMEDICO ");
-        var query = entityManager.createQuery(consulta.toString());
-        query.setParameter("IDMEDICO", idMedico);
-        query.executeUpdate();
     }
 
     @Override
