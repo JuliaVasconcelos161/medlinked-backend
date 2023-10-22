@@ -55,4 +55,11 @@ public class EnderecoServiceImpl implements EnderecoService {
         endereco.setPaciente(paciente);
         return enderecoRepository.updateEndereco(endereco);
     }
+
+    @Transactional
+    @Override
+    public void deleteEndereco(Integer idPaciente) {
+        Endereco endereco = enderecoRepository.getOneEndereco(idPaciente);
+        enderecoRepository.deleteEndereco(endereco);
+    }
 }

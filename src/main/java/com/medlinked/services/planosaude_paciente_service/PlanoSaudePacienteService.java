@@ -13,4 +13,6 @@ public interface PlanoSaudePacienteService {
     void disassociatePacientePlanoSaude(Integer idPaciente, Integer idPlanoSaude);
 
     List<PlanoSaude> getAllPlanosSaudePaciente(Integer idPaciente);
+
+    void disassociateAllPlanosSaudePaciente(Integer idPaciente);
 }

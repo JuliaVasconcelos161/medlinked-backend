@@ -8,4 +8,6 @@ public interface EnderecoRepository {
     Endereco getOneEndereco(Integer idPaciente);
 
     Endereco updateEndereco(Endereco endereco);
+
+    void deleteEndereco(Endereco endereco);
 }

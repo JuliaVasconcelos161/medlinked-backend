@@ -59,4 +59,15 @@ public class PacienteController {
                                                   @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
         return ResponseEntity.status(HttpStatus.OK).body(pacienteService.getAllPacientes(nomePaciente, cpf, page, pageSize));
     }
+
+    @Operation(summary = "Deleta paciente utilizando idPaciente informado.")
+    @DeleteMapping("/delete/{idPaciente}")
+    public ResponseEntity<Object> deletePaciente(@PathVariable Integer idPaciente) {
+        try{
+            pacienteService.deletePaciente(idPaciente);
+            return ResponseEntity.status(HttpStatus.OK).body("Paciente deletado com sucesso.");
+        }catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
+    }
 }

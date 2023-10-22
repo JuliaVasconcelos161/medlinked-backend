@@ -65,4 +65,10 @@ public class PlanoSaudePacienteServiceImpl implements PlanoSaudePacienteService 
     public List<PlanoSaude> getAllPlanosSaudePaciente(Integer idPaciente) {
         return planoSaudePacienteRepository.getAllPlanosSaudePaciente(idPaciente);
     }
+
+    @Transactional
+    @Override
+    public void disassociateAllPlanosSaudePaciente(Integer idPaciente) {
+        planoSaudePacienteRepository.disassociateAllPlanosSaudePaciente(idPaciente);
+    }
 }
