@@ -20,5 +20,7 @@ public interface MedicoCrmRepository {
 
     MedicoCrmResponseDto buildMedicoCrmResponseDto(Integer idMedico);
 
+    List<MedicoCrmResponseDto> buildMedicosCrmResponseByIdsMedicos(List<Integer> idsMedicos, int page, int pageSize);
+
     void deleteMedicoCrm(MedicoCRM medicoCrm);
 }

@@ -2,6 +2,7 @@ package com.medlinked.repositories.secretaria_medico_repository;
 
 import com.medlinked.entities.Secretaria;
 import com.medlinked.entities.dtos.MedicoCrmResponseDto;
+import com.medlinked.repositories.medicocrm_repository.MedicoCrmRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -13,10 +14,16 @@ public class SecretariaMedicoRepositoryClass implements SecretariaMedicoReposito
     @PersistenceContext
     EntityManager entityManager;
 
+    private final MedicoCrmRepository medicoCrmRepository;
+
+    public SecretariaMedicoRepositoryClass(MedicoCrmRepository medicoCrmRepository) {
+        this.medicoCrmRepository = medicoCrmRepository;
+    }
+
     @Override
     public List<MedicoCrmResponseDto> getAllMedicosSecretaria(Integer idSecretaria, int page, int pageSize) {
         List<Integer> idsMedicos = this.getAllIdsMedicosSecretaria(idSecretaria);
-        return this.buildMedicosCrmResponseByIdsMedicos(idsMedicos, page, pageSize);
+        return medicoCrmRepository.buildMedicosCrmResponseByIdsMedicos(idsMedicos, page, pageSize);
     }
 
     @Override
@@ -27,20 +34,6 @@ public class SecretariaMedicoRepositoryClass implements SecretariaMedicoReposito
         consulta.append(" where medico.idMedico = :IDMEDICO ");
         var query = entityManager.createQuery(consulta.toString(), Secretaria.class);
         query.setParameter("IDMEDICO", idMedico);
-        return query.getResultList();
-    }
-
-    private List<MedicoCrmResponseDto> buildMedicosCrmResponseByIdsMedicos(List<Integer> idsMedicos, int page, int pageSize) {
-        StringBuilder consulta = new StringBuilder(" select new com.medlinked.entities.dtos.MedicoCrmResponseDto( ");
-        consulta.append(" crm.medico.idMedico, crm.medico.pessoa.nome, crm.medico.pessoa.cpf, ");
-        consulta.append(" crm.medico.pessoa.email, crm.medico.pessoa.celular, estado.uf, crm.numeroCrm) ");
-        consulta.append(" from MedicoCRM crm ");
-        consulta.append(" where crm.idMedico in (:IDSMEDICOS) ");
-        consulta.append(" order by crm.medico.pessoa.nome ");
-        var query = entityManager.createQuery(consulta.toString(), MedicoCrmResponseDto.class);
-        query.setParameter("IDSMEDICOS", idsMedicos);
-        query.setFirstResult(page * pageSize);
-        query.setMaxResults(pageSize);
         return query.getResultList();
     }
 
