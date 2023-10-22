@@ -19,4 +19,6 @@ public interface MedicoCrmService {
     MedicoCrmResponseDto buildMedicoCrmResponseDto(Integer idMedico);
 
     List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico);
+
+    void deleteMedicoCrm(Integer idMedico);
 }

@@ -1,6 +1,7 @@
 package com.medlinked.repositories.secretaria_medico_repository;
 
 import com.medlinked.entities.MedicoCRM;
+import com.medlinked.entities.Secretaria;
 import com.medlinked.entities.dtos.MedicoCrmResponseDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -18,6 +19,28 @@ public class SecretariaMedicoRepositoryClass implements SecretariaMedicoReposito
         List<Integer> idsMedicos = this.getAllIdsMedicosSecretaria(idSecretaria);
         return this.buildMedicosCrmResponseByIdsMedicos(idsMedicos, page, pageSize);
     }
+
+    @Override
+    public void disassociateMedicoAllSecretarias(Integer idMedico) {
+        StringBuilder consulta = new StringBuilder(" delete medico from Secretaria secretaria ");
+        consulta.append(" inner join secretaria.medicos medico ");
+        consulta.append(" where medico.idMedico = :IDMEDICO ");
+        var query = entityManager.createQuery(consulta.toString());
+        query.setParameter("IDMEDICO", idMedico);
+        query.executeUpdate();
+    }
+
+    @Override
+    public List<Secretaria> getAllSecretariasMedico(Integer idMedico) {
+        StringBuilder consulta = new StringBuilder(" select secretaria ");
+        consulta.append(" from Secretaria secretaria ");
+        consulta.append(" inner join secretaria.medicos medico ");
+        consulta.append(" where medico.idMedico = :IDMEDICO ");
+        var query = entityManager.createQuery(consulta.toString(), Secretaria.class);
+        query.setParameter("IDMEDICO", idMedico);
+        return query.getResultList();
+    }
+
     private List<MedicoCrmResponseDto> buildMedicosCrmResponseByIdsMedicos(List<Integer> idsMedicos, int page, int pageSize) {
         StringBuilder consulta = new StringBuilder(" select new com.medlinked.entities.dtos.MedicoCrmResponseDto( ");
         consulta.append(" crm.medico.idMedico, crm.medico.pessoa.nome, crm.medico.pessoa.cpf, ");

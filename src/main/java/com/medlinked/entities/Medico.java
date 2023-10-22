@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
@@ -36,5 +37,10 @@ public class Medico {
     public void removePlanoSaude(PlanoSaude planoSaude) {
         this.planosSaude.remove(planoSaude);
         planoSaude.getMedicos().remove(this);
+    }
+
+    public void removeAllPlanosSaude(List<PlanoSaude> planosSaude) {
+        this.planosSaude.removeAll(planosSaude);
+        planosSaude.forEach(plano -> plano.getMedicos().remove(this));
     }
 }

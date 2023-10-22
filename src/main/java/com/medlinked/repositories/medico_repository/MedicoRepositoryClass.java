@@ -43,5 +43,10 @@ public class MedicoRepositoryClass implements MedicoRepository {
         return medico;
     }
 
+    @Override
+    public void deleteMedico(Medico medico) {
+        entityManager.remove(medico);
+    }
+
 
 }

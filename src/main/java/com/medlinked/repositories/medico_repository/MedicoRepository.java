@@ -13,4 +13,6 @@ public interface MedicoRepository {
     Medico getOneMedico(Integer idMedico);
 
     Medico updateMedico(Medico medico);
+
+    void deleteMedico(Medico medico);
 }

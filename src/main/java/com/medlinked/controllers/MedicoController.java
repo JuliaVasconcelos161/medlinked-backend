@@ -63,4 +63,15 @@ public class MedicoController {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
     }
+
+    @Operation(summary = "Deleta médico utilizando idMedico informado.")
+    @DeleteMapping("/delete/{idMedico}")
+    public ResponseEntity<Object> deleteMedico(@PathVariable Integer idMedico) {
+        try{
+            medicoService.deleteMedico(idMedico);
+            return ResponseEntity.status(HttpStatus.OK).body("Médico deletado com sucesso.");
+        }catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
+    }
 }

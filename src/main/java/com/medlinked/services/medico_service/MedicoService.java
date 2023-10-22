@@ -14,4 +14,6 @@ public interface MedicoService {
     List<Medico> getAll();
 
     MedicoCrmResponseDto updateMedico(Integer idMedico, MedicoDto medicoDto);
+
+    void deleteMedico(Integer idMedico);
 }
