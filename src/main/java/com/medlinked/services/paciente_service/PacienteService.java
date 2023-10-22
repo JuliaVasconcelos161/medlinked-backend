@@ -5,8 +5,6 @@ import com.medlinked.entities.dtos.PacienteDto;
 import com.medlinked.entities.dtos.PacienteResponseDto;
 import org.springframework.data.domain.Page;
 
-import java.util.List;
-
 public interface PacienteService {
     PacienteResponseDto createPaciente(PacienteDto pacienteDto);
 
@@ -16,4 +14,6 @@ public interface PacienteService {
 
 
     Page<Paciente> getAllPacientes(String nomePaciente, String cpf, int page, int pageSize);
+
+    void deletePaciente(Integer idPaciente);
 }

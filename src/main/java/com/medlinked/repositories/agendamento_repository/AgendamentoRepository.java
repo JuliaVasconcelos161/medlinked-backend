@@ -20,4 +20,6 @@ public interface AgendamentoRepository {
     void deleteAgendamento(Agendamento agendamento);
 
     void deleteAllAgendamentosMedico(Integer idMedico);
+
+    void deleteAllAgendamentosPaciente(Integer idPaciente);
 }

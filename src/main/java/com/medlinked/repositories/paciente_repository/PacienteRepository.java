@@ -14,4 +14,6 @@ public interface PacienteRepository {
     List<Paciente> getAllPacientes(String nomePaciente, String cpf, int page, int pageSize);
 
     Long countPacientes();
+
+    void deletePaciente(Paciente paciente);
 }

@@ -6,8 +6,10 @@ import com.medlinked.entities.Pessoa;
 import com.medlinked.entities.dtos.PacienteDto;
 import com.medlinked.entities.dtos.PacienteResponseDto;
 import com.medlinked.repositories.paciente_repository.PacienteRepository;
+import com.medlinked.services.agedamento_service.AgendamentoService;
 import com.medlinked.services.endereco_service.EnderecoService;
 import com.medlinked.services.pessoa_service.PessoaService;
+import com.medlinked.services.planosaude_paciente_service.PlanoSaudePacienteService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,13 +21,20 @@ import java.util.List;
 @Service
 public class PacienteServiceImpl implements PacienteService {
 
-    private final PacienteRepository pacienteRepository;
+    private final PlanoSaudePacienteService planoSaudePacienteService;
+
+    private final AgendamentoService agendamentoService;
 
     private final PessoaService pessoaService;
 
     private final EnderecoService enderecoService;
 
-    public PacienteServiceImpl(PacienteRepository pacienteRepository, PessoaService pessoaService, EnderecoService enderecoService) {
+    private final PacienteRepository pacienteRepository;
+    public PacienteServiceImpl(PlanoSaudePacienteService planoSaudePacienteService, AgendamentoService agendamentoService,
+                               PacienteRepository pacienteRepository, PessoaService pessoaService,
+                               EnderecoService enderecoService) {
+        this.planoSaudePacienteService = planoSaudePacienteService;
+        this.agendamentoService = agendamentoService;
         this.pacienteRepository = pacienteRepository;
         this.pessoaService = pessoaService;
         this.enderecoService = enderecoService;
@@ -68,5 +77,15 @@ public class PacienteServiceImpl implements PacienteService {
         PageRequest pageRequest = PageRequest.of(page, pageSize);
         Long total =  pacienteRepository.countPacientes();
         return new PageImpl<>(pacientes, pageRequest, total);
+    }
+
+    @Transactional
+    @Override
+    public void deletePaciente(Integer idPaciente) {
+        Paciente paciente = pacienteRepository.getOnePaciente(idPaciente);
+        agendamentoService.deleteAllAgendamentosPaciente(idPaciente);
+        planoSaudePacienteService.disassociateAllPlanosSaudePaciente(idPaciente);
+        enderecoService.deleteEndereco(idPaciente);
+        pacienteRepository.deletePaciente(paciente);
     }
 }

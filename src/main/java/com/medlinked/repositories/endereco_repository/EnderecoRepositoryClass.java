@@ -33,4 +33,9 @@ public class EnderecoRepositoryClass implements EnderecoRepository {
         entityManager.flush();
         return endereco;
     }
+
+    @Override
+    public void deleteEndereco(Endereco endereco) {
+        entityManager.remove(endereco);
+    }
 }

@@ -9,4 +9,6 @@ public interface EnderecoService {
 
     Endereco getOneEndereco(Integer idPaciente);
     Endereco updateEndereco(EnderecoDto enderecoDto, Paciente paciente);
+
+    void deleteEndereco(Integer idPaciente);
 }

@@ -79,6 +79,15 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
         query.executeUpdate();
     }
 
+    @Override
+    public void deleteAllAgendamentosPaciente(Integer idPaciente) {
+        StringBuilder consulta = new StringBuilder(" delete from Agendamento a ");
+        consulta.append(" where a.paciente.idPaciente = :IDPACIENTE ");
+        var query = entityManager.createQuery(consulta.toString());
+        query.setParameter("IDPACIENTE", idPaciente);
+        query.executeUpdate();
+    }
+
     private String consultaValidateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
                                                       Integer idAgendamento) {
         StringBuilder consulta = new StringBuilder(" select count(1) ");

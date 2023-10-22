@@ -69,4 +69,9 @@ public class PacienteRepositoryClass implements PacienteRepository {
         return query.getSingleResult();
     }
 
+    @Override
+    public void deletePaciente(Paciente paciente) {
+        entityManager.remove(paciente);
+    }
+
 }
