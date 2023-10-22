@@ -23,7 +23,7 @@ public class SecretariaMedicoController {
                                                             @PathVariable Integer idMedico) {
         try{
             secretariaMedicoService.associateSecretariaMedico(idSecretaria, idMedico);
-            return ResponseEntity.status(HttpStatus.OK).body("Médico associado com sucesso");
+            return ResponseEntity.status(HttpStatus.OK).body("Médico associado com sucesso.");
         }catch (MedLinkedException e) {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
