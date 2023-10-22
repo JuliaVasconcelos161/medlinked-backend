@@ -1,6 +1,7 @@
 package com.medlinked.entities.dtos;
 
 import com.medlinked.entities.Especialidade;
+import com.medlinked.entities.Estado;
 import com.medlinked.entities.PlanoSaude;
 import lombok.*;
 
@@ -24,20 +25,20 @@ public class MedicoCrmResponseDto {
 
     List<PlanoSaude> planosSaudeMedico;
 
-    private String descricaoUf;
+    private Estado estado;
 
     private Integer numeroCrm;
 
     private List<Especialidade> especialidades;
 
     public MedicoCrmResponseDto(Integer idMedico, String nome, Long cpf, String email, Long celular,
-                                String descricaoUf, Integer numeroCrm) {
+                                Estado estado, Integer numeroCrm) {
         this.idMedico = idMedico;
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
         this.celular = celular;
-        this.descricaoUf = descricaoUf;
+        this.estado = estado;
         this.numeroCrm = numeroCrm;
     }
 }
