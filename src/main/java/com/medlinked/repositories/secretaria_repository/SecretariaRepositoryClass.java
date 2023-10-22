@@ -32,4 +32,9 @@ public class SecretariaRepositoryClass implements SecretariaRepository {
         entityManager.flush();
         return secretaria;
     }
+
+    @Override
+    public void deleteSecretaria(Secretaria secretaria) {
+        entityManager.remove(secretaria);
+    }
 }

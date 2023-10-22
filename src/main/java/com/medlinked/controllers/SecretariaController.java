@@ -51,4 +51,14 @@ public class SecretariaController {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
     }
+    @Operation(summary = "Deleta secretária e seu usuário.")
+    @DeleteMapping("/delete/{idSecretaria}")
+    public ResponseEntity<Object> deleteSecretaria(@PathVariable Integer idSecretaria) {
+        try {
+            secretariaService.deleteSecretaria(idSecretaria);
+            return ResponseEntity.status(HttpStatus.OK).body("Secretária deletada com sucesso.");
+        }catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
+    }
 }

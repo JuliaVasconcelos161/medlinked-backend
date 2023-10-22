@@ -10,4 +10,6 @@ public interface SecretariaService {
     Secretaria updateSecretaria(SecretariaDto secretariaDto, Integer idSecretaria);
 
     Secretaria getOneSecretaria(Integer idSecretaria);
+
+    void deleteSecretaria(Integer idSecretaria);
 }

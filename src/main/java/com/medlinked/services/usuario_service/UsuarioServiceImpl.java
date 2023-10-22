@@ -90,5 +90,11 @@ public class UsuarioServiceImpl implements UsuarioService {
         usuario.setPassword(passwordEncoder.encode(updateSenhaUsuarioDto.getNewPassword()));
         return usuarioRepository.updateUsuario(usuario);
     }
+    @Transactional
+    @Override
+    public void deleteUsuario(Integer idUsuario) {
+        Usuario usuario = usuarioRepository.getOneUsuario(idUsuario);
+        usuarioRepository.deleteUsuario(usuario);
+    }
 
 }

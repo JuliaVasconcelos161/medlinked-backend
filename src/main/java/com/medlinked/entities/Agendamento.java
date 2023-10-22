@@ -34,9 +34,6 @@ public class Agendamento {
     @Column(nullable = false, length = 30)
     @Enumerated(EnumType.STRING)
     private TipoAgendamento tipoAgendamento;
-    @ManyToOne
-    @JoinColumn(name = "id_secretaria", nullable = false)
-    private Secretaria secretaria;
 
     @ManyToOne
     @JoinColumn(name = "id_medico", nullable = false)

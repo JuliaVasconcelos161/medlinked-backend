@@ -12,4 +12,6 @@ public interface UsuarioRepository {
     Usuario getOneUsuario(Integer idUsuario);
 
     Usuario updateUsuario(Usuario usuario);
+
+    void deleteUsuario(Usuario usuario);
 }
