@@ -10,7 +10,8 @@ public interface AgendamentoService {
 
     Agendamento updateAgendamento(AgendamentoDto agendamentoDto, Integer idAgendamento);
 
-    List<Agendamento> getAllAgendamentosMedicosSecretaria(Integer idSecretaria, Integer idMedico, Integer idPacientes);
+    List<Agendamento> getAllAgendamentosMedicosSecretaria(
+            Integer idSecretaria, Integer idMedico, Integer idPaciente, Integer mes, Integer ano);
 
     void deleteAgendamento(Integer idAgendamento);
 

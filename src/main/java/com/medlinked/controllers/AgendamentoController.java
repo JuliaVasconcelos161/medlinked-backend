@@ -44,9 +44,11 @@ public class AgendamentoController {
     @GetMapping("/{idSecretaria}")
     public ResponseEntity<Object> getAllAgendamentosMedicosSecretaria(@PathVariable Integer idSecretaria,
                                                                       @RequestParam(required = false) Integer idMedico,
-                                                                      @RequestParam(required = false) Integer idPaciente) {
+                                                                      @RequestParam(required = false) Integer idPaciente,
+                                                                      @RequestParam(required = false) Integer mes,
+                                                                      @RequestParam(required = false) Integer ano) {
         return ResponseEntity.status(HttpStatus.OK).body(agendamentoService
-                .getAllAgendamentosMedicosSecretaria(idSecretaria, idMedico, idPaciente));
+                .getAllAgendamentosMedicosSecretaria(idSecretaria, idMedico, idPaciente, mes, ano));
     }
 
     @Operation(summary = "Deleta agendamento utilizando idAgendamento informado.")

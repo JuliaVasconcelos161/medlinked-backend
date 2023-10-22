@@ -24,18 +24,8 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
     @Override
     public void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
                                            Integer idMedico, Integer idAgendamento) {
-        StringBuilder consulta = new StringBuilder(" select count(1) ");
-        consulta.append(" from Agendamento a ");
-        consulta.append(" where ('");
-        consulta.append(dataHoraInicioAgendamento);
-        consulta.append("' between a.dataHoraInicioAgendamento and a.dataHoraFimAgendamento ");
-        consulta.append(" or '");
-        consulta.append(dataHoraFimAgendamento);
-        consulta.append("' between a.dataHoraInicioAgendamento and a.dataHoraFimAgendamento) ");
-        consulta.append(" and a.medico.idMedico = :IDMEDICO ");
-        if(idAgendamento != null)
-            consulta.append(" and a.idAgendamento != :IDAGENDAMENTO ");
-        var query = entityManager.createQuery(consulta.toString(), Long.class);
+        var query = entityManager.createQuery(this.consultaValidateHorarioAgendamento(
+                dataHoraInicioAgendamento,dataHoraFimAgendamento, idAgendamento), Long.class);
         query.setParameter("IDMEDICO", idMedico);
         if(idAgendamento != null)
             query.setParameter("IDAGENDAMENTO", idAgendamento);
@@ -60,27 +50,17 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
 
     @Override
     public List<Agendamento> getAllAgendamentosMedicosSecretaria(Integer idSecretaria, Integer idMedico,
-                                                                 Integer idPaciente) {
-        StringBuilder consulta = new StringBuilder(" select a ");
-        consulta.append(" from Agendamento a ");
-        consulta.append(" inner join a.medico medico ");
-        if(idPaciente != null)
-            consulta.append(" inner join a.paciente paciente ");
-        consulta.append(" where medico.idMedico in (");
-        consulta.append("   select medico.idMedico ");
-        consulta.append("   from Secretaria secretaria ");
-        consulta.append("   inner join secretaria.medicos medico ");
-        consulta.append("   where secretaria.idSecretaria = :IDSECRETARIA) ");
-        if(idMedico != null)
-            consulta.append(" and medico.idMedico = :IDMEDICO ");
-        if(idPaciente != null)
-            consulta.append(" and paciente.idPaciente = :IDPACIENTE ");
-        consulta.append(" order by a.dataHoraInicioAgendamento ");
-        var query = entityManager.createQuery(consulta.toString(), Agendamento.class);
+                                                                 Integer idPaciente, Integer mes, Integer ano) {
+        var query = entityManager.createQuery(this.consultaGetAllAgendamentosMedicosSecretaria(
+                idMedico,idPaciente,mes,ano), Agendamento.class);
         if(idMedico != null)
             query.setParameter("IDMEDICO", idMedico);
         if(idPaciente != null)
             query.setParameter("IDPACIENTE", idPaciente);
+        if(mes != null)
+            query.setParameter("MES", mes);
+        if(ano != null)
+            query.setParameter("ANO", ano);
         query.setParameter("IDSECRETARIA", idSecretaria);
         return query.getResultList();
     }
@@ -97,5 +77,45 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
         var query = entityManager.createQuery(consulta.toString());
         query.setParameter("IDMEDICO", idMedico);
         query.executeUpdate();
+    }
+
+    private String consultaValidateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
+                                                      Integer idAgendamento) {
+        StringBuilder consulta = new StringBuilder(" select count(1) ");
+        consulta.append(" from Agendamento a ");
+        consulta.append(" where ('");
+        consulta.append(dataHoraInicioAgendamento);
+        consulta.append("' between a.dataHoraInicioAgendamento and a.dataHoraFimAgendamento ");
+        consulta.append(" or '");
+        consulta.append(dataHoraFimAgendamento);
+        consulta.append("' between a.dataHoraInicioAgendamento and a.dataHoraFimAgendamento) ");
+        consulta.append(" and a.medico.idMedico = :IDMEDICO ");
+        if(idAgendamento != null)
+            consulta.append(" and a.idAgendamento != :IDAGENDAMENTO ");
+        return consulta.toString();
+    }
+
+    private String consultaGetAllAgendamentosMedicosSecretaria(Integer idMedico, Integer idPaciente,
+                                                               Integer mes, Integer ano) {
+        StringBuilder consulta = new StringBuilder(" select a ");
+        consulta.append(" from Agendamento a ");
+        consulta.append(" inner join a.medico medico ");
+        if(idPaciente != null)
+            consulta.append(" inner join a.paciente paciente ");
+        consulta.append(" where medico.idMedico in (");
+        consulta.append("   select medico.idMedico ");
+        consulta.append("   from Secretaria secretaria ");
+        consulta.append("   inner join secretaria.medicos medico ");
+        consulta.append("   where secretaria.idSecretaria = :IDSECRETARIA) ");
+        if(idMedico != null)
+            consulta.append(" and medico.idMedico = :IDMEDICO ");
+        if(idPaciente != null)
+            consulta.append(" and paciente.idPaciente = :IDPACIENTE ");
+        if(mes != null)
+            consulta.append(" and month(a.dataHoraInicioAgendamento) = :MES ");
+        if(ano != null)
+            consulta.append(" and year(a.dataHoraInicioAgendamento) = :ANO ");
+        consulta.append(" order by a.dataHoraInicioAgendamento ");
+        return consulta.toString();
     }
 }
