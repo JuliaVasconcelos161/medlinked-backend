@@ -56,4 +56,9 @@ public class UsuarioRepositoryClass implements UsuarioRepository {
         entityManager.flush();
         return usuario;
     }
+
+    @Override
+    public void deleteUsuario(Usuario usuario) {
+        entityManager.remove(usuario);
+    }
 }

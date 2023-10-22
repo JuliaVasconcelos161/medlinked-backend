@@ -4,17 +4,12 @@ import com.medlinked.enums.TipoAgendamento;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 public class AgendamentoDto {
-
-    @NotNull
-    private Integer idSecretaria;
 
     @NotNull
     private Integer idMedico;

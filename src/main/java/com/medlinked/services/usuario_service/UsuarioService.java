@@ -14,4 +14,5 @@ public interface UsuarioService {
     UsuarioResponseDto authenticate(UsuarioRegisterDto usuarioRegisterDto);
 
     Usuario updateSenhaUsuario(UpdateSenhaUsuarioDto updateSenhaUsuarioDto, Integer idUsuario);
+    void deleteUsuario(Integer idUsuario);
 }

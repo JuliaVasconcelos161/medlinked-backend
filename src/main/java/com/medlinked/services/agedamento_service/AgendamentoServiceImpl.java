@@ -1,6 +1,9 @@
 package com.medlinked.services.agedamento_service;
 
-import com.medlinked.entities.*;
+import com.medlinked.entities.Agendamento;
+import com.medlinked.entities.Medico;
+import com.medlinked.entities.Paciente;
+import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.AgendamentoDto;
 import com.medlinked.exceptions.AgendamentoException;
 import com.medlinked.repositories.agendamento_repository.AgendamentoRepository;
@@ -44,7 +47,6 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     public Agendamento createAgendamento(AgendamentoDto agendamentoDto) {
         this.validateHorarioAgendamento(agendamentoDto.getDataHoraInicioAgendamento(),
                 agendamentoDto.getDataHoraFimAgendamento(), agendamentoDto.getIdMedico(), null);
-        Secretaria secretaria = secretariaRepository.getOneSecretaria(agendamentoDto.getIdSecretaria());
         Medico medico = medicoRepository.getOneMedico(agendamentoDto.getIdMedico());
         Paciente paciente = pacienteRepository.getOnePaciente(agendamentoDto.getIdPaciente());
         PlanoSaude planoSaude = agendamentoDto.getIdPlanoSaude() != null ?
@@ -55,7 +57,6 @@ public class AgendamentoServiceImpl implements AgendamentoService {
                 .dataHoraInicioAgendamento(LocalDateTime.parse(agendamentoDto.getDataHoraInicioAgendamento(), FORMATTER))
                 .dataHoraFimAgendamento(LocalDateTime.parse(agendamentoDto.getDataHoraFimAgendamento(), FORMATTER))
                 .descricao(agendamentoDto.getDescricao())
-                .secretaria(secretaria)
                 .medico(medico)
                 .paciente(paciente)
                 .planoSaude(planoSaude)
@@ -73,10 +74,6 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         agendamento.setDataHoraInicioAgendamento(LocalDateTime.parse(agendamentoDto.getDataHoraInicioAgendamento(), FORMATTER));
         agendamento.setDataHoraFimAgendamento(LocalDateTime.parse(agendamentoDto.getDataHoraFimAgendamento(), FORMATTER));
         agendamento.setDescricao(agendamentoDto.getDescricao());
-        if(!agendamento.getSecretaria().getIdSecretaria().equals(agendamentoDto.getIdSecretaria())) {
-            Secretaria secretaria = secretariaRepository.getOneSecretaria(agendamentoDto.getIdSecretaria());
-            agendamento.setSecretaria(secretaria);
-        }
         if(!agendamento.getMedico().getIdMedico().equals(agendamentoDto.getIdMedico())) {
             Medico medico = medicoRepository.getOneMedico(agendamentoDto.getIdMedico());
             agendamento.setMedico(medico);

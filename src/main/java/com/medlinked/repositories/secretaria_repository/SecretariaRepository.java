@@ -8,4 +8,6 @@ public interface SecretariaRepository {
     Secretaria getOneSecretaria(Integer idSecretaria);
 
     Secretaria updateSecretaria(Secretaria secretaria);
+
+    void deleteSecretaria(Secretaria secretaria);
 }
