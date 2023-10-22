@@ -65,5 +65,7 @@ public class SecretariaServiceImpl implements SecretariaService {
             throw new ExistsVinculoMedicoSecretariaException();
         secretariaRepository.deleteSecretaria(secretaria);
         usuarioService.deleteUsuario(idSecretaria);
+        if(pessoaService.existsPessoa(idSecretaria))
+            pessoaService.deletePessoa(idSecretaria);
     }
 }
