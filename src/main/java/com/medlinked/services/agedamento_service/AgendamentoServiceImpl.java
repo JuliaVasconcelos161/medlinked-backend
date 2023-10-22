@@ -12,6 +12,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static com.medlinked.utils.JavaDateFormatter.FORMATTER;
 
@@ -92,6 +93,11 @@ public class AgendamentoServiceImpl implements AgendamentoService {
             agendamento.setPlanoSaude(planoSaude);
         }
         return agendamentoRepository.updateAgendamento(agendamento);
+    }
+
+    @Override
+    public List<Agendamento> getAllAgendamentosMedicosSecretaria(Integer idSecretaria) {
+        return agendamentoRepository.getAllAgendamentosMedicosSecretaria(idSecretaria);
     }
 
     private void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
