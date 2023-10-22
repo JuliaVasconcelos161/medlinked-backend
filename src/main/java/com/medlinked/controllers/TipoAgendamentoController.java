@@ -1,6 +1,7 @@
 package com.medlinked.controllers;
 
 import com.medlinked.services.tipoagendamento_service.TipoAgendamentoService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,6 +18,7 @@ public class TipoAgendamentoController {
         this.tipoAgendamentoService = tipoAgendamentoService;
     }
 
+    @Operation(summary = "Retorna todos os tipos de agendamento.")
     @GetMapping
     public ResponseEntity<Object> getAllTiposAgendamento(){
         return ResponseEntity.status(HttpStatus.OK).body(tipoAgendamentoService.getAllTipoAgendamento());
