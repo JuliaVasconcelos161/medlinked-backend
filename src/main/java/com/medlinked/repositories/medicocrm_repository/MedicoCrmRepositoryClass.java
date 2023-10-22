@@ -65,7 +65,7 @@ public class MedicoCrmRepositoryClass implements MedicoCrmRepository {
     public MedicoCrmResponseDto buildMedicoCrmResponseDto(Integer idMedico) {
         StringBuilder consulta = new StringBuilder(" select new com.medlinked.entities.dtos.MedicoCrmResponseDto( ");
         consulta.append(" crm.medico.idMedico, crm.medico.pessoa.nome, crm.medico.pessoa.cpf, ");
-        consulta.append(" crm.medico.pessoa.email, crm.medico.pessoa.celular, estado.uf, crm.numeroCrm) ");
+        consulta.append(" crm.medico.pessoa.email, crm.medico.pessoa.celular, estado.descricao, crm.numeroCrm) ");
         consulta.append(" from MedicoCRM crm ");
         consulta.append(" inner join crm.estado estado ");
         consulta.append(" where crm.medico.idMedico = :IDMEDICO ");
@@ -73,7 +73,20 @@ public class MedicoCrmRepositoryClass implements MedicoCrmRepository {
         query.setParameter("IDMEDICO", idMedico);
         return query.getSingleResult();
     }
-
+    @Override
+    public List<MedicoCrmResponseDto> buildMedicosCrmResponseByIdsMedicos(List<Integer> idsMedicos, int page, int pageSize) {
+        StringBuilder consulta = new StringBuilder(" select new com.medlinked.entities.dtos.MedicoCrmResponseDto( ");
+        consulta.append(" crm.medico.idMedico, crm.medico.pessoa.nome, crm.medico.pessoa.cpf, ");
+        consulta.append(" crm.medico.pessoa.email, crm.medico.pessoa.celular, estado.descricao, crm.numeroCrm) ");
+        consulta.append(" from MedicoCRM crm ");
+        consulta.append(" where crm.idMedico in (:IDSMEDICOS) ");
+        consulta.append(" order by crm.medico.pessoa.nome ");
+        var query = entityManager.createQuery(consulta.toString(), MedicoCrmResponseDto.class);
+        query.setParameter("IDSMEDICOS", idsMedicos);
+        query.setFirstResult(page * pageSize);
+        query.setMaxResults(pageSize);
+        return query.getResultList();
+    }
     @Override
     public void deleteMedicoCrm(MedicoCRM medicoCrm) {
         entityManager.remove(medicoCrm);

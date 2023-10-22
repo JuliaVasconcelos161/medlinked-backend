@@ -24,20 +24,20 @@ public class MedicoCrmResponseDto {
 
     List<PlanoSaude> planosSaudeMedico;
 
-    private String ufCrm;
+    private String descricaoUf;
 
     private Integer numeroCrm;
 
     private List<Especialidade> especialidades;
 
     public MedicoCrmResponseDto(Integer idMedico, String nome, Long cpf, String email, Long celular,
-                                String ufCrm, Integer numeroCrm) {
+                                String descricaoUf, Integer numeroCrm) {
         this.idMedico = idMedico;
         this.nome = nome;
         this.cpf = cpf;
         this.email = email;
         this.celular = celular;
-        this.ufCrm = ufCrm;
+        this.descricaoUf = descricaoUf;
         this.numeroCrm = numeroCrm;
     }
 }
