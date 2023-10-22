@@ -80,4 +80,27 @@ public class PessoaRepositoryClass implements PessoaRepository {
             return null;
         }
     }
+
+    @Override
+    public boolean existsPessoa(Integer idPessoa) {
+        StringBuilder consulta = new StringBuilder(" select count(1) ");
+        consulta.append(" from Pessoa pessoa ");
+        consulta.append(" where not exists( select medico ");
+        consulta.append("   from Medico medico ");
+        consulta.append("   where medico.idMedico = :IDPESSOA) ");
+        consulta.append("and not exists( select secretaria ");
+        consulta.append("   from Secretaria secretaria ");
+        consulta.append("   where secretaria.idSecretaria = :IDPESSOA) ");
+        consulta.append("and not exists( select paciente ");
+        consulta.append("   from Paciente paciente ");
+        consulta.append("   where paciente.idPaciente = :IDPESSOA) ");
+        var query = entityManager.createQuery(consulta.toString(), Long.class);
+        query.setParameter("IDPESSOA", idPessoa);
+        return query.getSingleResult() > 0;
+    }
+
+    @Override
+    public void deletePessoa(Pessoa pessoa) {
+        entityManager.remove(pessoa);
+    }
 }

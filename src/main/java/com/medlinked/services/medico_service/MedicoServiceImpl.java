@@ -83,6 +83,8 @@ public class MedicoServiceImpl implements MedicoService {
         agendamentoService.deleteAllAgendamentosMedico(idMedico);
         medicoCrmService.deleteMedicoCrm(idMedico);
         medicoRepository.deleteMedico(medico);
+        if(pessoaService.existsPessoa(idMedico))
+            pessoaService.deletePessoa(idMedico);
     }
 
 }

@@ -14,4 +14,8 @@ public interface PessoaRepository {
     boolean existsEspecializacaoPessoaByEmail(String email, String especializacaoPessoa);
 
     Pessoa returnPessoaByCpf(String cpf);
+
+    boolean existsPessoa(Integer idPessoa);
+
+    void deletePessoa(Pessoa pessoa);
 }

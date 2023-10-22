@@ -68,6 +68,18 @@ public class PessoaServiceImpl implements PessoaService {
         return pessoaRepository.getOnePessoa(idPessoa);
     }
 
+    @Override
+    public boolean existsPessoa(Integer idPessoa) {
+        return pessoaRepository.existsPessoa(idPessoa);
+    }
+
+    @Transactional
+    @Override
+    public void deletePessoa(Integer idPessoa) {
+        Pessoa pessoa = pessoaRepository.getOnePessoa(idPessoa);
+        pessoaRepository.deletePessoa(pessoa);
+    }
+
     private void validatePessoaUpdate(Long cpfPessoa, String cpfDto, String especializacaoPessoa,
                                       String emailPessoa, String emailDto) {
         this.validateCpfUpdatePessoa(cpfPessoa, cpfDto, especializacaoPessoa);
