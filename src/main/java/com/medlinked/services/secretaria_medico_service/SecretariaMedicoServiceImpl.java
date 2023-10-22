@@ -70,4 +70,14 @@ public class SecretariaMedicoServiceImpl implements SecretariaMedicoService {
         Long total =  secretariaMedicoRepository.countMedicosSecretaria(idSecretaria);
         return new PageImpl<>(medicos, pageRequest, total);
     }
+
+    @Transactional
+    @Override
+    public void disassociateMedicoAllSecretarias(Medico medico) {
+        List<Secretaria> secretariasMedico = secretariaMedicoRepository.getAllSecretariasMedico(medico.getIdMedico());
+        secretariasMedico.forEach(secretaria -> {
+            secretaria.getMedicos().remove(medico);
+            secretariaRepository.updateSecretaria(secretaria);
+        });
+    }
 }

@@ -3,9 +3,12 @@ package com.medlinked.services.medico_service;
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.MedicoCRM;
 import com.medlinked.entities.Pessoa;
+import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.MedicoCrmResponseDto;
 import com.medlinked.entities.dtos.MedicoDto;
 import com.medlinked.repositories.medico_repository.MedicoRepository;
+import com.medlinked.repositories.planosaude_medico_repository.PlanoSaudeMedicoRepository;
+import com.medlinked.services.agedamento_service.AgendamentoService;
 import com.medlinked.services.medicocrm_service.MedicoCrmService;
 import com.medlinked.services.pessoa_service.PessoaService;
 import com.medlinked.services.secretaria_medico_service.SecretariaMedicoService;
@@ -17,19 +20,24 @@ import java.util.List;
 @Service
 public class MedicoServiceImpl implements MedicoService {
 
+    private final AgendamentoService agendamentoService;
+
     private final SecretariaMedicoService secretariaMedicoService;
 
     private final MedicoCrmService medicoCrmService;
 
     private final PessoaService pessoaService;
 
+    private final PlanoSaudeMedicoRepository planoSaudeMedicoRepository;
     private final MedicoRepository medicoRepository;
 
-    public MedicoServiceImpl(SecretariaMedicoService secretariaMedicoService, MedicoCrmService medicoCrmService,
-                             PessoaService pessoaService, MedicoRepository medicoRepository) {
+    public MedicoServiceImpl(AgendamentoService agendamentoService, SecretariaMedicoService secretariaMedicoService, MedicoCrmService medicoCrmService,
+                             PessoaService pessoaService, PlanoSaudeMedicoRepository planoSaudeMedicoRepository, MedicoRepository medicoRepository) {
+        this.agendamentoService = agendamentoService;
         this.secretariaMedicoService = secretariaMedicoService;
         this.medicoCrmService = medicoCrmService;
         this.pessoaService = pessoaService;
+        this.planoSaudeMedicoRepository = planoSaudeMedicoRepository;
         this.medicoRepository = medicoRepository;
     }
 
@@ -62,6 +70,19 @@ public class MedicoServiceImpl implements MedicoService {
         medicoRepository.updateMedico(medico);
         MedicoCRM medicoCrm = medicoCrmService.updateMedicoCrm(medico, medicoDto);
         return medicoCrmService.buildMedicoCrmResponseDto(medicoCrm.getIdMedico());
+    }
+
+    @Transactional
+    @Override
+    public void deleteMedico(Integer idMedico) {
+        Medico medico = medicoRepository.getOneMedico(idMedico);
+        List<PlanoSaude> planosSaudeMedico = planoSaudeMedicoRepository
+                .getAllPlanosSaudeMedico(idMedico, null, null);
+        medico.removeAllPlanosSaude(planosSaudeMedico);
+        secretariaMedicoService.disassociateMedicoAllSecretarias(medico);
+        agendamentoService.deleteAllAgendamentosMedico(idMedico);
+        medicoCrmService.deleteMedicoCrm(idMedico);
+        medicoRepository.deleteMedico(medico);
     }
 
 }

@@ -19,4 +19,6 @@ public interface MedicoCrmRepository {
     MedicoCRM updateMedicoCrm(MedicoCRM medicoCrm);
 
     MedicoCrmResponseDto buildMedicoCrmResponseDto(Integer idMedico);
+
+    void deleteMedicoCrm(MedicoCRM medicoCrm);
 }

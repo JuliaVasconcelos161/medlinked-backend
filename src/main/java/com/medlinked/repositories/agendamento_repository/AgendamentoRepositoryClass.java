@@ -89,4 +89,13 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
     public void deleteAgendamento(Agendamento agendamento) {
         entityManager.remove(agendamento);
     }
+
+    @Override
+    public void deleteAllAgendamentosMedico(Integer idMedico) {
+        StringBuilder consulta = new StringBuilder(" delete from Agendamento a ");
+        consulta.append(" where a.medico.idMedico = :IDMEDICO ");
+        var query = entityManager.createQuery(consulta.toString());
+        query.setParameter("IDMEDICO", idMedico);
+        query.executeUpdate();
+    }
 }

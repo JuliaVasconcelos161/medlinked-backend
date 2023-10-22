@@ -82,4 +82,11 @@ public class MedicoCrmServiceImpl implements MedicoCrmService {
     public List<Especialidade> getEspecialidadesMedicoByCrm(Integer idMedico) {
         return medicoCrmRepository.getEspecialidadesMedicoByCrm(idMedico);
     }
+
+    @Transactional
+    @Override
+    public void deleteMedicoCrm(Integer idMedico) {
+        MedicoCRM medicoCrm = medicoCrmRepository.getOneCrmByMedico(idMedico);
+        medicoCrmRepository.deleteMedicoCrm(medicoCrm);
+    }
 }

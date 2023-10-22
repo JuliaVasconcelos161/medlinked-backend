@@ -73,4 +73,9 @@ public class MedicoCrmRepositoryClass implements MedicoCrmRepository {
         query.setParameter("IDMEDICO", idMedico);
         return query.getSingleResult();
     }
+
+    @Override
+    public void deleteMedicoCrm(MedicoCRM medicoCrm) {
+        entityManager.remove(medicoCrm);
+    }
 }
