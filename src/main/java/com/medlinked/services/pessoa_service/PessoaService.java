@@ -15,4 +15,8 @@ public interface PessoaService {
     Pessoa getPessoaByCpf(Long cpf);
 
     Pessoa getOnePessoa(Integer idPessoa);
+
+    boolean existsPessoa(Integer idPessoa);
+
+    void deletePessoa(Integer idPessoa);
 }
