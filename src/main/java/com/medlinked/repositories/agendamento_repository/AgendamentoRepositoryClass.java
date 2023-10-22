@@ -84,4 +84,9 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
         query.setParameter("IDSECRETARIA", idSecretaria);
         return query.getResultList();
     }
+
+    @Override
+    public void deleteAgendamento(Agendamento agendamento) {
+        entityManager.remove(agendamento);
+    }
 }

@@ -15,4 +15,6 @@ public interface AgendamentoRepository {
     Agendamento updateAgendamento(Agendamento agendamento);
 
     List<Agendamento> getAllAgendamentosMedicosSecretaria(Integer idSecretaria, Integer idMedico, Integer idPaciente);
+
+    void deleteAgendamento(Agendamento agendamento);
 }

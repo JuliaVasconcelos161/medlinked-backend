@@ -100,6 +100,12 @@ public class AgendamentoServiceImpl implements AgendamentoService {
                                                                  Integer idPaciente) {
         return agendamentoRepository.getAllAgendamentosMedicosSecretaria(idSecretaria, idMedico, idPaciente);
     }
+    @Transactional
+    @Override
+    public void deleteAgendamento(Integer idAgendamento) {
+        Agendamento agendamento = agendamentoRepository.getOneAgendamento(idAgendamento);
+        agendamentoRepository.deleteAgendamento(agendamento);
+    }
 
     private void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
                                             Integer idMedico, Integer idAgendamento) {

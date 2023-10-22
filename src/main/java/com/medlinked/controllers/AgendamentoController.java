@@ -48,4 +48,15 @@ public class AgendamentoController {
         return ResponseEntity.status(HttpStatus.OK).body(agendamentoService
                 .getAllAgendamentosMedicosSecretaria(idSecretaria, idMedico, idPaciente));
     }
+
+    @Operation(summary = "Deleta agendamento utilizando idAgendamento informado.")
+    @DeleteMapping("/delete/{idAgendamento}")
+    public ResponseEntity<Object> deleteAgendamento(@PathVariable Integer idAgendamento) {
+        try{
+            agendamentoService.deleteAgendamento(idAgendamento);
+            return ResponseEntity.status(HttpStatus.OK).body("Agendamento deletado com sucesso.");
+        }catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
+    }
 }
