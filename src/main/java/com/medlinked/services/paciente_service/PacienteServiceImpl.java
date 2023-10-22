@@ -87,5 +87,7 @@ public class PacienteServiceImpl implements PacienteService {
         planoSaudePacienteService.disassociateAllPlanosSaudePaciente(idPaciente);
         enderecoService.deleteEndereco(idPaciente);
         pacienteRepository.deletePaciente(paciente);
+        if(pessoaService.existsPessoa(idPaciente))
+            pessoaService.deletePessoa(idPaciente);
     }
 }
