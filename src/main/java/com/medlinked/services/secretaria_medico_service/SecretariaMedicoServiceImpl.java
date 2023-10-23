@@ -1,13 +1,16 @@
 package com.medlinked.services.secretaria_medico_service;
 
 import com.medlinked.entities.Medico;
+import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.Secretaria;
 import com.medlinked.entities.dtos.MedicoCrmResponseDto;
 import com.medlinked.repositories.medico_repository.MedicoRepository;
 import com.medlinked.repositories.planosaude_medico_repository.PlanoSaudeMedicoRepository;
 import com.medlinked.repositories.secretaria_medico_repository.SecretariaMedicoRepository;
 import com.medlinked.repositories.secretaria_repository.SecretariaRepository;
+import com.medlinked.services.agedamento_service.AgendamentoService;
 import com.medlinked.services.medicocrm_service.MedicoCrmService;
+import com.medlinked.services.pessoa_service.PessoaService;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -19,6 +22,10 @@ import java.util.List;
 @Service
 public class SecretariaMedicoServiceImpl implements SecretariaMedicoService {
 
+    private final AgendamentoService agendamentoService;
+
+    private final PessoaService pessoaService;
+
     private final MedicoCrmService medicoCrmService;
 
     private final PlanoSaudeMedicoRepository planoSaudeMedicoRepository;
@@ -29,9 +36,12 @@ public class SecretariaMedicoServiceImpl implements SecretariaMedicoService {
 
     private final MedicoRepository medicoRepository;
 
-    public SecretariaMedicoServiceImpl(MedicoCrmService medicoCrmService, PlanoSaudeMedicoRepository planoSaudeMedicoRepository,
+    public SecretariaMedicoServiceImpl(AgendamentoService agendamentoService, PessoaService pessoaService,
+                                       MedicoCrmService medicoCrmService, PlanoSaudeMedicoRepository planoSaudeMedicoRepository,
                                        SecretariaMedicoRepository secretariaMedicoRepository,
                                        SecretariaRepository secretariaRepository, MedicoRepository medicoRepository) {
+        this.agendamentoService = agendamentoService;
+        this.pessoaService = pessoaService;
         this.medicoCrmService = medicoCrmService;
         this.planoSaudeMedicoRepository = planoSaudeMedicoRepository;
         this.secretariaMedicoRepository = secretariaMedicoRepository;
@@ -55,6 +65,8 @@ public class SecretariaMedicoServiceImpl implements SecretariaMedicoService {
         Medico medico = medicoRepository.getOneMedico(idMedico);
         secretaria.getMedicos().remove(medico);
         secretariaRepository.updateSecretaria(secretaria);
+        if(secretariaMedicoRepository.getAllSecretariasMedico(idMedico).isEmpty())
+            this.deleteMedicoSemDeletarVinculosSecretarias(medico);
     }
 
     @Override
@@ -79,5 +91,16 @@ public class SecretariaMedicoServiceImpl implements SecretariaMedicoService {
             secretaria.getMedicos().remove(medico);
             secretariaRepository.updateSecretaria(secretaria);
         });
+    }
+
+    private void deleteMedicoSemDeletarVinculosSecretarias(Medico medico) {
+        List<PlanoSaude> planosSaudeMedico = planoSaudeMedicoRepository
+                .getAllPlanosSaudeMedico(medico.getIdMedico(), null, null);
+        medico.removeAllPlanosSaude(planosSaudeMedico);
+        agendamentoService.deleteAllAgendamentosMedico(medico.getIdMedico());
+        medicoCrmService.deleteMedicoCrm(medico.getIdMedico());
+        medicoRepository.deleteMedico(medico);
+        if(pessoaService.existsPessoa(medico.getIdMedico()))
+            pessoaService.deletePessoa(medico.getIdMedico());
     }
 }
