@@ -24,7 +24,7 @@ public class PlanoSaudeController {
     }
 
     @Operation(summary = "Cria um novo plano de saúde e o retorna.")
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Object> createPlanoSaude(@RequestBody @Valid PlanoSaudeDto planoSaudeDto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(planoSaudeService.createPlanoSaude(planoSaudeDto));
@@ -48,7 +48,7 @@ public class PlanoSaudeController {
     }
 
     @Operation(summary = "Deleta o plano de saúde utilizando idPlanoSaude informado.")
-    @DeleteMapping("/{idPlanoSaude}")
+    @DeleteMapping("/delete/{idPlanoSaude}")
     public ResponseEntity<Object> deletePlanoSaude(@PathVariable Integer idPlanoSaude) {
         try {
             planoSaudeService.deletePlanoSaude(idPlanoSaude);

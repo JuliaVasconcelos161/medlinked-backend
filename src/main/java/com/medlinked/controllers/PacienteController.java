@@ -21,7 +21,7 @@ public class PacienteController {
     }
 
     @Operation(summary = "Cria um novo paciente com seu endereço e o retorna.")
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<Object> createPaciente(@RequestBody @Valid PacienteDto pacienteDto) {
         try{
             return ResponseEntity.status(HttpStatus.OK).body(pacienteService.createPaciente(pacienteDto));
@@ -41,7 +41,7 @@ public class PacienteController {
     }
 
     @Operation(summary = "Atualiza os dados de um paciente utilizando o idPaciente.")
-    @PutMapping("/{idPaciente}")
+    @PutMapping("/update/{idPaciente}")
     public ResponseEntity<Object> updatePaciente(@PathVariable Integer idPaciente,
                                                  @RequestBody @Valid PacienteDto pacienteDto) {
         try{
