@@ -6,10 +6,15 @@ import com.medlinked.entities.dtos.PasswordResetDto;
 import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.repositories.password_reset_repository.PasswordResetTokenRepository;
 import com.medlinked.repositories.usuario_repository.UsuarioRepository;
+import jakarta.mail.Message;
+import jakarta.mail.MessagingException;
+import jakarta.mail.Multipart;
+import jakarta.mail.internet.MimeBodyPart;
+import jakarta.mail.internet.MimeMessage;
+import jakarta.mail.internet.MimeMultipart;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,16 +48,17 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     public String resetPassword(HttpServletRequest request, String username) {
         Usuario usuario = usuarioRepository.returnUsuarioByUsername(username);
         String token = UUID.randomUUID().toString();
-        this.createPasswordResetTokenForUsuario(usuario, token);
-        javaMailSender.send(constructResetTokenEmail(request.getContextPath(), token, usuario));
+        PasswordResetToken passwordResetToken = passwordResetTokenRepository
+                .returnPasswordResetTokenByUsuario(usuario.getUsername());
+        if(passwordResetToken == null)
+            this.createPasswordResetTokenForUsuario(usuario, token);
+        else
+            this.updatePasswordResetTokenForUsuario(passwordResetToken, token);
+        javaMailSender.send(constructResetTokenEmail(token, usuario));
         return token;
     }
 
 
-    private void createPasswordResetTokenForUsuario(Usuario usuario, String token) {
-        PasswordResetToken passwordResetToken = new PasswordResetToken(usuario, token);
-        passwordResetTokenRepository.savePasswordResetToken(passwordResetToken);
-    }
 
     @Override
     public void changeUsuarioPassword(Usuario usuario, String senha) {
@@ -73,34 +79,48 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     }
 
     @Override
-    public String validatePasswordResetToken(String token) {
+    public void validatePasswordResetToken(String token) {
         final PasswordResetToken passToken = passwordResetTokenRepository.getPasswordResetTokenByToken(token);
-
         String response =  !isTokenFound(passToken) ? "Token inválido"
                 : isTokenExpired(passToken) ? "Token expirado"
                 : null;
         if(response != null)
             throw new MedLinkedException(response, HttpStatus.BAD_REQUEST);
-        return response;
     }
 
     @Override
-    public SimpleMailMessage constructResetTokenEmail(
-            String contextPath, String token, Usuario usuario
-    ) {
-        String url = contextPath + "http://localhost:3000/senha/change?token=" + token;
-        String message = "Clique no link para mudar sua senha";
-        return constructEmail("Redefinição de Senha", message + " \r\n" + url, usuario);
+    public MimeMessage constructResetTokenEmail(String token, Usuario usuario) {
+        StringBuilder message = new StringBuilder("<!DOCTYPE html>");
+        message.append("<html lang=\"pt-br\" >");
+        message.append("<head>");
+        message.append("<title>MedLinked</title>");
+        message.append("<meta name=\"viewport\" content=\"initial-scale=1.0, width=device-width\" />");
+        message.append("</head>");
+        message.append("<body>");
+        message.append("<p>Clique no link para atualizar sua senha:<a href=\"http://localhost:3000/senha/change?token=\"");
+        message.append(token);
+        message.append(">Atualizar senha</a> </p>");
+        message.append("</body>");
+        message.append("</html>");
+        try {
+            return constructEmail("Redefinição de Senha", message.toString() , usuario);
+        } catch (MessagingException e) {
+            throw new MedLinkedException("Não foi possível enviar o email.", HttpStatus.BAD_REQUEST);
+        }
     }
 
     @Override
-    public SimpleMailMessage constructEmail(String subject, String body, Usuario usuario) {
-        SimpleMailMessage email = new SimpleMailMessage();
-        email.setSubject(subject);
-        email.setText(body);
-        email.setTo(usuario.getPessoa().getEmail());
-        email.setFrom("support.email");
-        return email;
+    public MimeMessage constructEmail(String subject, String body, Usuario usuario) throws MessagingException {
+        MimeMessage mimeMessage = javaMailSender.createMimeMessage();
+        Multipart multipart = new MimeMultipart();
+        MimeBodyPart mimeBodyPart = new MimeBodyPart();
+        mimeBodyPart.setContent(body, "text/html; charset=UTF-8");
+        multipart.addBodyPart(mimeBodyPart);
+        mimeMessage.setContent(multipart);
+        mimeMessage.setSubject(subject);
+        mimeMessage.setRecipients(Message.RecipientType.TO, usuario.getPessoa().getEmail());
+        mimeMessage.setFrom("support.email");
+        return mimeMessage;
     }
 
     private boolean isTokenFound(PasswordResetToken passToken) {
@@ -109,5 +129,15 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
 
     private boolean isTokenExpired(PasswordResetToken passToken) {
         return passToken.getExpiryDate().after(new Date());
+    }
+
+    private PasswordResetToken createPasswordResetTokenForUsuario(Usuario usuario, String token) {
+        return passwordResetTokenRepository.savePasswordResetToken(new PasswordResetToken(usuario, token));
+    }
+
+    private PasswordResetToken updatePasswordResetTokenForUsuario(PasswordResetToken passwordResetToken, String token) {
+        passwordResetToken.setToken(token);
+        passwordResetToken.setExpiryDate(new Date());
+        return passwordResetTokenRepository.updatePasswordResetToken(passwordResetToken);
     }
 }

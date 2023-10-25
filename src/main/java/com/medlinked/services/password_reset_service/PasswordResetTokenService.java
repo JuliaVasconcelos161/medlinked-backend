@@ -2,8 +2,9 @@ package com.medlinked.services.password_reset_service;
 
 import com.medlinked.entities.Usuario;
 import com.medlinked.entities.dtos.PasswordResetDto;
+import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.mail.SimpleMailMessage;
 
 public interface PasswordResetTokenService {
     String resetPassword(HttpServletRequest request, String username);
@@ -12,11 +13,9 @@ public interface PasswordResetTokenService {
 
     Usuario savePassword(PasswordResetDto passwordResetDto);
 
-    String validatePasswordResetToken(String token);
+    void validatePasswordResetToken(String token);
 
-    SimpleMailMessage constructResetTokenEmail(
-            String contextPath, String token, Usuario usuario
-    );
+    MimeMessage constructResetTokenEmail(String token, Usuario usuario);
 
-    SimpleMailMessage constructEmail(String subject, String body, Usuario usuario);
+    MimeMessage constructEmail(String subject, String body, Usuario usuario) throws MessagingException;
 }
