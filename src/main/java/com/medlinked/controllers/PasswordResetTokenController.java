@@ -36,8 +36,8 @@ public class PasswordResetTokenController {
     @Operation(summary = "Verifica token de resetar senha enviado.")
     public ResponseEntity<String> showChangePasswordPage(@RequestParam("token") String token) {
         try{
-            return ResponseEntity.status(HttpStatus.OK).body(passwordResetTokenService
-                    .validatePasswordResetToken(token));
+            passwordResetTokenService.validatePasswordResetToken(token);
+            return ResponseEntity.status(HttpStatus.OK).body("Token válido.");
         }catch(MedLinkedException e){
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
