@@ -20,4 +20,15 @@ spring:
       hibernate:
         show_sql: true
 
-
+  mail:
+    host: smtp.gmail.com
+    username: medlinked2023@gmail.com
+    password: dbni wzpa auyt fyip
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+    port: 587
