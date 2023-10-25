@@ -14,6 +14,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import static com.medlinked.utils.JavaDateFormatter.EMAILFORMATTER;
+
 @Service
 public class EmailServiceImpl implements EmailService {
 
@@ -57,11 +59,17 @@ public class EmailServiceImpl implements EmailService {
         message.append("<meta name=\"viewport\" content=\"initial-scale=1.0, width=device-width\" />");
         message.append("</head>");
         message.append("<body>");
-        message.append("<h1>Olá! Estamos muito felizes em ter você conosco!!!</h1>");
+        message.append("<h1 style=\"color: black;\">Olá! ");
+        message.append(agendamento.getPaciente().getPessoa().getNome());
+        message.append(", tudo bem?</h1>");
+        message.append("<br>");
+        message.append("<h2 style=\"color: black;\">Estamos muito felizes em ter você conosco!!!</h2>");
         message.append("<br>");
         message.append("<p>Foi marcada uma consulta para você com ");
         message.append(agendamento.getMedico().getPessoa().getNome());
-        message.append(" no dia</p>");
+        message.append(" na data de ");
+        message.append(agendamento.getDataHoraInicioAgendamento().format(EMAILFORMATTER));
+        message.append(" </p>");
         message.append("</body>");
         message.append("</html>");
         try {
