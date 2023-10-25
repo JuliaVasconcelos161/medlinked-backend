@@ -1,6 +1,5 @@
 package com.medlinked.repositories.planosaude_paciente_repository;
 
-import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.PlanoSaudePaciente;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -41,12 +40,12 @@ public class PlanoSaudePacienteRepositoryClass implements PlanoSaudePacienteRepo
     }
 
     @Override
-    public List<PlanoSaude> getAllPlanosSaudePaciente(Integer idPaciente) {
-        StringBuilder consulta = new StringBuilder(" select planoSaudePaciente.idPlanoSaudePaciente.planoSaude ");
+    public List<PlanoSaudePaciente> getAllPlanosSaudePaciente(Integer idPaciente) {
+        StringBuilder consulta = new StringBuilder(" select planoSaudePaciente ");
         consulta.append(" from PlanoSaudePaciente planoSaudePaciente ");
         consulta.append(" where planoSaudePaciente.idPlanoSaudePaciente.paciente.idPaciente = :IDPACIENTE ");
         consulta.append(" order by planoSaudePaciente.idPlanoSaudePaciente.planoSaude.descricao ");
-        var query = entityManager.createQuery(consulta.toString(), PlanoSaude.class);
+        var query = entityManager.createQuery(consulta.toString(), PlanoSaudePaciente.class);
         query.setParameter("IDPACIENTE", idPaciente);
         return query.getResultList();
     }

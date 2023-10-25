@@ -62,7 +62,7 @@ public class PlanoSaudePacienteServiceImpl implements PlanoSaudePacienteService 
     }
 
     @Override
-    public List<PlanoSaude> getAllPlanosSaudePaciente(Integer idPaciente) {
+    public List<PlanoSaudePaciente> getAllPlanosSaudePaciente(Integer idPaciente) {
         return planoSaudePacienteRepository.getAllPlanosSaudePaciente(idPaciente);
     }
 
