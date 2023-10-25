@@ -1,6 +1,5 @@
 package com.medlinked.repositories.planosaude_paciente_repository;
 
-import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.PlanoSaudePaciente;
 
 import java.util.List;
@@ -12,7 +11,7 @@ public interface PlanoSaudePacienteRepository {
 
     void disassociateAllPacientesPlanoSaude(Integer idPlanoSaude);
 
-    List<PlanoSaude> getAllPlanosSaudePaciente(Integer idPaciente);
+    List<PlanoSaudePaciente> getAllPlanosSaudePaciente(Integer idPaciente);
 
     void disassociateAllPlanosSaudePaciente(Integer idPaciente);
 }

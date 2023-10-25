@@ -1,6 +1,5 @@
 package com.medlinked.services.planosaude_paciente_service;
 
-import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.PlanoSaudePaciente;
 import com.medlinked.entities.dtos.PlanoSaudePacienteDto;
 
@@ -12,7 +11,7 @@ public interface PlanoSaudePacienteService {
 
     void disassociatePacientePlanoSaude(Integer idPaciente, Integer idPlanoSaude);
 
-    List<PlanoSaude> getAllPlanosSaudePaciente(Integer idPaciente);
+    List<PlanoSaudePaciente> getAllPlanosSaudePaciente(Integer idPaciente);
 
     void disassociateAllPlanosSaudePaciente(Integer idPaciente);
 }
