@@ -10,7 +10,7 @@ import com.medlinked.repositories.agendamento_repository.AgendamentoRepository;
 import com.medlinked.repositories.medico_repository.MedicoRepository;
 import com.medlinked.repositories.paciente_repository.PacienteRepository;
 import com.medlinked.repositories.planosaude_repository.PlanoSaudeRepository;
-import com.medlinked.repositories.secretaria_repository.SecretariaRepository;
+import com.medlinked.services.email_service.EmailService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +22,7 @@ import static com.medlinked.utils.JavaDateFormatter.FORMATTER;
 @Service
 public class AgendamentoServiceImpl implements AgendamentoService {
 
-    private final SecretariaRepository secretariaRepository;
+    private final EmailService emailService;
 
     private final MedicoRepository medicoRepository;
 
@@ -32,10 +32,10 @@ public class AgendamentoServiceImpl implements AgendamentoService {
 
     private final AgendamentoRepository agendamentoRepository;
 
-    public AgendamentoServiceImpl(SecretariaRepository secretariaRepository, MedicoRepository medicoRepository,
+    public AgendamentoServiceImpl(EmailService emailService, MedicoRepository medicoRepository,
                                   PacienteRepository pacienteRepository, PlanoSaudeRepository planoSaudeRepository,
                                   AgendamentoRepository agendamentoRepository) {
-        this.secretariaRepository = secretariaRepository;
+        this.emailService = emailService;
         this.medicoRepository = medicoRepository;
         this.pacienteRepository = pacienteRepository;
         this.planoSaudeRepository = planoSaudeRepository;
@@ -61,7 +61,9 @@ public class AgendamentoServiceImpl implements AgendamentoService {
                 .paciente(paciente)
                 .planoSaude(planoSaude)
                 .build();
-        return agendamentoRepository.saveAgendamento(agendamento);
+        agendamento = agendamentoRepository.saveAgendamento(agendamento);
+        emailService.sendEmailAgendamentoConfirmacao(agendamento);
+        return agendamento;
     }
 
     @Transactional
