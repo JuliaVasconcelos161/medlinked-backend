@@ -50,9 +50,10 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
 
     @Override
     public List<Agendamento> getAllAgendamentosMedicosSecretaria(Integer idSecretaria, Integer idMedico,
-                                                                 Integer idPaciente, Integer mes, Integer ano) {
+                                                                 Integer idPaciente, Integer mes, Integer ano,
+                                                                 Integer dia) {
         var query = entityManager.createQuery(this.consultaGetAllAgendamentosMedicosSecretaria(
-                idMedico,idPaciente,mes,ano), Agendamento.class);
+                idMedico,idPaciente,mes,ano, dia), Agendamento.class);
         if(idMedico != null)
             query.setParameter("IDMEDICO", idMedico);
         if(idPaciente != null)
@@ -61,6 +62,8 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
             query.setParameter("MES", mes);
         if(ano != null)
             query.setParameter("ANO", ano);
+        if(dia != null)
+            query.setParameter("DIA", dia);
         query.setParameter("IDSECRETARIA", idSecretaria);
         return query.getResultList();
     }
@@ -105,7 +108,7 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
     }
 
     private String consultaGetAllAgendamentosMedicosSecretaria(Integer idMedico, Integer idPaciente,
-                                                               Integer mes, Integer ano) {
+                                                               Integer mes, Integer ano, Integer dia) {
         StringBuilder consulta = new StringBuilder(" select a ");
         consulta.append(" from Agendamento a ");
         consulta.append(" inner join a.medico medico ");
@@ -124,6 +127,8 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
             consulta.append(" and month(a.dataHoraInicioAgendamento) = :MES ");
         if(ano != null)
             consulta.append(" and year(a.dataHoraInicioAgendamento) = :ANO ");
+        if(dia != null)
+            consulta.append(" and day(a.dataHoraInicioAgendamento) = :DIA ");
         consulta.append(" order by a.dataHoraInicioAgendamento ");
         return consulta.toString();
     }
