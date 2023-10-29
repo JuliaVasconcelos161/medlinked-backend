@@ -46,9 +46,10 @@ public class AgendamentoController {
                                                                       @RequestParam(required = false) Integer idMedico,
                                                                       @RequestParam(required = false) Integer idPaciente,
                                                                       @RequestParam(required = false) Integer mes,
-                                                                      @RequestParam(required = false) Integer ano) {
+                                                                      @RequestParam(required = false) Integer ano,
+                                                                      @RequestParam(required = false) Integer dia) {
         return ResponseEntity.status(HttpStatus.OK).body(agendamentoService
-                .getAllAgendamentosMedicosSecretaria(idSecretaria, idMedico, idPaciente, mes, ano));
+                .getAllAgendamentosMedicosSecretaria(idSecretaria, idMedico, idPaciente, mes, ano, dia));
     }
 
     @Operation(summary = "Deleta agendamento utilizando idAgendamento informado.")
