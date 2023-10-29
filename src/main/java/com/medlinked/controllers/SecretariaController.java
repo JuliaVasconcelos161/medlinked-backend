@@ -1,7 +1,7 @@
 package com.medlinked.controllers;
 
-import com.medlinked.entities.dtos.SecretariaUsuarioDto;
 import com.medlinked.entities.dtos.SecretariaDto;
+import com.medlinked.entities.dtos.SecretariaUsuarioDto;
 import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.services.secretaria_service.SecretariaService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/secretaria")
-@CrossOrigin(origins = "*", maxAge = 4600, allowedHeaders = "*")
 public class SecretariaController {
 
     private final SecretariaService secretariaService;

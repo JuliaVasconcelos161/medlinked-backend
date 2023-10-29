@@ -14,7 +14,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/plano-saude")
-@CrossOrigin(origins = "*", maxAge = 4600, allowedHeaders = "*")
 public class PlanoSaudeController {
 
     private final PlanoSaudeService planoSaudeService;

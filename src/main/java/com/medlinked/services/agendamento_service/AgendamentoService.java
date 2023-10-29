@@ -1,4 +1,4 @@
-package com.medlinked.services.agedamento_service;
+package com.medlinked.services.agendamento_service;
 
 import com.medlinked.entities.Agendamento;
 import com.medlinked.entities.dtos.AgendamentoDto;

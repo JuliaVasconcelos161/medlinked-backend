@@ -8,7 +8,7 @@ import com.medlinked.entities.dtos.MedicoCrmResponseDto;
 import com.medlinked.entities.dtos.MedicoDto;
 import com.medlinked.repositories.medico_repository.MedicoRepository;
 import com.medlinked.repositories.planosaude_medico_repository.PlanoSaudeMedicoRepository;
-import com.medlinked.services.agedamento_service.AgendamentoService;
+import com.medlinked.services.agendamento_service.AgendamentoService;
 import com.medlinked.services.medicocrm_service.MedicoCrmService;
 import com.medlinked.services.pessoa_service.PessoaService;
 import com.medlinked.services.secretaria_medico_service.SecretariaMedicoService;

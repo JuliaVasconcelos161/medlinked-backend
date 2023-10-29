@@ -2,7 +2,7 @@ package com.medlinked.controllers;
 
 import com.medlinked.entities.dtos.AgendamentoDto;
 import com.medlinked.exceptions.MedLinkedException;
-import com.medlinked.services.agedamento_service.AgendamentoService;
+import com.medlinked.services.agendamento_service.AgendamentoService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;

@@ -3,8 +3,6 @@ package com.medlinked.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Objects;
-
 @Entity
 @Table(name = "TB_PESSOA")
 @Builder

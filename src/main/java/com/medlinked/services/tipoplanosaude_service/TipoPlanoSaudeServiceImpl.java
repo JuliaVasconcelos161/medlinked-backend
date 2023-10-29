@@ -2,7 +2,6 @@ package com.medlinked.services.tipoplanosaude_service;
 
 import com.medlinked.entities.TipoPlanoSaude;
 import com.medlinked.repositories.tipoplanosaude_repository.TipoPlanoSaudeRepository;
-import com.medlinked.services.tipoplanosaude_service.TipoPlanoSaudeService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,6 +1,5 @@
 package com.medlinked.controllers;
 
-import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.MedicoPlanoSaudeDto;
 import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.services.planosaude_medico_service.PlanoSaudeMedicoService;
@@ -10,11 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping("/plano-saude/medico")
-@CrossOrigin(origins = "*", maxAge = 4600, allowedHeaders = "*")
 public class PlanoSaudeMedicoController {
 
     private final PlanoSaudeMedicoService planoSaudeMedicoService;

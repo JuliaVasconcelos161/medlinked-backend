@@ -1,7 +1,6 @@
 package com.medlinked.repositories.planosaude_repository;
 
 import com.medlinked.entities.PlanoSaude;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
