@@ -10,7 +10,7 @@ public interface PessoaService {
 
     Pessoa returnPessoaByCpf(String cpf);
 
-    void validateNewEspecializacaoPessoa(String cpfDto, String emailDto, String especializacaoPessoa);
+    void validateNewPessoa(String cpfDto, String emailDto, String especializacaoPessoa);
 
     Pessoa getPessoaByCpf(Long cpf);
 

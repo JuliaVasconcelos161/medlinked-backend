@@ -9,9 +9,9 @@ public interface PessoaRepository {
 
     Pessoa save(Pessoa pessoa);
 
-    boolean existsEspecializacaoPessoaByCpf(String cpf, String especializacaoPessoa);
+    boolean existsEspecializacaoPessoaByCpf(String cpf, String especializacaoPessoa, Integer idPessoa);
 
-    boolean existsEspecializacaoPessoaByEmail(String email, String especializacaoPessoa);
+    boolean existsEspecializacaoPessoaByEmail(String email, String especializacaoPessoa, Integer idPessoa);
 
     Pessoa returnPessoaByCpf(String cpf);
 

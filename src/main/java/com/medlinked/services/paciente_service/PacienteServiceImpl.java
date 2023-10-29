@@ -43,7 +43,7 @@ public class PacienteServiceImpl implements PacienteService {
     @Transactional
     @Override
     public PacienteResponseDto createPaciente(PacienteDto pacienteDto) {
-        pessoaService.validateNewEspecializacaoPessoa(
+        pessoaService.validateNewPessoa(
                 pacienteDto.getCpf(), pacienteDto.getEmail(), "Paciente");
         Pessoa pessoa = pessoaService.returnPessoaByCpf(pacienteDto.getCpf());
         Paciente paciente = Paciente.builder()

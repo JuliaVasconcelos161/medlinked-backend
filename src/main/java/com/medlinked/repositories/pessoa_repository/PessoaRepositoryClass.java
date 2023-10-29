@@ -34,35 +34,45 @@ public class PessoaRepositoryClass implements PessoaRepository {
     }
 
     @Override
-    public boolean existsEspecializacaoPessoaByCpf(String cpf, String especializacaoPessoa) {
+    public boolean existsEspecializacaoPessoaByCpf(String cpf, String especializacaoPessoa, Integer idPessoa) {
         StringBuilder consulta = new StringBuilder(" select count(1) ");
         consulta.append(" from ");
         consulta.append(especializacaoPessoa);
+        consulta.append(" especializacaoPessoa ");
         if(especializacaoPessoa.equals("Pessoa"))
-            consulta.append(" pessoa ");
-        else {
-            consulta.append(" especializacaoPessoa ");
-            consulta.append(" inner join especializacaoPessoa.pessoa pessoa ");
+            consulta.append(" where especializacaoPessoa.cpf = :CPF ");
+        else
+            consulta.append(" where especializacaoPessoa.pessoa.cpf = :CPF ");
+        if(idPessoa != null) {
+            consulta.append(" and especializacaoPessoa.id");
+            consulta.append(especializacaoPessoa);
+            consulta.append(" != :IDPESSOA ");
         }
-        consulta.append(" where pessoa.cpf = :CPF ");
         var query = entityManager.createQuery(consulta.toString(), Long.class);
+        if(idPessoa != null)
+            query.setParameter("IDPESSOA", idPessoa);
         query.setParameter("CPF", cpf);
         return query.getSingleResult() > 0;
     }
 
     @Override
-    public boolean existsEspecializacaoPessoaByEmail(String email, String especializacaoPessoa) {
+    public boolean existsEspecializacaoPessoaByEmail(String email, String especializacaoPessoa, Integer idPessoa) {
         StringBuilder consulta = new StringBuilder(" select count(1) ");
         consulta.append(" from ");
         consulta.append(especializacaoPessoa);
+        consulta.append(" especializacaoPessoa ");
         if(especializacaoPessoa.equals("Pessoa"))
-           consulta.append(" pessoa ");
-        else {
-            consulta.append(" especializacaoPessoa ");
-            consulta.append(" inner join especializacaoPessoa.pessoa pessoa ");
+            consulta.append(" where especializacaoPessoa.email = :EMAIL ");
+        else
+            consulta.append("  where especializacaoPessoa.pessoa.email = :EMAIL ");
+        if(idPessoa != null) {
+            consulta.append(" and especializacaoPessoa.id");
+            consulta.append(especializacaoPessoa);
+            consulta.append(" != :IDPESSOA ");
         }
-        consulta.append(" where pessoa.email = :EMAIL ");
         var query = entityManager.createQuery(consulta.toString(), Long.class);
+        if(idPessoa != null)
+            query.setParameter("IDPESSOA", idPessoa);
         query.setParameter("EMAIL", email);
         return query.getSingleResult() > 0;
     }
