@@ -1,7 +1,6 @@
 package com.medlinked.repositories.password_reset_repository;
 
 import com.medlinked.entities.PasswordResetToken;
-import com.medlinked.entities.Usuario;
 import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;

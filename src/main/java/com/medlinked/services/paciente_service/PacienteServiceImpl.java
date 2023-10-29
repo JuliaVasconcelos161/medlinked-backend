@@ -6,7 +6,7 @@ import com.medlinked.entities.Pessoa;
 import com.medlinked.entities.dtos.PacienteDto;
 import com.medlinked.entities.dtos.PacienteResponseDto;
 import com.medlinked.repositories.paciente_repository.PacienteRepository;
-import com.medlinked.services.agedamento_service.AgendamentoService;
+import com.medlinked.services.agendamento_service.AgendamentoService;
 import com.medlinked.services.endereco_service.EnderecoService;
 import com.medlinked.services.pessoa_service.PessoaService;
 import com.medlinked.services.planosaude_paciente_service.PlanoSaudePacienteService;

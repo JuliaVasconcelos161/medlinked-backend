@@ -3,7 +3,6 @@ package com.medlinked.repositories.tipoplanosaude_repository;
 import com.medlinked.entities.TipoPlanoSaude;
 import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 

@@ -5,7 +5,6 @@ import com.medlinked.entities.Usuario;
 import com.medlinked.entities.dtos.UpdateSenhaUsuarioDto;
 import com.medlinked.entities.dtos.UsuarioRegisterDto;
 import com.medlinked.entities.dtos.UsuarioResponseDto;
-import jakarta.transaction.Transactional;
 
 public interface UsuarioService {
 

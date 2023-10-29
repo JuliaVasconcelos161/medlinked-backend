@@ -3,7 +3,6 @@ package com.medlinked.repositories.usuario_repository;
 import com.medlinked.entities.Usuario;
 import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
-import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 

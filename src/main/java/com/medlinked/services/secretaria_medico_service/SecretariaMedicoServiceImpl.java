@@ -8,7 +8,7 @@ import com.medlinked.repositories.medico_repository.MedicoRepository;
 import com.medlinked.repositories.planosaude_medico_repository.PlanoSaudeMedicoRepository;
 import com.medlinked.repositories.secretaria_medico_repository.SecretariaMedicoRepository;
 import com.medlinked.repositories.secretaria_repository.SecretariaRepository;
-import com.medlinked.services.agedamento_service.AgendamentoService;
+import com.medlinked.services.agendamento_service.AgendamentoService;
 import com.medlinked.services.medicocrm_service.MedicoCrmService;
 import com.medlinked.services.pessoa_service.PessoaService;
 import jakarta.transaction.Transactional;

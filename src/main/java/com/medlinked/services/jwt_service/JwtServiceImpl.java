@@ -1,6 +1,5 @@
 package com.medlinked.services.jwt_service;
 
-import com.medlinked.services.jwt_service.JwtService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
