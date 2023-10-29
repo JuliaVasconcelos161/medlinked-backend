@@ -38,13 +38,11 @@ public class PessoaRepositoryClass implements PessoaRepository {
         StringBuilder consulta = new StringBuilder(" select count(1) ");
         consulta.append(" from ");
         consulta.append(especializacaoPessoa);
+        consulta.append(" especializacaoPessoa ");
         if(especializacaoPessoa.equals("Pessoa"))
-            consulta.append(" pessoa ");
-        else {
-            consulta.append(" especializacaoPessoa ");
-            consulta.append(" inner join especializacaoPessoa.pessoa pessoa ");
-        }
-        consulta.append(" where pessoa.cpf = :CPF ");
+            consulta.append(" where especializacaoPessoa.cpf = :CPF ");
+        else
+            consulta.append(" where especializacaoPessoa.pessoa.cpf = :CPF ");
         var query = entityManager.createQuery(consulta.toString(), Long.class);
         query.setParameter("CPF", cpf);
         return query.getSingleResult() > 0;

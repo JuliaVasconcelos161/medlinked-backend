@@ -34,7 +34,7 @@ public class PessoaServiceImpl implements PessoaService {
     @Override
     @Transactional
     public Pessoa createPessoa(PessoaDto pessoaDto, String especializacaoPessoa) {
-        this.validateNewEspecializacaoPessoa(pessoaDto.getCpf(), pessoaDto.getEmail(), "Pessoa");
+        this.validateNewPessoa(pessoaDto.getCpf(), pessoaDto.getEmail(), "Pessoa");
         Pessoa pessoa = Pessoa.builder()
                 .nome(pessoaDto.getNome())
                 .cpf(Long.parseLong(pessoaDto.getCpf()))
@@ -51,7 +51,7 @@ public class PessoaServiceImpl implements PessoaService {
 
 
     @Override
-    public void validateNewEspecializacaoPessoa(String cpfDto, String emailDto, String especializacaoPessoa) {
+    public void validateNewPessoa(String cpfDto, String emailDto, String especializacaoPessoa) {
         if(pessoaRepository.existsEspecializacaoPessoaByCpf(cpfDto, especializacaoPessoa))
             throw new ExistsException(especializacaoPessoa, "CPF");
         if(pessoaRepository.existsEspecializacaoPessoaByEmail(emailDto, especializacaoPessoa))

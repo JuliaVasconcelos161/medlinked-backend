@@ -44,7 +44,7 @@ public class MedicoServiceImpl implements MedicoService {
     @Override
     @Transactional
     public MedicoCrmResponseDto createMedico(MedicoDto medicoDto, Integer idSecretaria) {
-        pessoaService.validateNewEspecializacaoPessoa(medicoDto.getCpf(), medicoDto.getEmail(), "Medico");
+        pessoaService.validateNewPessoa(medicoDto.getCpf(), medicoDto.getEmail(), "Medico");
         medicoCrmService.validateCrm(medicoDto, null);
         Pessoa pessoa = pessoaService.returnPessoaByCpf(medicoDto.getCpf());
         Medico medico = Medico.builder()

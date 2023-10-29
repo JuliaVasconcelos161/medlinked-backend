@@ -2,7 +2,6 @@ package com.medlinked.services.secretaria_service;
 
 import com.medlinked.entities.Pessoa;
 import com.medlinked.entities.Secretaria;
-import com.medlinked.entities.Usuario;
 import com.medlinked.entities.dtos.SecretariaDto;
 import com.medlinked.entities.dtos.SecretariaUsuarioDto;
 import com.medlinked.entities.dtos.UsuarioResponseDto;
@@ -31,7 +30,7 @@ public class SecretariaServiceImpl implements SecretariaService {
     @Transactional
     @Override
     public UsuarioResponseDto createSecretaria(SecretariaUsuarioDto secretariaUsuarioDto) {
-        pessoaService.validateNewEspecializacaoPessoa(
+        pessoaService.validateNewPessoa(
                 secretariaUsuarioDto.getCpf(), secretariaUsuarioDto.getEmail(), "Secretaria");
         Pessoa pessoa = pessoaService.returnPessoaByCpf(secretariaUsuarioDto.getCpf());
         Secretaria secretaria = Secretaria.builder()
