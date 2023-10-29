@@ -7,9 +7,9 @@ spring:
   application:
     name: medlinked-system
   datasource:
-    url: jdbc:postgresql://localhost:5432/banco-med-linked
-    username: postgres
-    password: Key123
+    url: "${env-spring-datasource-url}"
+    username: "${env-spring-datasource-username}"
+    password: "${env-spring-datasource-password}"
   jpa:
     hibernate:
       ddl-auto: update
@@ -22,8 +22,8 @@ spring:
 
   mail:
     host: smtp.gmail.com
-    username: medlinked2023@gmail.com
-    password: dbni wzpa auyt fyip
+    username: "${env-spring-mail-username}"
+    password: "${env-spring-mail-password}"
     properties:
       mail:
         smtp:
