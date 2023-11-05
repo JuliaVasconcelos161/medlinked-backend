@@ -72,11 +72,16 @@ public class PacienteServiceImpl implements PacienteService {
     }
 
     @Override
-    public Page<Paciente> getAllPacientes(String nomePaciente, String cpf, int page, int pageSize) {
+    public Page<Paciente> getAllPacientesPaginado(String nomePaciente, String cpf, Integer page, Integer pageSize) {
         List<Paciente> pacientes = pacienteRepository.getAllPacientes(nomePaciente, cpf, page, pageSize);
         PageRequest pageRequest = PageRequest.of(page, pageSize);
         Long total =  pacienteRepository.countPacientes();
         return new PageImpl<>(pacientes, pageRequest, total);
+    }
+
+    @Override
+    public List<Paciente> getAllPacientes() {
+        return pacienteRepository.getAllPacientes(null, null, null, null);
     }
 
     @Transactional

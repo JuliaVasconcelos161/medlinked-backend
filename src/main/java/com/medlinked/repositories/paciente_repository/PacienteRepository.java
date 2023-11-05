@@ -11,7 +11,7 @@ public interface PacienteRepository {
 
     Paciente updatePaciente(Paciente paciente);
 
-    List<Paciente> getAllPacientes(String nomePaciente, String cpf, int page, int pageSize);
+    List<Paciente> getAllPacientes(String nomePaciente, String cpf, Integer page, Integer pageSize);
 
     Long countPacientes();
 

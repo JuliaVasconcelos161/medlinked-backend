@@ -50,13 +50,19 @@ public class PacienteController {
         }
     }
 
-    @Operation(summary = "Retorna todos os pacientes.")
-    @GetMapping
+    @Operation(summary = "Retorna todos os pacientes de forma paginada.")
+    @GetMapping("/paginado")
     public ResponseEntity<Object> getAllPacientes(@RequestParam(required = false) String nomePaciente,
                                                   @RequestParam(required = false) String cpf,
-                                                  @RequestParam(value = "page", defaultValue = "0") int page,
-                                                  @RequestParam(value = "pageSize", defaultValue = "10") int pageSize) {
-        return ResponseEntity.status(HttpStatus.OK).body(pacienteService.getAllPacientes(nomePaciente, cpf, page, pageSize));
+                                                  @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                  @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+        return ResponseEntity.status(HttpStatus.OK).body(pacienteService.getAllPacientesPaginado(nomePaciente, cpf, page, pageSize));
+    }
+
+    @Operation(summary = "Retorna todos os pacientes.")
+    @GetMapping
+    public ResponseEntity<Object> getAllPacientes() {
+        return ResponseEntity.status(HttpStatus.OK).body(pacienteService.getAllPacientes());
     }
 
     @Operation(summary = "Deleta paciente utilizando idPaciente informado.")
