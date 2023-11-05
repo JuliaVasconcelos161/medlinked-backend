@@ -36,14 +36,16 @@ public class PacienteRepositoryClass implements PacienteRepository {
     }
 
     @Override
-    public List<Paciente> getAllPacientes(String nomePaciente, String cpf, int page, int pageSize) {
+    public List<Paciente> getAllPacientes(String nomePaciente, String cpf, Integer page, Integer pageSize) {
         var query = entityManager.createQuery(this.consultaGetAllPacientes(nomePaciente, cpf), Paciente.class);
         if(nomePaciente != null)
             query.setParameter("NOMEPACIENTE", "%"+nomePaciente+"%");
         if(cpf != null)
             query.setParameter("CPF", cpf);
-        query.setFirstResult(page * pageSize);
-        query.setMaxResults(pageSize);
+        if(page != null && pageSize != null) {
+            query.setFirstResult(page * pageSize);
+            query.setMaxResults(pageSize);
+        }
         return query.getResultList();
     }
 
