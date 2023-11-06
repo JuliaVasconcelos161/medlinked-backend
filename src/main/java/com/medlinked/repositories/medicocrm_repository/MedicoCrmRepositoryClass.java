@@ -74,7 +74,7 @@ public class MedicoCrmRepositoryClass implements MedicoCrmRepository {
         return query.getSingleResult();
     }
     @Override
-    public List<MedicoCrmResponseDto> buildMedicosCrmResponseByIdsMedicos(List<Integer> idsMedicos, int page, int pageSize) {
+    public List<MedicoCrmResponseDto> buildMedicosCrmResponseByIdsMedicos(List<Integer> idsMedicos, Integer page, Integer pageSize) {
         StringBuilder consulta = new StringBuilder(" select new com.medlinked.entities.dtos.MedicoCrmResponseDto( ");
         consulta.append(" crm.medico.idMedico, crm.medico.pessoa.nome, crm.medico.pessoa.cpf, ");
         consulta.append(" crm.medico.pessoa.email, crm.medico.pessoa.celular, estado, crm.numeroCrm) ");
@@ -83,8 +83,10 @@ public class MedicoCrmRepositoryClass implements MedicoCrmRepository {
         consulta.append(" order by crm.medico.pessoa.nome ");
         var query = entityManager.createQuery(consulta.toString(), MedicoCrmResponseDto.class);
         query.setParameter("IDSMEDICOS", idsMedicos);
-        query.setFirstResult(page * pageSize);
-        query.setMaxResults(pageSize);
+        if(page != null && pageSize != null) {
+            query.setFirstResult(page * pageSize);
+            query.setMaxResults(pageSize);
+        }
         return query.getResultList();
     }
     @Override

@@ -21,7 +21,7 @@ public class SecretariaMedicoRepositoryClass implements SecretariaMedicoReposito
     }
 
     @Override
-    public List<MedicoCrmResponseDto> getAllMedicosSecretaria(Integer idSecretaria, int page, int pageSize) {
+    public List<MedicoCrmResponseDto> getAllMedicosSecretaria(Integer idSecretaria, Integer page, Integer pageSize) {
         List<Integer> idsMedicos = this.getAllIdsMedicosSecretaria(idSecretaria);
         return medicoCrmRepository.buildMedicosCrmResponseByIdsMedicos(idsMedicos, page, pageSize);
     }

@@ -70,7 +70,7 @@ public class SecretariaMedicoServiceImpl implements SecretariaMedicoService {
     }
 
     @Override
-    public Page<MedicoCrmResponseDto> getAllMedicosSecretaria(Integer idSecretaria, int page, int pageSize) {
+    public Page<MedicoCrmResponseDto> getAllMedicosSecretariaPaginado(Integer idSecretaria, int page, int pageSize) {
         List<MedicoCrmResponseDto> medicos = secretariaMedicoRepository
                 .getAllMedicosSecretaria(idSecretaria, page, pageSize);
         medicos.forEach(medico ->{
@@ -81,6 +81,13 @@ public class SecretariaMedicoServiceImpl implements SecretariaMedicoService {
         PageRequest pageRequest = PageRequest.of(page, pageSize);
         Long total =  secretariaMedicoRepository.countMedicosSecretaria(idSecretaria);
         return new PageImpl<>(medicos, pageRequest, total);
+    }
+
+    @Override
+    public List<MedicoCrmResponseDto> getAllMedicosSecretaria(Integer idSecretaria) {
+        List<MedicoCrmResponseDto> medicos = secretariaMedicoRepository
+                .getAllMedicosSecretaria(idSecretaria, null, null);
+        return medicos;
     }
 
     @Transactional
