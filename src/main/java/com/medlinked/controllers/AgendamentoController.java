@@ -40,6 +40,16 @@ public class AgendamentoController {
         }
     }
 
+    @Operation(summary = "Retorna um agendamento utilizando idAgendamento informado.")
+    @GetMapping("/detalhes/{idAgendamento}")
+    public ResponseEntity<Object> getOneAgendamento(@PathVariable Integer idAgendamento) {
+        try{
+            return ResponseEntity.status(HttpStatus.OK).body(agendamentoService.getOneAgendamento(idAgendamento));
+        }catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
+    }
+
     @Operation(summary = "Retorna todos os agendamentos dos médicos de uma secretária.")
     @GetMapping("/{idSecretaria}")
     public ResponseEntity<Object> getAllAgendamentosMedicosSecretaria(@PathVariable Integer idSecretaria,
