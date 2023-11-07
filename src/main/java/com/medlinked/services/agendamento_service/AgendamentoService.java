@@ -19,4 +19,6 @@ public interface AgendamentoService {
     void deleteAllAgendamentosMedico(Integer idMedico);
 
     void deleteAllAgendamentosPaciente(Integer idPaciente);
+
+    Agendamento getOneAgendamento(Integer idAgendamento);
 }
