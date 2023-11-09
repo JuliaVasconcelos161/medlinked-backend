@@ -3,6 +3,7 @@ package com.medlinked.repositories.password_reset_repository;
 import com.medlinked.entities.PasswordResetToken;
 import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
@@ -38,10 +39,12 @@ public class PasswordResetTokenRepositoryClass implements PasswordResetTokenRepo
         consulta.append(" where passwordReset.usuario.username = :USERNAME ");
         var query = entityManager.createQuery(consulta.toString(), PasswordResetToken.class);
         query.setParameter("USERNAME", username);
-        PasswordResetToken passwordResetToken =  query.getSingleResult();
-        if(passwordResetToken == null)
-            throw new NoObjectFoundException("Username");
-        return passwordResetToken;
+        try{
+            PasswordResetToken passwordResetToken =  query.getSingleResult();
+            return passwordResetToken;
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     @Override
