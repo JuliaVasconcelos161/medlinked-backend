@@ -1,6 +1,5 @@
 package com.medlinked.entities.dtos;
 
-import com.medlinked.enums.TipoAgendamento;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -26,6 +25,5 @@ public class AgendamentoDto {
     private String dataHoraFimAgendamento;
 
     private String descricao;
-    @NotNull
-    private TipoAgendamento tipoAgendamento;
+
 }

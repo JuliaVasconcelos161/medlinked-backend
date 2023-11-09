@@ -3,6 +3,7 @@ package com.medlinked.services.agendamento_service;
 import com.medlinked.entities.Agendamento;
 import com.medlinked.entities.Medico;
 import com.medlinked.entities.dtos.AgendamentoAutomaticoDto;
+import com.medlinked.enums.TipoAgendamento;
 import com.medlinked.repositories.agendamento_repository.AgendamentoRepository;
 import com.medlinked.repositories.medico_repository.MedicoRepository;
 import jakarta.transaction.Transactional;
@@ -44,6 +45,7 @@ public class AgendamentoAutomaticoServiceImpl implements AgendamentoAutomaticoSe
                         .dataHoraInicioAgendamento(diaHorarioAgendamento)
                         .dataHoraFimAgendamento(diaHorarioAgendamento.plusMinutes(agendamentoAutomaticoDto.getTempoIntervalo()))
                         .medico(medico)
+                        .tipoAgendamento(TipoAgendamento.AUTOMATICO)
                         .build();
                 diaHorarioAgendamento = diaHorarioAgendamento.plusMinutes(agendamentoAutomaticoDto.getTempoIntervalo());
                 agendamentoRepository.saveAgendamento(agendamento);
@@ -55,9 +57,5 @@ public class AgendamentoAutomaticoServiceImpl implements AgendamentoAutomaticoSe
             diaHorarioAgendamento = diaHorarioAgendamento.withHour(horaInicio.getHour()).withMinute(horaInicio.getMinute());
         }
     }
-
-//    private void buildAgendamentoAutomatico(Agendamento agendamento) {
-//
-//    }
 
 }
