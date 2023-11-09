@@ -40,7 +40,7 @@ public class Agendamento {
     private Medico medico;
 
     @ManyToOne
-    @JoinColumn(name = "id_paciente", nullable = false)
+    @JoinColumn(name = "id_paciente", nullable = true)
     private Paciente paciente;
 
     @ManyToOne
