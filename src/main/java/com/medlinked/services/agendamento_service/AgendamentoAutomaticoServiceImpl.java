@@ -35,24 +35,29 @@ public class AgendamentoAutomaticoServiceImpl implements AgendamentoAutomaticoSe
         LocalTime horaInicio = LocalTime.parse(agendamentoAutomaticoDto.getHoraInicioGeracao());
         LocalTime horaFim = LocalTime.parse(agendamentoAutomaticoDto.getHoraFimGeracao());
         LocalDateTime diaHorarioAgendamento = LocalDateTime.of(dataInicio, horaInicio);
-        do {
-                do {
-                    agendamento = Agendamento.builder()
-                            .tipoAgendamento(agendamentoAutomaticoDto.getTipoAgendamento())
-                            .dataHoraInicioAgendamento(diaHorarioAgendamento)
-                            .dataHoraFimAgendamento(diaHorarioAgendamento.plusMinutes(agendamentoAutomaticoDto.getTempoIntervalo()))
-                            .medico(medico)
-                            .build();
-                    diaHorarioAgendamento = diaHorarioAgendamento.plusMinutes(agendamentoAutomaticoDto.getTempoIntervalo());
-                    agendamentoRepository.saveAgendamento(agendamento);
-                } while (agendamento.getDataHoraFimAgendamento().isBefore(LocalDateTime.of(diaHorarioAgendamento.toLocalDate(), horaFim)));
-
+        while (diaHorarioAgendamento.isBefore(LocalDateTime.of(dataFim, horaFim))){
+            while (diaHorarioAgendamento
+                    .isBefore(LocalDateTime.of(diaHorarioAgendamento.toLocalDate(), horaFim)
+                            .minusMinutes(agendamentoAutomaticoDto.getTempoIntervalo()))) {
+                agendamento = Agendamento.builder()
+                        .tipoAgendamento(agendamentoAutomaticoDto.getTipoAgendamento())
+                        .dataHoraInicioAgendamento(diaHorarioAgendamento)
+                        .dataHoraFimAgendamento(diaHorarioAgendamento.plusMinutes(agendamentoAutomaticoDto.getTempoIntervalo()))
+                        .medico(medico)
+                        .build();
+                diaHorarioAgendamento = diaHorarioAgendamento.plusMinutes(agendamentoAutomaticoDto.getTempoIntervalo());
+                agendamentoRepository.saveAgendamento(agendamento);
+            }
             if(agendamentoAutomaticoDto.getIsApenasDiasUteis() && diaHorarioAgendamento.getDayOfWeek() == DayOfWeek.FRIDAY)
                 diaHorarioAgendamento = diaHorarioAgendamento.plusDays(3);
             else
                 diaHorarioAgendamento = diaHorarioAgendamento.plusDays(1);
-            diaHorarioAgendamento = diaHorarioAgendamento.withHour(horaInicio.getHour());
-        }while (diaHorarioAgendamento.isBefore(LocalDateTime.of(dataFim, horaFim)));
+            diaHorarioAgendamento = diaHorarioAgendamento.withHour(horaInicio.getHour()).withMinute(horaInicio.getMinute());
+        }
     }
+
+//    private void buildAgendamentoAutomatico(Agendamento agendamento) {
+//
+//    }
 
 }
