@@ -42,8 +42,8 @@ public class AgendamentoAutomaticoServiceImpl implements AgendamentoAutomaticoSe
         Integer tempoIntervalo = agendamentoAutomaticoDto.getTempoIntervalo();
         List<AgendamentoAutomaticoFalhoDto> agendamentosFalhos = new ArrayList<>();
         while (diaHorarioAgendamento.isBefore(LocalDateTime.of(dataFim, horaFim))){
-            while (diaHorarioAgendamento
-                    .isBefore(LocalDateTime.of(diaHorarioAgendamento.toLocalDate(), horaFim).minusMinutes(tempoIntervalo-1))) {
+            while (diaHorarioAgendamento.isBefore(
+                    LocalDateTime.of(diaHorarioAgendamento.toLocalDate(), horaFim).minusMinutes(tempoIntervalo-1))) {
                 try{
                     agendamentoRepository.validateHorarioAgendamentoExistente(
                             diaHorarioAgendamento.plusMinutes(1).toString(),
@@ -57,13 +57,15 @@ public class AgendamentoAutomaticoServiceImpl implements AgendamentoAutomaticoSe
                 agendamentoRepository.saveAgendamento(buildAgendamento(diaHorarioAgendamento, medico, tempoIntervalo));
                 diaHorarioAgendamento = diaHorarioAgendamento.plusMinutes(tempoIntervalo);
             }
-            diaHorarioAgendamento = adicionaDiasADiaHorarioAgendamento(agendamentoAutomaticoDto.getIsApenasSegundaASexta(), diaHorarioAgendamento);
+            diaHorarioAgendamento = adicionaDiasADiaHorarioAgendamento(
+                    agendamentoAutomaticoDto.getIsApenasSegundaASexta(), diaHorarioAgendamento);
             diaHorarioAgendamento = diaHorarioAgendamento.withHour(horaInicio.getHour()).withMinute(horaInicio.getMinute());
         }
         return agendamentosFalhos;
     }
 
-    private LocalDateTime adicionaDiasADiaHorarioAgendamento(Boolean isApenasSegundaASexta, LocalDateTime diaHorarioAgendamento) {
+    private LocalDateTime adicionaDiasADiaHorarioAgendamento(
+            Boolean isApenasSegundaASexta, LocalDateTime diaHorarioAgendamento) {
         Boolean isFriday =  diaHorarioAgendamento.getDayOfWeek() == DayOfWeek.FRIDAY;
         if(isApenasSegundaASexta && isFriday)
             return diaHorarioAgendamento.plusDays(3);
@@ -81,7 +83,8 @@ public class AgendamentoAutomaticoServiceImpl implements AgendamentoAutomaticoSe
     }
 
 
-    private AgendamentoAutomaticoFalhoDto buildAgendamentoFalhoDto(LocalDateTime diaHorarioAgendamento, Integer tempoIntervalo) {
+    private AgendamentoAutomaticoFalhoDto buildAgendamentoFalhoDto(
+            LocalDateTime diaHorarioAgendamento, Integer tempoIntervalo) {
           return new AgendamentoAutomaticoFalhoDto(diaHorarioAgendamento.toString(),
                         diaHorarioAgendamento.plusMinutes(tempoIntervalo).toString());
     }
