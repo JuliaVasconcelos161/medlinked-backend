@@ -22,8 +22,7 @@ public class AgendamentoAutomaticoController {
     @PostMapping
     public ResponseEntity<Object> createAgendamentoAutomatico(@RequestBody @Valid AgendamentoAutomaticoDto agendamentoAutomaticoDto) {
         try{
-            agendamentoAutomaticoService.createAgendamentosAutomaticos(agendamentoAutomaticoDto);
-            return ResponseEntity.status(HttpStatus.OK).body("Agendamentos realizados");
+            return ResponseEntity.status(HttpStatus.OK).body(agendamentoAutomaticoService.createAgendamentosAutomaticos(agendamentoAutomaticoDto));
         }catch (MedLinkedException e) {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
