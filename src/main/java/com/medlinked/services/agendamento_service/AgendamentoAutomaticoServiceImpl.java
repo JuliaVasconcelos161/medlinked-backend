@@ -35,40 +35,39 @@ public class AgendamentoAutomaticoServiceImpl implements AgendamentoAutomaticoSe
     public List<AgendamentoAutomaticoFalhoDto> createAgendamentosAutomaticos(AgendamentoAutomaticoDto agendamentoAutomaticoDto) {
         Agendamento agendamento;
         Medico medico = medicoRepository.getOneMedico(agendamentoAutomaticoDto.getIdMedico());
-        LocalDate dataInicio = LocalDate.parse(agendamentoAutomaticoDto.getDataInicioPreAgendamento());
-        LocalDate dataFim = LocalDate.parse(agendamentoAutomaticoDto.getDataFimPreAgendamento());
+        LocalDate dataInicio = LocalDate.parse(agendamentoAutomaticoDto.getDataInicioAgendamentoAutomatico());
+        LocalDate dataFim = LocalDate.parse(agendamentoAutomaticoDto.getDataFimAgendamentoAutomatico());
         LocalTime horaInicio = LocalTime.parse(agendamentoAutomaticoDto.getHoraInicioGeracao());
         LocalTime horaFim = LocalTime.parse(agendamentoAutomaticoDto.getHoraFimGeracao());
         LocalDateTime diaHorarioAgendamento = LocalDateTime.of(dataInicio, horaInicio);
+        Integer tempoIntervalo = agendamentoAutomaticoDto.getTempoIntervalo();
         List<AgendamentoAutomaticoFalhoDto> agendamentosFalhos = new ArrayList<>();
         while (diaHorarioAgendamento.isBefore(LocalDateTime.of(dataFim, horaFim))){
             while (diaHorarioAgendamento
-                    .isBefore(LocalDateTime.of(diaHorarioAgendamento.toLocalDate(), horaFim).minusMinutes(agendamentoAutomaticoDto.getTempoIntervalo()-1))) {
+                    .isBefore(LocalDateTime.of(diaHorarioAgendamento.toLocalDate(), horaFim).minusMinutes(tempoIntervalo-1))) {
                 try{
-                    agendamentoRepository
-                            .validateHorarioAgendamentoExistente(
+                    agendamentoRepository.validateHorarioAgendamentoExistente(
                                     diaHorarioAgendamento.plusMinutes(1).toString(),
-                                    diaHorarioAgendamento.plusMinutes(agendamentoAutomaticoDto.getTempoIntervalo()-1)
-                                            .toString(),
+                                    diaHorarioAgendamento.plusMinutes(tempoIntervalo-1).toString(),
                                     medico.getIdMedico(), null);
                 } catch (ExistsException e) {
                     AgendamentoAutomaticoFalhoDto agendamentoFalho =
                             new AgendamentoAutomaticoFalhoDto(diaHorarioAgendamento.toString(),
-                                    diaHorarioAgendamento.plusMinutes(agendamentoAutomaticoDto.getTempoIntervalo()).toString());
+                                    diaHorarioAgendamento.plusMinutes(tempoIntervalo).toString());
                     agendamentosFalhos.add(agendamentoFalho);
-                    diaHorarioAgendamento = diaHorarioAgendamento.plusMinutes(agendamentoAutomaticoDto.getTempoIntervalo());
+                    diaHorarioAgendamento = diaHorarioAgendamento.plusMinutes(tempoIntervalo);
                     continue;
                 }
                 agendamento = Agendamento.builder()
                         .dataHoraInicioAgendamento(diaHorarioAgendamento)
-                        .dataHoraFimAgendamento(diaHorarioAgendamento.plusMinutes(agendamentoAutomaticoDto.getTempoIntervalo()))
+                        .dataHoraFimAgendamento(diaHorarioAgendamento.plusMinutes(tempoIntervalo))
                         .medico(medico)
                         .tipoAgendamento(TipoAgendamento.AUTOMATICO)
                         .build();
                 agendamentoRepository.saveAgendamento(agendamento);
-                diaHorarioAgendamento = diaHorarioAgendamento.plusMinutes(agendamentoAutomaticoDto.getTempoIntervalo());
+                diaHorarioAgendamento = diaHorarioAgendamento.plusMinutes(tempoIntervalo);
             }
-            if(agendamentoAutomaticoDto.getIsApenasDiasUteis() && diaHorarioAgendamento.getDayOfWeek() == DayOfWeek.FRIDAY)
+            if(agendamentoAutomaticoDto.getIsApenasSegundaASexta() && diaHorarioAgendamento.getDayOfWeek() == DayOfWeek.FRIDAY)
                 diaHorarioAgendamento = diaHorarioAgendamento.plusDays(3);
             else
                 diaHorarioAgendamento = diaHorarioAgendamento.plusDays(1);

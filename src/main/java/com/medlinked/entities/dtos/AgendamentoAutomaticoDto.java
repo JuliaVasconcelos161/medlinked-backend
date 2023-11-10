@@ -13,10 +13,10 @@ public class AgendamentoAutomaticoDto {
     private Integer idMedico;
 
     @NotNull
-    private String dataInicioPreAgendamento;
+    private String dataInicioAgendamentoAutomatico;
 
     @NotNull
-    private String dataFimPreAgendamento;
+    private String dataFimAgendamentoAutomatico;
 
     @NotNull
     private String horaInicioGeracao;
@@ -28,5 +28,5 @@ public class AgendamentoAutomaticoDto {
     private Integer tempoIntervalo;
 
     @NotNull
-    private Boolean isApenasDiasUteis;
+    private Boolean isApenasSegundaASexta;
 }
