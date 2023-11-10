@@ -43,7 +43,7 @@ public class AgendamentoAutomaticoServiceImpl implements AgendamentoAutomaticoSe
         List<AgendamentoAutomaticoFalhoDto> agendamentosFalhos = new ArrayList<>();
         while (diaHorarioAgendamento.isBefore(LocalDateTime.of(dataFim, horaFim))){
             while (diaHorarioAgendamento
-                    .isBefore(LocalDateTime.of(diaHorarioAgendamento.toLocalDate(), horaFim))) {
+                    .isBefore(LocalDateTime.of(diaHorarioAgendamento.toLocalDate(), horaFim).minusMinutes(agendamentoAutomaticoDto.getTempoIntervalo()-1))) {
                 try{
                     agendamentoRepository
                             .validateHorarioAgendamentoExistente(
