@@ -22,8 +22,8 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
     }
 
     @Override
-    public void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
-                                           Integer idMedico, Integer idAgendamento) {
+    public void validateHorarioAgendamentoExistente(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
+                                                    Integer idMedico, Integer idAgendamento) {
         var query = entityManager.createQuery(this.consultaValidateHorarioAgendamento(
                 dataHoraInicioAgendamento,dataHoraFimAgendamento, idAgendamento), Long.class);
         query.setParameter("IDMEDICO", idMedico);

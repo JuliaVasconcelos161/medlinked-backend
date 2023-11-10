@@ -1,6 +1,5 @@
 package com.medlinked.entities.dtos;
 
-import com.medlinked.enums.TipoAgendamento;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -27,9 +26,6 @@ public class AgendamentoAutomaticoDto {
 
     @NotNull
     private Integer tempoIntervalo;
-
-    @NotNull
-    private TipoAgendamento tipoAgendamento;
 
     @NotNull
     private Boolean isApenasDiasUteis;

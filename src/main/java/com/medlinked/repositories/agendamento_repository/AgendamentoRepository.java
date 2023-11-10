@@ -7,8 +7,8 @@ import java.util.List;
 public interface AgendamentoRepository {
     Agendamento saveAgendamento(Agendamento agendamento);
 
-    void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
-                                    Integer idMedico, Integer idAgendamento);
+    void validateHorarioAgendamentoExistente(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
+                                             Integer idMedico, Integer idAgendamento);
 
     Agendamento getOneAgendamento(Integer idAgendamento);
 

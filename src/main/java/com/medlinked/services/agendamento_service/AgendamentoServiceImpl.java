@@ -125,19 +125,26 @@ public class AgendamentoServiceImpl implements AgendamentoService {
 
     private void validateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
                                             Integer idMedico, Integer idAgendamento) {
-        if(this.validateHorarioInicioDepoisHorarioFim(dataHoraInicioAgendamento, dataHoraFimAgendamento))
-            throw new AgendamentoException();
-        if(idAgendamento != null)
-            agendamentoRepository
-                    .validateHorarioAgendamento(dataHoraInicioAgendamento, dataHoraFimAgendamento, idMedico, idAgendamento);
-        else
-            agendamentoRepository
-                    .validateHorarioAgendamento(dataHoraInicioAgendamento, dataHoraFimAgendamento, idMedico, null);
-    }
-
-    private boolean validateHorarioInicioDepoisHorarioFim(String dataHoraInicioAgendamento, String dataHoraFimAgendamento) {
         LocalDateTime inicio = LocalDateTime.parse(dataHoraInicioAgendamento, FORMATTER);
         LocalDateTime fim = LocalDateTime.parse(dataHoraFimAgendamento, FORMATTER);
+        if(this.validateHorarioInicioDepoisHorarioFim(inicio, fim))
+            throw new AgendamentoException();
+        this.validateHorarioAgendamentoExistente(inicio, fim, idMedico, idAgendamento);
+    }
+
+    public void validateHorarioAgendamentoExistente(LocalDateTime dataHorainicio, LocalDateTime dataHorafim,
+                                                     Integer idMedico, Integer idAgendamento) {
+        if(idAgendamento != null)
+            agendamentoRepository
+                    .validateHorarioAgendamentoExistente(
+                            dataHorainicio.plusMinutes(1).toString(),dataHorafim.minusMinutes(1).toString(), idMedico, idAgendamento);
+        else
+            agendamentoRepository
+                    .validateHorarioAgendamentoExistente(
+                            dataHorainicio.plusMinutes(1).toString(),dataHorafim.minusMinutes(1).toString(), idMedico, null);
+    }
+
+    private boolean validateHorarioInicioDepoisHorarioFim(LocalDateTime inicio, LocalDateTime fim) {
         return inicio.isAfter(fim);
     }
 }
