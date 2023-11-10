@@ -33,7 +33,6 @@ public class AgendamentoAutomaticoServiceImpl implements AgendamentoAutomaticoSe
     @Transactional
     @Override
     public List<AgendamentoAutomaticoFalhoDto> createAgendamentosAutomaticos(AgendamentoAutomaticoDto agendamentoAutomaticoDto) {
-        Agendamento agendamento;
         Medico medico = medicoRepository.getOneMedico(agendamentoAutomaticoDto.getIdMedico());
         LocalDate dataInicio = LocalDate.parse(agendamentoAutomaticoDto.getDataInicioAgendamentoAutomatico());
         LocalDate dataFim = LocalDate.parse(agendamentoAutomaticoDto.getDataFimAgendamentoAutomatico());
@@ -43,37 +42,51 @@ public class AgendamentoAutomaticoServiceImpl implements AgendamentoAutomaticoSe
         Integer tempoIntervalo = agendamentoAutomaticoDto.getTempoIntervalo();
         List<AgendamentoAutomaticoFalhoDto> agendamentosFalhos = new ArrayList<>();
         while (diaHorarioAgendamento.isBefore(LocalDateTime.of(dataFim, horaFim))){
-            while (diaHorarioAgendamento
-                    .isBefore(LocalDateTime.of(diaHorarioAgendamento.toLocalDate(), horaFim).minusMinutes(tempoIntervalo-1))) {
+            while (diaHorarioAgendamento.isBefore(
+                    LocalDateTime.of(diaHorarioAgendamento.toLocalDate(), horaFim).minusMinutes(tempoIntervalo-1))) {
                 try{
                     agendamentoRepository.validateHorarioAgendamentoExistente(
-                                    diaHorarioAgendamento.plusMinutes(1).toString(),
-                                    diaHorarioAgendamento.plusMinutes(tempoIntervalo-1).toString(),
-                                    medico.getIdMedico(), null);
+                            diaHorarioAgendamento.plusMinutes(1).toString(),
+                            diaHorarioAgendamento.plusMinutes(tempoIntervalo-1).toString(),
+                            medico.getIdMedico(), null);
                 } catch (ExistsException e) {
-                    AgendamentoAutomaticoFalhoDto agendamentoFalho =
-                            new AgendamentoAutomaticoFalhoDto(diaHorarioAgendamento.toString(),
-                                    diaHorarioAgendamento.plusMinutes(tempoIntervalo).toString());
-                    agendamentosFalhos.add(agendamentoFalho);
+                    agendamentosFalhos.add(buildAgendamentoFalhoDto(diaHorarioAgendamento, tempoIntervalo));
                     diaHorarioAgendamento = diaHorarioAgendamento.plusMinutes(tempoIntervalo);
                     continue;
                 }
-                agendamento = Agendamento.builder()
-                        .dataHoraInicioAgendamento(diaHorarioAgendamento)
-                        .dataHoraFimAgendamento(diaHorarioAgendamento.plusMinutes(tempoIntervalo))
-                        .medico(medico)
-                        .tipoAgendamento(TipoAgendamento.AUTOMATICO)
-                        .build();
-                agendamentoRepository.saveAgendamento(agendamento);
+                agendamentoRepository.saveAgendamento(buildAgendamento(diaHorarioAgendamento, medico, tempoIntervalo));
                 diaHorarioAgendamento = diaHorarioAgendamento.plusMinutes(tempoIntervalo);
             }
-            if(agendamentoAutomaticoDto.getIsApenasSegundaASexta() && diaHorarioAgendamento.getDayOfWeek() == DayOfWeek.FRIDAY)
-                diaHorarioAgendamento = diaHorarioAgendamento.plusDays(3);
-            else
-                diaHorarioAgendamento = diaHorarioAgendamento.plusDays(1);
+            diaHorarioAgendamento = adicionaDiasADiaHorarioAgendamento(
+                    agendamentoAutomaticoDto.getIsApenasSegundaASexta(), diaHorarioAgendamento);
             diaHorarioAgendamento = diaHorarioAgendamento.withHour(horaInicio.getHour()).withMinute(horaInicio.getMinute());
         }
         return agendamentosFalhos;
+    }
+
+    private LocalDateTime adicionaDiasADiaHorarioAgendamento(
+            Boolean isApenasSegundaASexta, LocalDateTime diaHorarioAgendamento) {
+        Boolean isFriday =  diaHorarioAgendamento.getDayOfWeek() == DayOfWeek.FRIDAY;
+        if(isApenasSegundaASexta && isFriday)
+            return diaHorarioAgendamento.plusDays(3);
+        else
+            return diaHorarioAgendamento.plusDays(1);
+    }
+
+    private Agendamento buildAgendamento(LocalDateTime diaHorarioAgendamento, Medico medico, Integer tempoIntervalo) {
+        return Agendamento.builder()
+                .dataHoraInicioAgendamento(diaHorarioAgendamento)
+                .dataHoraFimAgendamento(diaHorarioAgendamento.plusMinutes(tempoIntervalo))
+                .medico(medico)
+                .tipoAgendamento(TipoAgendamento.AUTOMATICO)
+                .build();
+    }
+
+
+    private AgendamentoAutomaticoFalhoDto buildAgendamentoFalhoDto(
+            LocalDateTime diaHorarioAgendamento, Integer tempoIntervalo) {
+          return new AgendamentoAutomaticoFalhoDto(diaHorarioAgendamento.toString(),
+                        diaHorarioAgendamento.plusMinutes(tempoIntervalo).toString());
     }
 
 }
