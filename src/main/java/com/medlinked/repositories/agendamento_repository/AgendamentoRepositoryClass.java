@@ -101,7 +101,18 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
         consulta.append(" or '");
         consulta.append(dataHoraFimAgendamento);
         consulta.append("' between a.dataHoraInicioAgendamento and a.dataHoraFimAgendamento) ");
-        consulta.append(" and a.medico.idMedico = :IDMEDICO ");
+        consulta.append(" or (a.dataHoraInicioAgendamento ");
+        consulta.append(" between '");
+        consulta.append(dataHoraInicioAgendamento);
+        consulta.append("' and '");
+        consulta.append(dataHoraFimAgendamento);
+        consulta.append("' or a.dataHoraFimAgendamento");
+        consulta.append(" between '");
+        consulta.append(dataHoraInicioAgendamento);
+        consulta.append("' and '");
+        consulta.append(dataHoraFimAgendamento);
+        consulta.append("') and");
+        consulta.append(" a.medico.idMedico = :IDMEDICO ");
         if(idAgendamento != null)
             consulta.append(" and a.idAgendamento != :IDAGENDAMENTO ");
         return consulta.toString();
