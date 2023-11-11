@@ -52,6 +52,7 @@
             é criptografada para ser salva no banco de dados utilizando BCrypt. No fim é retornado um token, que informa
             o idUsuario, seu nome e seu username.
         </p>
+    <p> Retorno: UsuarioResponseDto ou mensagem retornada por MedLinkedException </p>
 
 <li><h4>Editar secretária:</h4></li>
     <p> Método http: PUT </p>
@@ -62,12 +63,13 @@
         RequestBody: SecretariaDto
     </p>
     <p style="text-align:justify;">
-        Ao editar uma secretária como não possui atributos além daqueles que se relacionam a ela
+        Ao editar uma secretária, como ela não possui atributos além daqueles que se relacionam a ela
         a partir de Pessoa, será chamado um método que atualiza as informações de Pessoa no qual
         são verificados email, e cpf, caso já exista uma outra pessoa com email e cpf informados
         será estourada uma exceção. Caso contrário, serão salvas as novas caracteristicas de pessoa
         e secretária.
     </p>
+    <p> Retorno: Secretaria ou mensagem retornada por MedLinkedException</p>
 
 <li><h4>Retornar secretária:</h4></li>
     <p> Método http: GET </p>
@@ -78,6 +80,7 @@
         Nessa rota serão retornadas as informações da Secretária cujo id foi informado,
         caso não seja encontrado será estourada uma exceção.
     </p>
+    <p> Retorno: Secretaria ou mensagem retornada por MedLinkedException</p>
 
 <li><h4>Deletar secretária:</h4></li>
     <p> Método http: DELETE </p>
@@ -91,6 +94,7 @@
         será verificada a existência de outro tipo de cadastro de Pessoa com esses dados,
         caso não exista, também será deletado o registro em tb_pessoa.
     </p>
+    <p> Retorno: Não possui retorno ou retorna mensagem de MedLinkedException</p>
 
 
 </ul>
