@@ -96,6 +96,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
                     : null;
             agendamento.setPlanoSaude(planoSaude);
         }
+        this.enviaEmailCasoPacienteExistente(agendamento);
         return agendamentoRepository.updateAgendamento(agendamento);
     }
 
@@ -106,6 +107,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         return agendamentoRepository.getAllAgendamentosMedicosSecretaria(
                 idSecretaria, idMedico, idPaciente, mes, ano, dia);
     }
+
     @Transactional
     @Override
     public void deleteAgendamento(Integer idAgendamento) {
@@ -117,7 +119,6 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     public void deleteAllAgendamentosMedico(Integer idMedico) {
         agendamentoRepository.deleteAllAgendamentosMedico(idMedico);
     }
-
     @Override
     public void deleteAllAgendamentosPaciente(Integer idPaciente) {
         agendamentoRepository.deleteAllAgendamentosPaciente(idPaciente);
@@ -151,5 +152,10 @@ public class AgendamentoServiceImpl implements AgendamentoService {
 
     private boolean validateHorarioInicioDepoisHorarioFim(LocalDateTime inicio, LocalDateTime fim) {
         return inicio.isAfter(fim);
+    }
+
+    private void enviaEmailCasoPacienteExistente(Agendamento agendamento) {
+        if(agendamento.getPaciente() != null)
+            emailService.sendEmailAgendamentoConfirmacao(agendamento);
     }
 }
