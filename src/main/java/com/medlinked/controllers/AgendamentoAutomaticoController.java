@@ -10,7 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/agendamento-automatico")
+@RequestMapping("/agendamento-automatico/create")
 public class AgendamentoAutomaticoController {
     private final AgendamentoAutomaticoService agendamentoAutomaticoService;
 
@@ -18,9 +18,9 @@ public class AgendamentoAutomaticoController {
         this.agendamentoAutomaticoService = agendamentoAutomaticoService;
     }
 
-    @Operation(summary = "Deleta agendamento utilizando idAgendamento informado.")
+    @Operation(summary = "Cria agendamentos para um intervalo definido deixando a agenda preparada para apenas depois vincula-lo a um paciente.")
     @PostMapping
-    public ResponseEntity<Object> createAgendamentoAutomatico(@RequestBody @Valid AgendamentoAutomaticoDto agendamentoAutomaticoDto) {
+    public ResponseEntity<Object> createAgendamentosAutomaticos(@RequestBody @Valid AgendamentoAutomaticoDto agendamentoAutomaticoDto) {
         try{
             return ResponseEntity.status(HttpStatus.OK).body(agendamentoAutomaticoService.createAgendamentosAutomaticos(agendamentoAutomaticoDto));
         }catch (MedLinkedException e) {

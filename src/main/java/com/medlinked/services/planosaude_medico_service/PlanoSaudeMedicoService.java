@@ -7,9 +7,9 @@ import org.springframework.data.domain.Page;
 import java.util.List;
 
 public interface PlanoSaudeMedicoService {
-    List<PlanoSaude> updateMedicoPlanosSaude(Integer idMedico, MedicoPlanoSaudeDto medicoPlanoSaudeDto);
+    List<PlanoSaude> associatePlanosSaudeMedico(Integer idMedico, MedicoPlanoSaudeDto medicoPlanoSaudeDto);
 
-    List<PlanoSaude> updateMedicoRemovePlanoSaude(Integer idMedico, Integer idPlanoSaude);
+    List<PlanoSaude> disassociatePlanoSaudeMedico(Integer idMedico, Integer idPlanoSaude);
 
     Page<PlanoSaude> getAllPlanosSaudeMedico(Integer idMedico, Integer page, Integer pageSize);
 }

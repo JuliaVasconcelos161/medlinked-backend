@@ -37,7 +37,7 @@ public class PlanoSaudeMedicoServiceImpl implements PlanoSaudeMedicoService {
 
     @Override
     @Transactional
-    public List<PlanoSaude> updateMedicoPlanosSaude(Integer idMedico, MedicoPlanoSaudeDto medicoPlanoSaudeDto) {
+    public List<PlanoSaude> associatePlanosSaudeMedico(Integer idMedico, MedicoPlanoSaudeDto medicoPlanoSaudeDto) {
         Medico medico = medicoRepository.getOneMedico(idMedico);
         Set<PlanoSaude> planosSaude = new HashSet<>();
         medicoPlanoSaudeDto.getIdsPlanosSaude().forEach(idPlano -> {
@@ -53,7 +53,7 @@ public class PlanoSaudeMedicoServiceImpl implements PlanoSaudeMedicoService {
 
     @Override
     @Transactional
-    public List<PlanoSaude> updateMedicoRemovePlanoSaude(Integer idMedico, Integer idPlanoSaude) {
+    public List<PlanoSaude> disassociatePlanoSaudeMedico(Integer idMedico, Integer idPlanoSaude) {
         Medico medico = medicoRepository.getOneMedico(idMedico);
         PlanoSaude planoSaude = planoSaudeRepository.getOnePlanoSaude(idPlanoSaude);
         medico.removePlanoSaude(planoSaude);

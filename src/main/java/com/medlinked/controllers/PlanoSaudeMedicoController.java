@@ -20,27 +20,26 @@ public class PlanoSaudeMedicoController {
     }
 
 
-    @Operation(summary = "Atualiza o médico vinculando-o aos planos de saúde recebidos, e retorna os planos vinculados.")
-    @PutMapping("/adiciona-planos-medico/{idMedico}")
-    public ResponseEntity<Object> updateMedicoPlanosSaude(@PathVariable Integer idMedico,
-                                                          @RequestBody @Valid MedicoPlanoSaudeDto medicoPlanoSaudeDto) {
+    @Operation(summary = "Associa planos de saúde a médico informado.")
+    @PutMapping("/associate/{idMedico}")
+    public ResponseEntity<Object> associatePlanosSaudeMedico(@PathVariable Integer idMedico,
+                                                             @RequestBody @Valid MedicoPlanoSaudeDto medicoPlanoSaudeDto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(
-                    planoSaudeMedicoService.updateMedicoPlanosSaude(idMedico, medicoPlanoSaudeDto));
+                    planoSaudeMedicoService.associatePlanosSaudeMedico(idMedico, medicoPlanoSaudeDto));
         } catch (MedLinkedException e) {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
 
     }
 
-    @Operation(summary = "Atualiza o médico removendo plano de saúde utilizando o idPlanoSaude informado.")
-    @PutMapping("/update-medico-remove-plano/{idMedico}/{idPlanoSaude}")
-    public ResponseEntity<Object> updateMedicoRemovePlanoSaude(
-            @PathVariable Integer idMedico,
+    @Operation(summary = "Disassocia plano de saúde de médico informado.")
+    @PutMapping("/disassociate/{idMedico}/{idPlanoSaude}")
+    public ResponseEntity<Object> disassociatePlanoSaudeMedico(@PathVariable Integer idMedico,
             @PathVariable Integer idPlanoSaude) {
         try {
             return ResponseEntity.status(HttpStatus.OK)
-                    .body(planoSaudeMedicoService.updateMedicoRemovePlanoSaude(idMedico, idPlanoSaude));
+                    .body(planoSaudeMedicoService.disassociatePlanoSaudeMedico(idMedico, idPlanoSaude));
         } catch (MedLinkedException e) {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
