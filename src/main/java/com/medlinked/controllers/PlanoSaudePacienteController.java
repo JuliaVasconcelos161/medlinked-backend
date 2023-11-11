@@ -54,4 +54,16 @@ public class PlanoSaudePacienteController {
             return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
         }
     }
+
+    @Operation(summary = "Retorna todos os planos de saude de um paciente que também são planos de um determinado médico.")
+    @GetMapping("/medico/{idPaciente}/{idMedico}")
+    public ResponseEntity<Object> getAllPlanosSaudePacienteMedico(@PathVariable Integer idPaciente,
+                                                                  @PathVariable Integer idMedico) {
+        try {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(planoSaudePacienteService.getAllPlanosSaudePacienteMedico(idPaciente, idMedico));
+        }catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
+    }
 }
