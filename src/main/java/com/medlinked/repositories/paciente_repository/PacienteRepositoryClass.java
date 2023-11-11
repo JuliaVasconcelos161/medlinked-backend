@@ -59,7 +59,7 @@ public class PacienteRepositoryClass implements PacienteRepository {
         consulta.append(" from Paciente paciente ");
         consulta.append(" inner join paciente.pessoa pessoa ");
         if(nomePaciente != null) {
-            consulta.append(" where pessoa.nome like :NOMEPACIENTE ");
+            consulta.append(" where lower(pessoa.nome) like lower(:NOMEPACIENTE) ");
             if(cpf != null)
                 consulta.append(" and pessoa.cpf = :CPF");
         } else if(cpf != null)
