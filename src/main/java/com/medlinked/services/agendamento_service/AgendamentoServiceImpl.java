@@ -48,7 +48,9 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         this.validateHorarioAgendamento(agendamentoDto.getDataHoraInicioAgendamento(),
                 agendamentoDto.getDataHoraFimAgendamento(), agendamentoDto.getIdMedico(), null);
         Medico medico = medicoRepository.getOneMedico(agendamentoDto.getIdMedico());
-        Paciente paciente = pacienteRepository.getOnePaciente(agendamentoDto.getIdPaciente());
+        Paciente paciente = agendamentoDto.getIdPaciente() != null ?
+                pacienteRepository.getOnePaciente(agendamentoDto.getIdPaciente())
+                : null;
         PlanoSaude planoSaude = agendamentoDto.getIdPlanoSaude() != null ?
                 planoSaudeRepository.getOnePlanoSaude(agendamentoDto.getIdPlanoSaude())
                 : null;
@@ -80,8 +82,11 @@ public class AgendamentoServiceImpl implements AgendamentoService {
             Medico medico = medicoRepository.getOneMedico(agendamentoDto.getIdMedico());
             agendamento.setMedico(medico);
         }
-        if(!agendamento.getPaciente().getIdPaciente().equals(agendamentoDto.getIdPaciente())) {
-            Paciente paciente = pacienteRepository.getOnePaciente(agendamentoDto.getIdPaciente());
+        if(agendamento.getPaciente() == null ||
+                !agendamento.getPaciente().getIdPaciente().equals(agendamentoDto.getIdPaciente())) {
+            Paciente paciente = agendamentoDto.getIdPaciente() != null ?
+                    pacienteRepository.getOnePaciente(agendamentoDto.getIdPaciente())
+                    : null;
             agendamento.setPaciente(paciente);
         }
         if(agendamento.getPlanoSaude() == null ||
