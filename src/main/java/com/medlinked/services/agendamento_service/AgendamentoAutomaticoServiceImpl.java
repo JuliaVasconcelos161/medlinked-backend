@@ -5,6 +5,7 @@ import com.medlinked.entities.Medico;
 import com.medlinked.entities.dtos.AgendamentoAutomaticoDto;
 import com.medlinked.entities.dtos.AgendamentoAutomaticoFalhoDto;
 import com.medlinked.enums.TipoAgendamento;
+import com.medlinked.exceptions.AgendamentoException;
 import com.medlinked.exceptions.ExistsException;
 import com.medlinked.repositories.agendamento_repository.AgendamentoRepository;
 import com.medlinked.repositories.medico_repository.MedicoRepository;
@@ -41,6 +42,7 @@ public class AgendamentoAutomaticoServiceImpl implements AgendamentoAutomaticoSe
         LocalDateTime diaHorarioAgendamento = LocalDateTime.of(dataInicio, horaInicio);
         Integer tempoIntervalo = agendamentoAutomaticoDto.getTempoIntervalo();
         List<AgendamentoAutomaticoFalhoDto> agendamentosFalhos = new ArrayList<>();
+        validaTempoInicioAntesTempoFim(LocalDateTime.of(dataInicio, horaInicio), LocalDateTime.of(dataFim, horaFim));
         while (diaHorarioAgendamento.isBefore(LocalDateTime.of(dataFim, horaFim))){
             while (diaHorarioAgendamento.isBefore(
                     LocalDateTime.of(diaHorarioAgendamento.toLocalDate(), horaFim).minusMinutes(tempoIntervalo-1))) {
@@ -62,6 +64,11 @@ public class AgendamentoAutomaticoServiceImpl implements AgendamentoAutomaticoSe
             diaHorarioAgendamento = diaHorarioAgendamento.withHour(horaInicio.getHour()).withMinute(horaInicio.getMinute());
         }
         return agendamentosFalhos;
+    }
+
+    private void validaTempoInicioAntesTempoFim(LocalDateTime horarioInicio, LocalDateTime horarioFim) {
+        if(horarioInicio.isAfter(horarioFim))
+            throw new AgendamentoException();
     }
 
     private LocalDateTime adicionaDiasADiaHorarioAgendamento(
