@@ -6,6 +6,7 @@ import com.medlinked.exceptions.ExistsException;
 import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -152,7 +153,7 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
                                                                Integer mes, Integer ano, Integer dia,
                                                                TipoAgendamento tipoAgendamento, Boolean isCount) {
         StringBuilder consulta = new StringBuilder(" select  ");
-        if(isCount)
+        if(BooleanUtils.isTrue(isCount))
             consulta.append(" count(1) ");
         else
             consulta.append(" a ");
@@ -177,7 +178,7 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
             consulta.append(" and day(a.dataHoraInicioAgendamento) = :DIA ");
         if(tipoAgendamento != null)
             consulta.append(" and a.tipoAgendamento = :TIPOAGENDAMENTO");
-        if(isCount.equals(false))
+        if(BooleanUtils.isFalse(isCount))
             consulta.append(" order by a.dataHoraInicioAgendamento ");
         return consulta.toString();
     }

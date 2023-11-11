@@ -13,6 +13,7 @@ import com.medlinked.services.medicocrm_service.MedicoCrmService;
 import com.medlinked.services.pessoa_service.PessoaService;
 import com.medlinked.services.secretaria_medico_service.SecretariaMedicoService;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -83,7 +84,7 @@ public class MedicoServiceImpl implements MedicoService {
         agendamentoService.deleteAllAgendamentosMedico(idMedico);
         medicoCrmService.deleteMedicoCrm(idMedico);
         medicoRepository.deleteMedico(medico);
-        if(pessoaService.existsPessoa(idMedico))
+        if(BooleanUtils.isTrue(pessoaService.existsPessoa(idMedico)))
             pessoaService.deletePessoa(idMedico);
     }
 

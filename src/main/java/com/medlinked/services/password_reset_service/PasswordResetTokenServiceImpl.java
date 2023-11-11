@@ -76,7 +76,7 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     public void validatePasswordResetToken(String token) {
         final PasswordResetToken passToken = passwordResetTokenRepository.getPasswordResetTokenByToken(token);
         String response = BooleanUtils.isFalse(isTokenFound(passToken)) ? "Token inválido"
-                : isTokenExpired(passToken) ? "Token expirado"
+                : BooleanUtils.isTrue(isTokenExpired(passToken)) ? "Token expirado"
                 : null;
         if(response != null)
             throw new MedLinkedException(response, HttpStatus.BAD_REQUEST);

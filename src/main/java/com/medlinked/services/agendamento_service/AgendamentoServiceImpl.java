@@ -152,7 +152,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
                                             Integer idMedico, Integer idAgendamento) {
         LocalDateTime inicio = LocalDateTime.parse(dataHoraInicioAgendamento, FORMATTER);
         LocalDateTime fim = LocalDateTime.parse(dataHoraFimAgendamento, FORMATTER);
-        if(this.validateHorarioInicioDepoisHorarioFim(inicio, fim))
+        if(BooleanUtils.isTrue(this.isHorarioInicioDepoisHorarioFim(inicio, fim)))
             throw new AgendamentoException();
         this.validateHorarioAgendamentoExistente(inicio, fim, idMedico, idAgendamento);
     }
@@ -169,7 +169,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
                             dataHorainicio.plusMinutes(1).toString(),dataHorafim.minusMinutes(1).toString(), idMedico, null);
     }
 
-    private boolean validateHorarioInicioDepoisHorarioFim(LocalDateTime inicio, LocalDateTime fim) {
+    private boolean isHorarioInicioDepoisHorarioFim(LocalDateTime inicio, LocalDateTime fim) {
         return inicio.isAfter(fim);
     }
 

@@ -12,6 +12,7 @@ import com.medlinked.services.agendamento_service.AgendamentoService;
 import com.medlinked.services.medicocrm_service.MedicoCrmService;
 import com.medlinked.services.pessoa_service.PessoaService;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -65,7 +66,7 @@ public class SecretariaMedicoServiceImpl implements SecretariaMedicoService {
         Medico medico = medicoRepository.getOneMedico(idMedico);
         secretaria.getMedicos().remove(medico);
         secretariaRepository.updateSecretaria(secretaria);
-        if(secretariaMedicoRepository.getAllSecretariasMedico(idMedico).isEmpty())
+        if(BooleanUtils.isTrue(secretariaMedicoRepository.getAllSecretariasMedico(idMedico).isEmpty()))
             this.deleteMedicoSemDeletarVinculosSecretarias(medico);
     }
 
@@ -107,7 +108,7 @@ public class SecretariaMedicoServiceImpl implements SecretariaMedicoService {
         agendamentoService.deleteAllAgendamentosMedico(medico.getIdMedico());
         medicoCrmService.deleteMedicoCrm(medico.getIdMedico());
         medicoRepository.deleteMedico(medico);
-        if(pessoaService.existsPessoa(medico.getIdMedico()))
+        if(BooleanUtils.isTrue(pessoaService.existsPessoa(medico.getIdMedico())))
             pessoaService.deletePessoa(medico.getIdMedico());
     }
 }

@@ -5,6 +5,7 @@ import com.medlinked.entities.dtos.PessoaDto;
 import com.medlinked.exceptions.ExistsException;
 import com.medlinked.repositories.pessoa_repository.PessoaRepository;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -50,9 +51,9 @@ public class PessoaServiceImpl implements PessoaService {
 
     @Override
     public void validateNewPessoa(String cpfDto, String emailDto, String especializacaoPessoa) {
-        if(pessoaRepository.existsEspecializacaoPessoaByCpf(cpfDto, especializacaoPessoa, null))
+        if(BooleanUtils.isTrue(pessoaRepository.existsEspecializacaoPessoaByCpf(cpfDto, especializacaoPessoa, null)))
             throw new ExistsException(especializacaoPessoa, "CPF");
-        if(pessoaRepository.existsEspecializacaoPessoaByEmail(emailDto, especializacaoPessoa, null))
+        if(BooleanUtils.isTrue(pessoaRepository.existsEspecializacaoPessoaByEmail(emailDto, especializacaoPessoa, null)))
             throw new ExistsException(especializacaoPessoa, "Email");
     }
 
@@ -79,9 +80,9 @@ public class PessoaServiceImpl implements PessoaService {
     }
 
     private void validatePessoaUpdate(String cpfDto, String especializacaoPessoa, String emailDto, Integer idPessoa) {
-        if(pessoaRepository.existsEspecializacaoPessoaByCpf(cpfDto, especializacaoPessoa, idPessoa))
+        if(BooleanUtils.isTrue(pessoaRepository.existsEspecializacaoPessoaByCpf(cpfDto, especializacaoPessoa, idPessoa)))
             throw new ExistsException(especializacaoPessoa, "CPF");
-        if(pessoaRepository.existsEspecializacaoPessoaByEmail(emailDto, especializacaoPessoa, idPessoa))
+        if(BooleanUtils.isTrue(pessoaRepository.existsEspecializacaoPessoaByEmail(emailDto, especializacaoPessoa, idPessoa)))
             throw new ExistsException(especializacaoPessoa, "Email");
     }
 
