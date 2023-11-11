@@ -1,6 +1,7 @@
 package com.medlinked.repositories.planosaude_paciente_repository;
 
 import com.medlinked.entities.PlanoSaudePaciente;
+import com.medlinked.entities.dtos.PlanoSaudePacienteResponseDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
@@ -40,12 +41,16 @@ public class PlanoSaudePacienteRepositoryClass implements PlanoSaudePacienteRepo
     }
 
     @Override
-    public List<PlanoSaudePaciente> getAllPlanosSaudePaciente(Integer idPaciente) {
-        StringBuilder consulta = new StringBuilder(" select planoSaudePaciente ");
+    public List<PlanoSaudePacienteResponseDto> buildPlanoSaudePacienteResponseDto(Integer idPaciente) {
+        StringBuilder consulta = new StringBuilder(" select new com.medlinked.entities.dtos.PlanoSaudePacienteResponseDto( ");
+        consulta.append(" planoSaudePaciente.idPlanoSaudePaciente.planoSaude, ");
+        consulta.append(" planoSaudePaciente.numeroCarteirinha, ");
+        consulta.append(" tipoPlanoSaude) ");
         consulta.append(" from PlanoSaudePaciente planoSaudePaciente ");
+        consulta.append(" inner join planoSaudePaciente.tipoPlanoSaude tipoPlanoSaude ");
         consulta.append(" where planoSaudePaciente.idPlanoSaudePaciente.paciente.idPaciente = :IDPACIENTE ");
         consulta.append(" order by planoSaudePaciente.idPlanoSaudePaciente.planoSaude.descricao ");
-        var query = entityManager.createQuery(consulta.toString(), PlanoSaudePaciente.class);
+        var query = entityManager.createQuery(consulta.toString(), PlanoSaudePacienteResponseDto.class);
         query.setParameter("IDPACIENTE", idPaciente);
         return query.getResultList();
     }

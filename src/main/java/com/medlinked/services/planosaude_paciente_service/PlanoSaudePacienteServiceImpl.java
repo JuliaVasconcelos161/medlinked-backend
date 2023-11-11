@@ -5,14 +5,13 @@ import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.PlanoSaudePaciente;
 import com.medlinked.entities.TipoPlanoSaude;
 import com.medlinked.entities.dtos.PlanoSaudePacienteDto;
+import com.medlinked.entities.dtos.PacientePlanosSaudeResponseDto;
 import com.medlinked.repositories.paciente_repository.PacienteRepository;
 import com.medlinked.repositories.planosaude_paciente_repository.PlanoSaudePacienteRepository;
 import com.medlinked.repositories.planosaude_repository.PlanoSaudeRepository;
 import com.medlinked.services.tipoplanosaude_service.TipoPlanoSaudeService;
 import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class PlanoSaudePacienteServiceImpl implements PlanoSaudePacienteService {
@@ -62,8 +61,10 @@ public class PlanoSaudePacienteServiceImpl implements PlanoSaudePacienteService 
     }
 
     @Override
-    public List<PlanoSaudePaciente> getAllPlanosSaudePaciente(Integer idPaciente) {
-        return planoSaudePacienteRepository.getAllPlanosSaudePaciente(idPaciente);
+    public PacientePlanosSaudeResponseDto getAllPlanosSaudePaciente(Integer idPaciente) {
+        return new PacientePlanosSaudeResponseDto(
+                pacienteRepository.getOnePaciente(idPaciente),
+                planoSaudePacienteRepository.buildPlanoSaudePacienteResponseDto(idPaciente));
     }
 
     @Transactional
