@@ -72,6 +72,10 @@ public class PacienteRepositoryClass implements PacienteRepository {
     @Override
     public Long countPacientes(String nomePaciente, String cpf) {
         var query = entityManager.createQuery(consultaGetAllPacientes(nomePaciente, cpf, true), Long.class);
+        if(nomePaciente != null)
+            query.setParameter("NOMEPACIENTE", "%"+nomePaciente+"%");
+        if(cpf != null)
+            query.setParameter("CPF", cpf);
         return query.getSingleResult();
     }
 
