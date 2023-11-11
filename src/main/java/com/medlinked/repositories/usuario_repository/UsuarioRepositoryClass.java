@@ -3,6 +3,7 @@ package com.medlinked.repositories.usuario_repository;
 import com.medlinked.entities.Usuario;
 import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
@@ -35,10 +36,11 @@ public class UsuarioRepositoryClass implements UsuarioRepository {
         consulta.append(" where usuario.username = :USERNAME ");
         var query = entityManager.createQuery(consulta.toString(), Usuario.class);
         query.setParameter("USERNAME", username);
-        Usuario usuario = query.getSingleResult();
-        if(usuario == null)
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
             throw new NoObjectFoundException("Usuário");
-        return usuario;
+        }
     }
 
     @Override
