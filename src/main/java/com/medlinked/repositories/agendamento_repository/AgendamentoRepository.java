@@ -17,11 +17,15 @@ public interface AgendamentoRepository {
 
     List<Agendamento> getAllAgendamentosMedicosSecretaria(
             Integer idSecretaria, Integer idMedico, Integer idPaciente, Integer mes, Integer ano, Integer dia,
-            TipoAgendamento tipoAgendamento);
+            TipoAgendamento tipoAgendamento, Integer page, Integer pageSize);
 
     void deleteAgendamento(Agendamento agendamento);
 
     void deleteAllAgendamentosMedico(Integer idMedico);
 
     void deleteAllAgendamentosPaciente(Integer idPaciente);
+
+    Long countGetAllAgendamentosMedicosSecretaria(Integer idSecretaria, Integer idMedico,
+                                                  Integer idPaciente, Integer mes, Integer ano,
+                                                  Integer dia, TipoAgendamento tipoAgendamento);
 }

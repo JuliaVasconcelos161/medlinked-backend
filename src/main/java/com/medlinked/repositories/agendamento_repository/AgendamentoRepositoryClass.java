@@ -52,9 +52,10 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
     @Override
     public List<Agendamento> getAllAgendamentosMedicosSecretaria(Integer idSecretaria, Integer idMedico,
                                                                  Integer idPaciente, Integer mes, Integer ano,
-                                                                 Integer dia, TipoAgendamento tipoAgendamento) {
+                                                                 Integer dia, TipoAgendamento tipoAgendamento,
+                                                                 Integer page, Integer pageSize) {
         var query = entityManager.createQuery(this.consultaGetAllAgendamentosMedicosSecretaria(
-                idMedico,idPaciente,mes,ano, dia, tipoAgendamento), Agendamento.class);
+                idMedico,idPaciente,mes,ano, dia, tipoAgendamento, false), Agendamento.class);
         if(idMedico != null)
             query.setParameter("IDMEDICO", idMedico);
         if(idPaciente != null)
@@ -68,6 +69,10 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
         if(tipoAgendamento != null)
             query.setParameter("TIPOAGENDAMENTO", tipoAgendamento);
         query.setParameter("IDSECRETARIA", idSecretaria);
+        if(page != null && pageSize != null) {
+            query.setFirstResult(page * pageSize);
+            query.setMaxResults(pageSize);
+        }
         return query.getResultList();
     }
 
@@ -92,6 +97,28 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
         var query = entityManager.createQuery(consulta.toString());
         query.setParameter("IDPACIENTE", idPaciente);
         query.executeUpdate();
+    }
+
+    @Override
+    public Long countGetAllAgendamentosMedicosSecretaria(Integer idSecretaria, Integer idMedico,
+                                                         Integer idPaciente, Integer mes, Integer ano,
+                                                         Integer dia, TipoAgendamento tipoAgendamento) {
+        var query = entityManager.createQuery(this.consultaGetAllAgendamentosMedicosSecretaria(
+                idMedico,idPaciente,mes,ano, dia, tipoAgendamento, true), Long.class);
+        if(idMedico != null)
+            query.setParameter("IDMEDICO", idMedico);
+        if(idPaciente != null)
+            query.setParameter("IDPACIENTE", idPaciente);
+        if(mes != null)
+            query.setParameter("MES", mes);
+        if(ano != null)
+            query.setParameter("ANO", ano);
+        if(dia != null)
+            query.setParameter("DIA", dia);
+        if(tipoAgendamento != null)
+            query.setParameter("TIPOAGENDAMENTO", tipoAgendamento);
+        query.setParameter("IDSECRETARIA", idSecretaria);
+        return query.getSingleResult();
     }
 
     private String consultaValidateHorarioAgendamentoExistente(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
@@ -123,8 +150,12 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
 
     private String consultaGetAllAgendamentosMedicosSecretaria(Integer idMedico, Integer idPaciente,
                                                                Integer mes, Integer ano, Integer dia,
-                                                               TipoAgendamento tipoAgendamento) {
-        StringBuilder consulta = new StringBuilder(" select a ");
+                                                               TipoAgendamento tipoAgendamento, Boolean isCount) {
+        StringBuilder consulta = new StringBuilder(" select  ");
+        if(isCount)
+            consulta.append(" count(1) ");
+        else
+            consulta.append(" a ");
         consulta.append(" from Agendamento a ");
         consulta.append(" inner join a.medico medico ");
         if(idPaciente != null)
@@ -146,7 +177,8 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
             consulta.append(" and day(a.dataHoraInicioAgendamento) = :DIA ");
         if(tipoAgendamento != null)
             consulta.append(" and a.tipoAgendamento = :TIPOAGENDAMENTO");
-        consulta.append(" order by a.dataHoraInicioAgendamento ");
+        if(isCount.equals(false))
+            consulta.append(" order by a.dataHoraInicioAgendamento ");
         return consulta.toString();
     }
 }

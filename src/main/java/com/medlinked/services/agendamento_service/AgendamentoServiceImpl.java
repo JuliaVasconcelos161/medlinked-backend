@@ -13,6 +13,9 @@ import com.medlinked.repositories.paciente_repository.PacienteRepository;
 import com.medlinked.repositories.planosaude_repository.PlanoSaudeRepository;
 import com.medlinked.services.email_service.EmailService;
 import jakarta.transaction.Transactional;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -102,12 +105,26 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     }
 
     @Override
-    public List<Agendamento> getAllAgendamentosMedicosSecretaria(Integer idSecretaria, Integer idMedico,
-                                                                 Integer idPaciente, Integer mes, Integer ano,
-                                                                 Integer dia, TipoAgendamento tipoAgendamento) {
-        return agendamentoRepository.getAllAgendamentosMedicosSecretaria(
-                idSecretaria, idMedico, idPaciente, mes, ano, dia, tipoAgendamento);
+    public Page<Agendamento> getAllAgendamentosMedicosSecretariaPaginado(Integer idSecretaria, Integer idMedico,
+                                                                         Integer idPaciente, Integer mes, Integer ano,
+                                                                         Integer dia, TipoAgendamento tipoAgendamento,
+                                                                         Integer page, Integer pageSize) {
+        List<Agendamento> agendamentos =  agendamentoRepository.getAllAgendamentosMedicosSecretaria(idSecretaria,
+                idMedico, idPaciente, mes, ano, dia, tipoAgendamento, page, pageSize);
+        PageRequest pageRequest = PageRequest.of(page, pageSize);
+        Long total = agendamentoRepository.countGetAllAgendamentosMedicosSecretaria(idSecretaria, idMedico, idPaciente,
+                mes, ano, dia, tipoAgendamento);
+        return new PageImpl<>(agendamentos, pageRequest, total);
     }
+
+    @Override
+    public List<Agendamento> getAllAgendamentosMedicosSecretaria(Integer idSecretaria, Integer idMedico,
+                                                                         Integer idPaciente, Integer mes, Integer ano,
+                                                                         Integer dia, TipoAgendamento tipoAgendamento) {
+        return agendamentoRepository.getAllAgendamentosMedicosSecretaria(idSecretaria,
+                idMedico, idPaciente, mes, ano, dia, tipoAgendamento, null, null);
+    }
+
 
     @Transactional
     @Override
