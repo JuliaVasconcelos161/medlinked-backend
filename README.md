@@ -79,4 +79,18 @@
         caso não seja encontrado será estourada uma exceção.
     </p>
 
+<li><h4>Deletar secretária:</h4></li>
+    <p> Método http: DELETE </p>
+    <p>
+        Rota: secretaria/delete/{idSecretaria}
+    </p>
+    <p style="text-align:justify;">
+        Ao deletar uma secretária, será verificado se ela possui algum vinculo com médico,
+        caso ela possua, será estourada uma exceção que informará a existência desse vínculo.
+        Caso contrário, será deletado o registro em tb_secretaria, e também em tb_usuario, 
+        será verificada a existência de outro tipo de cadastro de Pessoa com esses dados,
+        caso não exista, também será deletado o registro em tb_pessoa.
+    </p>
+
+
 </ul>
