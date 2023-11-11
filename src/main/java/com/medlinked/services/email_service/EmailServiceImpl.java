@@ -27,8 +27,8 @@ public class EmailServiceImpl implements EmailService {
 
 
     @Override
-    public void sendEmailResetPassword(String token, Usuario usuario) {
-        javaMailSender.send(this.constructResetTokenEmail(token, usuario));
+    public void sendEmailResetPassword(Usuario usuario) {
+        javaMailSender.send(this.constructResetTokenEmail(usuario));
     }
 
 
@@ -79,7 +79,7 @@ public class EmailServiceImpl implements EmailService {
         }
     }
     @Override
-    public MimeMessage constructResetTokenEmail(String token, Usuario usuario) {
+    public MimeMessage constructResetTokenEmail(Usuario usuario) {
         StringBuilder message = new StringBuilder("<!DOCTYPE html>");
         message.append("<html lang=\"pt-br\" >");
         message.append("<head>");
@@ -87,8 +87,7 @@ public class EmailServiceImpl implements EmailService {
         message.append("<meta name=\"viewport\" content=\"initial-scale=1.0, width=device-width\" />");
         message.append("</head>");
         message.append("<body>");
-        message.append("<p>Clique no link para atualizar sua senha:<a href=\"http://localhost:3000/senha/change?token=\"");
-        message.append(token);
+        message.append("<p>Clique no link para atualizar sua senha:<a href=\"http://localhost:3000/senha/alterar\"");
         message.append(">Atualizar senha</a> </p>");
         message.append("</body>");
         message.append("</html>");

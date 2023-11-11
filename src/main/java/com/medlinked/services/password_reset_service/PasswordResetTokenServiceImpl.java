@@ -48,7 +48,7 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
             this.createPasswordResetTokenForUsuario(usuario, token);
         else
             this.updatePasswordResetTokenForUsuario(passwordResetToken, token);
-        emailService.sendEmailResetPassword(token, usuario);
+        emailService.sendEmailResetPassword(usuario);
         return token;
     }
 
