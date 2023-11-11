@@ -51,6 +51,22 @@ public class AgendamentoController {
         }
     }
 
+    @Operation(summary = "Retorna todos os agendamentos dos médicos de uma secretária de forma paginada.")
+    @GetMapping("/paginado/{idSecretaria}")
+    public ResponseEntity<Object> getAllAgendamentosMedicosSecretariaPaginado(@PathVariable Integer idSecretaria,
+                                                                              @RequestParam(required = false) Integer idMedico,
+                                                                              @RequestParam(required = false) Integer idPaciente,
+                                                                              @RequestParam(required = false) Integer mes,
+                                                                              @RequestParam(required = false) Integer ano,
+                                                                              @RequestParam(required = false) Integer dia,
+                                                                              @RequestParam(required = false) TipoAgendamento tipoAgendamento,
+                                                                              @RequestParam(value = "page", defaultValue = "0") Integer page,
+                                                                              @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
+        return ResponseEntity.status(HttpStatus.OK).body(agendamentoService
+                .getAllAgendamentosMedicosSecretariaPaginado(idSecretaria, idMedico, idPaciente, mes, ano, dia, tipoAgendamento,
+                        page, pageSize));
+    }
+
     @Operation(summary = "Retorna todos os agendamentos dos médicos de uma secretária.")
     @GetMapping("/{idSecretaria}")
     public ResponseEntity<Object> getAllAgendamentosMedicosSecretaria(@PathVariable Integer idSecretaria,
