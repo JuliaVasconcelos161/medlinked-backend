@@ -10,6 +10,7 @@ import com.medlinked.exceptions.ExistsException;
 import com.medlinked.repositories.agendamento_repository.AgendamentoRepository;
 import com.medlinked.repositories.medico_repository.MedicoRepository;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.DayOfWeek;
@@ -74,7 +75,7 @@ public class AgendamentoAutomaticoServiceImpl implements AgendamentoAutomaticoSe
     private LocalDateTime adicionaDiasADiaHorarioAgendamento(
             Boolean isApenasSegundaASexta, LocalDateTime diaHorarioAgendamento) {
         Boolean isFriday =  diaHorarioAgendamento.getDayOfWeek() == DayOfWeek.FRIDAY;
-        if(isApenasSegundaASexta && isFriday)
+        if(BooleanUtils.isTrue(isApenasSegundaASexta) && BooleanUtils.isTrue(isFriday))
             return diaHorarioAgendamento.plusDays(3);
         else
             return diaHorarioAgendamento.plusDays(1);

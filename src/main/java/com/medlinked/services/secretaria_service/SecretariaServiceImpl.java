@@ -10,6 +10,7 @@ import com.medlinked.repositories.secretaria_repository.SecretariaRepository;
 import com.medlinked.services.pessoa_service.PessoaService;
 import com.medlinked.services.usuario_service.UsuarioService;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -60,11 +61,11 @@ public class SecretariaServiceImpl implements SecretariaService {
     @Override
     public void deleteSecretaria(Integer idSecretaria) {
         Secretaria secretaria = secretariaRepository.getOneSecretaria(idSecretaria);
-        if(!secretaria.getMedicos().isEmpty())
+        if(BooleanUtils.isFalse(secretaria.getMedicos().isEmpty()))
             throw new ExistsVinculoMedicoSecretariaException();
         secretariaRepository.deleteSecretaria(secretaria);
         usuarioService.deleteUsuario(idSecretaria);
-        if(pessoaService.existsPessoa(idSecretaria))
+        if(BooleanUtils.isTrue(pessoaService.existsPessoa(idSecretaria)))
             pessoaService.deletePessoa(idSecretaria);
     }
 }

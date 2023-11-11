@@ -12,6 +12,7 @@ import com.medlinked.repositories.planosaude_medico_repository.PlanoSaudeMedicoR
 import com.medlinked.services.especialidade_service.EspecialidadeService;
 import com.medlinked.services.estado_service.EstadoService;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -49,9 +50,9 @@ public class MedicoCrmServiceImpl implements MedicoCrmService {
 
     @Override
     public void validateCrm(MedicoDto medicoDto, Integer idMedico) {
-        if(medicoDto.getIdsEspecialidades().size() > 2)
+        if(BooleanUtils.isTrue(medicoDto.getIdsEspecialidades().size() > 2))
             throw new EspecialidadeException();
-        if(this.existsMedicoByNumeroCrm(medicoDto.getNumeroCrm(), idMedico))
+        if(BooleanUtils.isTrue(existsMedicoByNumeroCrm(medicoDto.getNumeroCrm(), idMedico)))
             throw new ExistsException("Médico", "Número CRM");
     }
     private boolean existsMedicoByNumeroCrm(Integer numeroCrm, Integer idMedico) {

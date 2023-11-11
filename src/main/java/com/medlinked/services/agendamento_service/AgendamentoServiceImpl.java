@@ -13,6 +13,7 @@ import com.medlinked.repositories.paciente_repository.PacienteRepository;
 import com.medlinked.repositories.planosaude_repository.PlanoSaudeRepository;
 import com.medlinked.services.email_service.EmailService;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -82,19 +83,19 @@ public class AgendamentoServiceImpl implements AgendamentoService {
         agendamento.setDataHoraInicioAgendamento(LocalDateTime.parse(agendamentoDto.getDataHoraInicioAgendamento(), FORMATTER));
         agendamento.setDataHoraFimAgendamento(LocalDateTime.parse(agendamentoDto.getDataHoraFimAgendamento(), FORMATTER));
         agendamento.setDescricao(agendamentoDto.getDescricao());
-        if(!agendamento.getMedico().getIdMedico().equals(agendamentoDto.getIdMedico())) {
+        if(BooleanUtils.isFalse(agendamento.getMedico().getIdMedico().equals(agendamentoDto.getIdMedico()))) {
             Medico medico = medicoRepository.getOneMedico(agendamentoDto.getIdMedico());
             agendamento.setMedico(medico);
         }
         if(agendamento.getPaciente() == null ||
-                !agendamento.getPaciente().getIdPaciente().equals(agendamentoDto.getIdPaciente())) {
+                BooleanUtils.isFalse(agendamento.getPaciente().getIdPaciente().equals(agendamentoDto.getIdPaciente()))) {
             Paciente paciente = agendamentoDto.getIdPaciente() != null ?
                     pacienteRepository.getOnePaciente(agendamentoDto.getIdPaciente())
                     : null;
             agendamento.setPaciente(paciente);
         }
         if(agendamento.getPlanoSaude() == null ||
-                !agendamento.getPlanoSaude().getIdPlanoSaude().equals(agendamentoDto.getIdPlanoSaude())) {
+                BooleanUtils.isFalse(agendamento.getPlanoSaude().getIdPlanoSaude().equals(agendamentoDto.getIdPlanoSaude()))) {
             PlanoSaude planoSaude = agendamentoDto.getIdPlanoSaude() != null ?
                     planoSaudeRepository.getOnePlanoSaude(agendamentoDto.getIdPlanoSaude())
                     : null;
@@ -119,8 +120,8 @@ public class AgendamentoServiceImpl implements AgendamentoService {
 
     @Override
     public List<Agendamento> getAllAgendamentosMedicosSecretaria(Integer idSecretaria, Integer idMedico,
-                                                                         Integer idPaciente, Integer mes, Integer ano,
-                                                                         Integer dia, TipoAgendamento tipoAgendamento) {
+                                                                 Integer idPaciente, Integer mes, Integer ano,
+                                                                 Integer dia, TipoAgendamento tipoAgendamento) {
         return agendamentoRepository.getAllAgendamentosMedicosSecretaria(idSecretaria,
                 idMedico, idPaciente, mes, ano, dia, tipoAgendamento, null, null);
     }
@@ -151,7 +152,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
                                             Integer idMedico, Integer idAgendamento) {
         LocalDateTime inicio = LocalDateTime.parse(dataHoraInicioAgendamento, FORMATTER);
         LocalDateTime fim = LocalDateTime.parse(dataHoraFimAgendamento, FORMATTER);
-        if(this.validateHorarioInicioDepoisHorarioFim(inicio, fim))
+        if(BooleanUtils.isTrue(this.isHorarioInicioDepoisHorarioFim(inicio, fim)))
             throw new AgendamentoException();
         this.validateHorarioAgendamentoExistente(inicio, fim, idMedico, idAgendamento);
     }
@@ -168,7 +169,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
                             dataHorainicio.plusMinutes(1).toString(),dataHorafim.minusMinutes(1).toString(), idMedico, null);
     }
 
-    private boolean validateHorarioInicioDepoisHorarioFim(LocalDateTime inicio, LocalDateTime fim) {
+    private boolean isHorarioInicioDepoisHorarioFim(LocalDateTime inicio, LocalDateTime fim) {
         return inicio.isAfter(fim);
     }
 

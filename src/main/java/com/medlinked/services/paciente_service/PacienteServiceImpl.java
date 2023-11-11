@@ -11,6 +11,7 @@ import com.medlinked.services.endereco_service.EnderecoService;
 import com.medlinked.services.pessoa_service.PessoaService;
 import com.medlinked.services.planosaude_paciente_service.PlanoSaudePacienteService;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -92,7 +93,7 @@ public class PacienteServiceImpl implements PacienteService {
         planoSaudePacienteService.disassociateAllPlanosSaudePaciente(idPaciente);
         enderecoService.deleteEndereco(idPaciente);
         pacienteRepository.deletePaciente(paciente);
-        if(pessoaService.existsPessoa(idPaciente))
+        if(BooleanUtils.isTrue(pessoaService.existsPessoa(idPaciente)))
             pessoaService.deletePessoa(idPaciente);
     }
 }
