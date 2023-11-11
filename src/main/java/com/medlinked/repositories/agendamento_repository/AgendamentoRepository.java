@@ -1,6 +1,7 @@
 package com.medlinked.repositories.agendamento_repository;
 
 import com.medlinked.entities.Agendamento;
+import com.medlinked.enums.TipoAgendamento;
 
 import java.util.List;
 
@@ -15,7 +16,8 @@ public interface AgendamentoRepository {
     Agendamento updateAgendamento(Agendamento agendamento);
 
     List<Agendamento> getAllAgendamentosMedicosSecretaria(
-            Integer idSecretaria, Integer idMedico, Integer idPaciente, Integer mes, Integer ano, Integer dia);
+            Integer idSecretaria, Integer idMedico, Integer idPaciente, Integer mes, Integer ano, Integer dia,
+            TipoAgendamento tipoAgendamento);
 
     void deleteAgendamento(Agendamento agendamento);
 

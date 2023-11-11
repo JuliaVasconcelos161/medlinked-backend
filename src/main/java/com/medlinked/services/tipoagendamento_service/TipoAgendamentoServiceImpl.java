@@ -12,6 +12,7 @@ public class TipoAgendamentoServiceImpl implements TipoAgendamentoService {
         List<TipoAgendamento> tiposAgendamento = new ArrayList<>();
         tiposAgendamento.add(TipoAgendamento.REGULAR);
         tiposAgendamento.add(TipoAgendamento.RETORNO);
+        tiposAgendamento.add(TipoAgendamento.AUTOMATICO);
         return tiposAgendamento;
     }
 }

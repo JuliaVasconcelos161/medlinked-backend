@@ -1,6 +1,7 @@
 package com.medlinked.repositories.agendamento_repository;
 
 import com.medlinked.entities.Agendamento;
+import com.medlinked.enums.TipoAgendamento;
 import com.medlinked.exceptions.ExistsException;
 import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
@@ -51,9 +52,9 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
     @Override
     public List<Agendamento> getAllAgendamentosMedicosSecretaria(Integer idSecretaria, Integer idMedico,
                                                                  Integer idPaciente, Integer mes, Integer ano,
-                                                                 Integer dia) {
+                                                                 Integer dia, TipoAgendamento tipoAgendamento) {
         var query = entityManager.createQuery(this.consultaGetAllAgendamentosMedicosSecretaria(
-                idMedico,idPaciente,mes,ano, dia), Agendamento.class);
+                idMedico,idPaciente,mes,ano, dia, tipoAgendamento), Agendamento.class);
         if(idMedico != null)
             query.setParameter("IDMEDICO", idMedico);
         if(idPaciente != null)
@@ -64,6 +65,8 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
             query.setParameter("ANO", ano);
         if(dia != null)
             query.setParameter("DIA", dia);
+        if(tipoAgendamento != null)
+            query.setParameter("TIPOAGENDAMENTO", tipoAgendamento);
         query.setParameter("IDSECRETARIA", idSecretaria);
         return query.getResultList();
     }
@@ -119,7 +122,8 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
     }
 
     private String consultaGetAllAgendamentosMedicosSecretaria(Integer idMedico, Integer idPaciente,
-                                                               Integer mes, Integer ano, Integer dia) {
+                                                               Integer mes, Integer ano, Integer dia,
+                                                               TipoAgendamento tipoAgendamento) {
         StringBuilder consulta = new StringBuilder(" select a ");
         consulta.append(" from Agendamento a ");
         consulta.append(" inner join a.medico medico ");
@@ -140,6 +144,8 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
             consulta.append(" and year(a.dataHoraInicioAgendamento) = :ANO ");
         if(dia != null)
             consulta.append(" and day(a.dataHoraInicioAgendamento) = :DIA ");
+        if(tipoAgendamento != null)
+            consulta.append(" and a.tipoAgendamento = :TIPOAGENDAMENTO");
         consulta.append(" order by a.dataHoraInicioAgendamento ");
         return consulta.toString();
     }
