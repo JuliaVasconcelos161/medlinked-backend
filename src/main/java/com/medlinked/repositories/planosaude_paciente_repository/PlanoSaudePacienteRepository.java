@@ -1,6 +1,7 @@
 package com.medlinked.repositories.planosaude_paciente_repository;
 
 import com.medlinked.entities.PlanoSaudePaciente;
+import com.medlinked.entities.dtos.PlanoSaudePacienteResponseDto;
 
 import java.util.List;
 
@@ -11,7 +12,7 @@ public interface PlanoSaudePacienteRepository {
 
     void disassociateAllPacientesPlanoSaude(Integer idPlanoSaude);
 
-    List<PlanoSaudePaciente> getAllPlanosSaudePaciente(Integer idPaciente);
+    List<PlanoSaudePacienteResponseDto> buildPlanoSaudePacienteResponseDto(Integer idPaciente);
 
     void disassociateAllPlanosSaudePaciente(Integer idPaciente);
 }

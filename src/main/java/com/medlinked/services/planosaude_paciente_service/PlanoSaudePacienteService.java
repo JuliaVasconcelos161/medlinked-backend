@@ -2,8 +2,7 @@ package com.medlinked.services.planosaude_paciente_service;
 
 import com.medlinked.entities.PlanoSaudePaciente;
 import com.medlinked.entities.dtos.PlanoSaudePacienteDto;
-
-import java.util.List;
+import com.medlinked.entities.dtos.PacientePlanosSaudeResponseDto;
 
 public interface PlanoSaudePacienteService {
      PlanoSaudePaciente associatePacientePlanoSaude(
@@ -11,7 +10,7 @@ public interface PlanoSaudePacienteService {
 
     void disassociatePacientePlanoSaude(Integer idPaciente, Integer idPlanoSaude);
 
-    List<PlanoSaudePaciente> getAllPlanosSaudePaciente(Integer idPaciente);
+    PacientePlanosSaudeResponseDto getAllPlanosSaudePaciente(Integer idPaciente);
 
     void disassociateAllPlanosSaudePaciente(Integer idPaciente);
 }
