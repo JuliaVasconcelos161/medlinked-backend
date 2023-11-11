@@ -4,6 +4,7 @@ import com.medlinked.entities.Paciente;
 import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -37,7 +38,7 @@ public class PacienteRepositoryClass implements PacienteRepository {
 
     @Override
     public List<Paciente> getAllPacientes(String nomePaciente, String cpf, Integer page, Integer pageSize) {
-        var query = entityManager.createQuery(this.consultaGetAllPacientes(nomePaciente, cpf), Paciente.class);
+        var query = entityManager.createQuery(this.consultaGetAllPacientes(nomePaciente, cpf, false), Paciente.class);
         if(nomePaciente != null)
             query.setParameter("NOMEPACIENTE", "%"+nomePaciente+"%");
         if(cpf != null)
@@ -49,8 +50,12 @@ public class PacienteRepositoryClass implements PacienteRepository {
         return query.getResultList();
     }
 
-    private String consultaGetAllPacientes(String nomePaciente, String cpf) {
-        StringBuilder consulta = new StringBuilder(" select paciente ");
+    private String consultaGetAllPacientes(String nomePaciente, String cpf, Boolean isCount) {
+        StringBuilder consulta = new StringBuilder(" select  ");
+        if(BooleanUtils.isTrue(isCount))
+            consulta.append(" count(1) ");
+        else
+            consulta.append(" paciente ");
         consulta.append(" from Paciente paciente ");
         consulta.append(" inner join paciente.pessoa pessoa ");
         if(nomePaciente != null) {
@@ -59,15 +64,14 @@ public class PacienteRepositoryClass implements PacienteRepository {
                 consulta.append(" and pessoa.cpf = :CPF");
         } else if(cpf != null)
             consulta.append(" where pessoa.cpf = :CPF ");
-        consulta.append(" order by pessoa.nome ");
+        if(BooleanUtils.isFalse(isCount))
+            consulta.append(" order by pessoa.nome ");
         return consulta.toString();
     }
 
     @Override
-    public Long countPacientes() {
-        StringBuilder consulta = new StringBuilder(" select count(1) ");
-        consulta.append(" from Paciente paciente ");
-        var query = entityManager.createQuery(consulta.toString(), Long.class);
+    public Long countPacientes(String nomePaciente, String cpf) {
+        var query = entityManager.createQuery(consultaGetAllPacientes(nomePaciente, cpf, true), Long.class);
         return query.getSingleResult();
     }
 

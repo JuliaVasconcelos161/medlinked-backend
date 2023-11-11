@@ -75,7 +75,7 @@ public class PacienteServiceImpl implements PacienteService {
     public Page<Paciente> getAllPacientesPaginado(String nomePaciente, String cpf, Integer page, Integer pageSize) {
         List<Paciente> pacientes = pacienteRepository.getAllPacientes(nomePaciente, cpf, page, pageSize);
         PageRequest pageRequest = PageRequest.of(page, pageSize);
-        Long total =  pacienteRepository.countPacientes();
+        Long total =  pacienteRepository.countPacientes(nomePaciente, cpf);
         return new PageImpl<>(pacientes, pageRequest, total);
     }
 
