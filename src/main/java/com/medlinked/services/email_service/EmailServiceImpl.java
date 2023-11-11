@@ -3,6 +3,7 @@ package com.medlinked.services.email_service;
 import com.medlinked.entities.Agendamento;
 import com.medlinked.entities.Pessoa;
 import com.medlinked.entities.Usuario;
+import com.medlinked.exceptions.EmailException;
 import com.medlinked.exceptions.MedLinkedException;
 import jakarta.mail.Message;
 import jakarta.mail.MessagingException;
@@ -28,13 +29,21 @@ public class EmailServiceImpl implements EmailService {
 
     @Override
     public void sendEmailResetPassword(Usuario usuario) {
-        javaMailSender.send(this.constructResetTokenEmail(usuario));
+        try {
+            javaMailSender.send(this.constructResetTokenEmail(usuario));
+        } catch (Exception e) {
+            throw new EmailException();
+        }
     }
 
 
     @Override
     public void sendEmailAgendamentoConfirmacao(Agendamento agendamento) {
-        javaMailSender.send(this.constructEmailAgendamentoConfirmacao(agendamento));
+        try {
+            javaMailSender.send(this.constructEmailAgendamentoConfirmacao(agendamento));
+        } catch (Exception e) {
+            throw new EmailException();
+        }
     }
 
     @Override
