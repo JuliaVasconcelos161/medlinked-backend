@@ -24,7 +24,7 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
     @Override
     public void validateHorarioAgendamentoExistente(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
                                                     Integer idMedico, Integer idAgendamento) {
-        var query = entityManager.createQuery(this.consultaValidateHorarioAgendamento(
+        var query = entityManager.createQuery(this.consultaValidateHorarioAgendamentoExistente(
                 dataHoraInicioAgendamento,dataHoraFimAgendamento, idAgendamento), Long.class);
         query.setParameter("IDMEDICO", idMedico);
         if(idAgendamento != null)
@@ -91,11 +91,11 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
         query.executeUpdate();
     }
 
-    private String consultaValidateHorarioAgendamento(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
-                                                      Integer idAgendamento) {
+    private String consultaValidateHorarioAgendamentoExistente(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
+                                                               Integer idAgendamento) {
         StringBuilder consulta = new StringBuilder(" select count(1) ");
         consulta.append(" from Agendamento a ");
-        consulta.append(" where ('");
+        consulta.append(" where (('");
         consulta.append(dataHoraInicioAgendamento);
         consulta.append("' between a.dataHoraInicioAgendamento and a.dataHoraFimAgendamento ");
         consulta.append(" or '");
@@ -111,7 +111,7 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
         consulta.append(dataHoraInicioAgendamento);
         consulta.append("' and '");
         consulta.append(dataHoraFimAgendamento);
-        consulta.append("') and");
+        consulta.append("')) and");
         consulta.append(" a.medico.idMedico = :IDMEDICO ");
         if(idAgendamento != null)
             consulta.append(" and a.idAgendamento != :IDAGENDAMENTO ");
