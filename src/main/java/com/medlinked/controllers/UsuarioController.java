@@ -31,9 +31,9 @@ public class UsuarioController {
     }
 
     @Operation(summary = "Altera a senha de usuário e o retorna.")
-    @PutMapping("/update/{idUsuario}")
-    public ResponseEntity<Object> updateUsuario(@PathVariable Integer idUsuario,
-                                                @RequestBody @Valid UpdateSenhaUsuarioDto updateSenhaUsuarioDto) {
+    @PutMapping("/update-senha/{idUsuario}")
+    public ResponseEntity<Object> updateSenhaUsuario(@PathVariable Integer idUsuario,
+                                                     @RequestBody @Valid UpdateSenhaUsuarioDto updateSenhaUsuarioDto) {
         try {
             return ResponseEntity.status(HttpStatus.OK).body(usuarioService.updateSenhaUsuario(updateSenhaUsuarioDto, idUsuario));
         }catch (MedLinkedException e) {
