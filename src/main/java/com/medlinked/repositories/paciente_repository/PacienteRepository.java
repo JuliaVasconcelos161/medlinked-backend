@@ -13,7 +13,7 @@ public interface PacienteRepository {
 
     List<Paciente> getAllPacientes(String nomePaciente, String cpf, Integer page, Integer pageSize);
 
-    Long countPacientes();
+    Long countPacientes(String nomePaciente, String cpf);
 
     void deletePaciente(Paciente paciente);
 }
