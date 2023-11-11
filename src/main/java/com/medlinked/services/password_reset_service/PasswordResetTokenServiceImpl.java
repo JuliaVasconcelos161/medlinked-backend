@@ -9,6 +9,7 @@ import com.medlinked.repositories.usuario_repository.UsuarioRepository;
 import com.medlinked.services.email_service.EmailService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -74,7 +75,7 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     @Override
     public void validatePasswordResetToken(String token) {
         final PasswordResetToken passToken = passwordResetTokenRepository.getPasswordResetTokenByToken(token);
-        String response =  !isTokenFound(passToken) ? "Token inválido"
+        String response = BooleanUtils.isFalse(isTokenFound(passToken)) ? "Token inválido"
                 : isTokenExpired(passToken) ? "Token expirado"
                 : null;
         if(response != null)

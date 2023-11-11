@@ -12,6 +12,7 @@ import com.medlinked.repositories.usuario_repository.UsuarioRepository;
 import com.medlinked.services.jwt_service.JwtService;
 import com.medlinked.services.pessoa_service.PessoaService;
 import jakarta.transaction.Transactional;
+import org.apache.commons.lang3.BooleanUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -85,7 +86,7 @@ public class UsuarioServiceImpl implements UsuarioService {
     @Override
     public Usuario updateSenhaUsuario(UpdateSenhaUsuarioDto updateSenhaUsuarioDto, Integer idUsuario) {
         Usuario usuario = usuarioRepository.getOneUsuario(idUsuario);
-        if(!passwordEncoder.matches(updateSenhaUsuarioDto.getOldPassword(), usuario.getPassword()))
+        if(BooleanUtils.isFalse(passwordEncoder.matches(updateSenhaUsuarioDto.getOldPassword(), usuario.getPassword())))
             throw new PasswordNotMatchingException();
         usuario.setPassword(passwordEncoder.encode(updateSenhaUsuarioDto.getNewPassword()));
         return usuarioRepository.updateUsuario(usuario);
