@@ -5,6 +5,7 @@ import com.medlinked.entities.Medico;
 import com.medlinked.entities.Paciente;
 import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.AgendamentoDto;
+import com.medlinked.enums.TipoAgendamento;
 import com.medlinked.exceptions.AgendamentoException;
 import com.medlinked.repositories.agendamento_repository.AgendamentoRepository;
 import com.medlinked.repositories.medico_repository.MedicoRepository;
@@ -103,9 +104,9 @@ public class AgendamentoServiceImpl implements AgendamentoService {
     @Override
     public List<Agendamento> getAllAgendamentosMedicosSecretaria(Integer idSecretaria, Integer idMedico,
                                                                  Integer idPaciente, Integer mes, Integer ano,
-                                                                 Integer dia) {
+                                                                 Integer dia, TipoAgendamento tipoAgendamento) {
         return agendamentoRepository.getAllAgendamentosMedicosSecretaria(
-                idSecretaria, idMedico, idPaciente, mes, ano, dia);
+                idSecretaria, idMedico, idPaciente, mes, ano, dia, tipoAgendamento);
     }
 
     @Transactional

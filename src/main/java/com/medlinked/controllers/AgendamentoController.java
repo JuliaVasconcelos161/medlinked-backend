@@ -1,6 +1,7 @@
 package com.medlinked.controllers;
 
 import com.medlinked.entities.dtos.AgendamentoDto;
+import com.medlinked.enums.TipoAgendamento;
 import com.medlinked.exceptions.MedLinkedException;
 import com.medlinked.services.agendamento_service.AgendamentoService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -57,9 +58,10 @@ public class AgendamentoController {
                                                                       @RequestParam(required = false) Integer idPaciente,
                                                                       @RequestParam(required = false) Integer mes,
                                                                       @RequestParam(required = false) Integer ano,
-                                                                      @RequestParam(required = false) Integer dia) {
+                                                                      @RequestParam(required = false) Integer dia,
+                                                                      @RequestParam(required = false) TipoAgendamento tipoAgendamento) {
         return ResponseEntity.status(HttpStatus.OK).body(agendamentoService
-                .getAllAgendamentosMedicosSecretaria(idSecretaria, idMedico, idPaciente, mes, ano, dia));
+                .getAllAgendamentosMedicosSecretaria(idSecretaria, idMedico, idPaciente, mes, ano, dia, tipoAgendamento));
     }
 
     @Operation(summary = "Deleta agendamento utilizando idAgendamento informado.")
