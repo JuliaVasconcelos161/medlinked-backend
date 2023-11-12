@@ -122,6 +122,17 @@ public class AgendamentoRepositoryClass implements AgendamentoRepository {
         return query.getSingleResult();
     }
 
+    @Override
+    public void updataAgendamentosRemovePlanoSaude(Integer idPlanoSaude) {
+        StringBuilder consulta = new StringBuilder(" update ");
+        consulta.append(" Agendamento a ");
+        consulta.append(" set a.planoSaude = null ");
+        consulta.append(" where a.planoSaude.idPlanoSaude = :IDPLANOSAUDE");
+        var query = entityManager.createQuery(consulta.toString());
+        query.setParameter("IDPLANOSAUDE", idPlanoSaude);
+        query.executeUpdate();
+    }
+
     private String consultaValidateHorarioAgendamentoExistente(String dataHoraInicioAgendamento, String dataHoraFimAgendamento,
                                                                Integer idAgendamento) {
         StringBuilder consulta = new StringBuilder(" select count(1) ");
