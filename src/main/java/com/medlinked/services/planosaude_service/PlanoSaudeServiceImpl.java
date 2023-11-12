@@ -4,6 +4,7 @@ import com.medlinked.entities.PlanoSaude;
 import com.medlinked.entities.dtos.PlanoSaudeDto;
 import com.medlinked.exceptions.ExistsException;
 import com.medlinked.exceptions.MedLinkedException;
+import com.medlinked.repositories.agendamento_repository.AgendamentoRepository;
 import com.medlinked.repositories.planosaude_paciente_repository.PlanoSaudePacienteRepository;
 import com.medlinked.repositories.planosaude_repository.PlanoSaudeRepository;
 import jakarta.transaction.Transactional;
@@ -21,10 +22,14 @@ public class PlanoSaudeServiceImpl implements PlanoSaudeService {
 
     private final PlanoSaudePacienteRepository planoSaudePacienteRepository;
 
+    private final AgendamentoRepository agendamentoRepository;
+
     public PlanoSaudeServiceImpl(PlanoSaudeRepository planoSaudeRepository,
-                                 PlanoSaudePacienteRepository planoSaudePacienteRepository) {
+                                 PlanoSaudePacienteRepository planoSaudePacienteRepository,
+                                 AgendamentoRepository agendamentoRepository) {
         this.planoSaudeRepository = planoSaudeRepository;
         this.planoSaudePacienteRepository = planoSaudePacienteRepository;
+        this.agendamentoRepository = agendamentoRepository;
     }
 
     @Override
@@ -51,6 +56,7 @@ public class PlanoSaudeServiceImpl implements PlanoSaudeService {
             PlanoSaude planoSaude = planoSaudeRepository.getOnePlanoSaude(idPlanoSaude);
             planoSaudePacienteRepository.disassociateAllPacientesPlanoSaude(idPlanoSaude);
             planoSaudeRepository.delete(planoSaude);
+            agendamentoRepository.updataAgendamentosRemovePlanoSaude(idPlanoSaude);
         } catch (Exception e) {
             throw new MedLinkedException();
         }

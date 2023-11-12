@@ -28,4 +28,6 @@ public interface AgendamentoRepository {
     Long countGetAllAgendamentosMedicosSecretaria(Integer idSecretaria, Integer idMedico,
                                                   Integer idPaciente, Integer mes, Integer ano,
                                                   Integer dia, TipoAgendamento tipoAgendamento);
+
+    void updataAgendamentosRemovePlanoSaude(Integer idPlanoSaude);
 }
