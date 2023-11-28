@@ -5,6 +5,7 @@ import com.medlinked.entities.MedicoCRM;
 import com.medlinked.entities.dtos.MedicoCrmResponseDto;
 import com.medlinked.exceptions.NoObjectFoundException;
 import jakarta.persistence.EntityManager;
+import jakarta.persistence.NoResultException;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.stereotype.Repository;
 
@@ -71,7 +72,11 @@ public class MedicoCrmRepositoryClass implements MedicoCrmRepository {
         consulta.append(" where crm.medico.idMedico = :IDMEDICO ");
         var query = entityManager.createQuery(consulta.toString(), MedicoCrmResponseDto.class);
         query.setParameter("IDMEDICO", idMedico);
-        return query.getSingleResult();
+        try {
+            return query.getSingleResult();
+        } catch (NoResultException e) {
+            throw new NoObjectFoundException("Médico");
+        }
     }
     @Override
     public List<MedicoCrmResponseDto> buildMedicosCrmResponseByIdsMedicos(List<Integer> idsMedicos, Integer page, Integer pageSize) {

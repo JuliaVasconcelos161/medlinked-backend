@@ -26,10 +26,11 @@ public class PasswordResetTokenRepositoryClass implements PasswordResetTokenRepo
         consulta.append(" where passwordReset.token = :TOKEN ");
         var query = entityManager.createQuery(consulta.toString(), PasswordResetToken.class);
         query.setParameter("TOKEN", token);
-        PasswordResetToken passwordResetToken =  query.getSingleResult();
-        if(passwordResetToken == null)
+        try{
+            return query.getSingleResult();
+        } catch (NoResultException e) {
             throw new NoObjectFoundException("Token");
-        return passwordResetToken;
+        }
     }
 
     @Override
@@ -40,8 +41,7 @@ public class PasswordResetTokenRepositoryClass implements PasswordResetTokenRepo
         var query = entityManager.createQuery(consulta.toString(), PasswordResetToken.class);
         query.setParameter("USERNAME", username);
         try{
-            PasswordResetToken passwordResetToken =  query.getSingleResult();
-            return passwordResetToken;
+            return query.getSingleResult();
         } catch (NoResultException e) {
             return null;
         }
