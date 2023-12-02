@@ -18,7 +18,7 @@
         </ul>
         <h3 id="descricao_projeto">Descrição do Projeto:</h3>
         <p style="text-align:justify;"> 
-            Esse projeto foi desenvolvido como backend do Projeto Integrador do 4° Período de Sistemas de Infomação,
+            Esse projeto foi desenvolvido como backend do Projeto Integrador do 4° Período de Sistemas de Informação,
             cujo objetivo é fornecer ao usuário uma aplicação que possibilite o controle de agenda de um ou vários médicos
             para os quais uma secretária trabalha.
         </p>
@@ -214,7 +214,7 @@
             <li>
                 <h3 id="paciente">PacienteController:</h3>
                 <ul>
-                     <li><h4>Criar paciente:</h4>
+                     <li><h4>Criar Paciente:</h4>
                         <p> Método HTTP: POST </p>
                         <p>
                             Rota: /paciente/create
@@ -233,7 +233,7 @@
                         </p>
                         <p> Retorno: PacienteResponseDto ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Retornar paciente:</h4>
+                    <li><h4>Retornar Paciente:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /paciente/{idPaciente}
@@ -244,7 +244,7 @@
                         </p>
                         <p> Retorno: PacienteResponseDto ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Alterar paciente:</h4>
+                    <li><h4>Alterar Paciente:</h4>
                         <p> Método HTTP: PUT </p>
                         <p>
                             Rota: /paciente/update/{idPaciente}
@@ -310,6 +310,84 @@
                             daquele paciente, o disassocia de todos os planos de saúde vinculados a ele, deleta o seu endereco, deleta o
                             paciente, e verifica se existe algum outro tipo de pessoa no sistema com dados de Pessoa daquele paciente,
                             caso não exista o registro em tb_pessoa também é deletado.
+                        </p>
+                        <p> Retorno: Mensagem de sucesso ou mensagem de MedLinkedException</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3 id="medico">MedicoController:</h3>
+                <ul>
+                     <li><h4>Criar Médico:</h4>
+                        <p> Método HTTP: POST </p>
+                        <p>
+                            Rota: /medico/create/{idSecretaria}
+                        </p>
+                        <p>
+                            RequestBody: MedicoDto
+                        </p>
+                        <p style="text-align:justify;">
+                            Ao criar um médico será verificado o cpf informado, caso já esteja cadastrado no sistema
+                            como outro tipo de pessoa, será criado um registro apenas na tabela tb_medico, caso contrário
+                            também será criado um registro na tb_pessoa, criando a pessoa no sistema. Também é verificado se existe
+                            um médico com aquele cpf, ou email, ou crm, caso exista é estourada uma exceção. Se no dto
+                            tiverem sido enviadas mais de duas especialidades para serem salvas, também será estourada uma exceção.
+                            Caso seja necessário criar uma pessoa no sistema será verificado se já existe alguma outra pessoa com cpf ou
+                            email informado, caso exista estoura exceção. O médico criado é salvo, é criado um vínculo
+                            com a secretária cujo idSecretaria foi passado na url, um registro em tb_medico_crm com
+                            dados referentes ao crm e especialidades a serem vinculadas àquele médico. Por meio de
+                            constructor expression cria-se um MedicoCrmResponseDto, que é retornado na requisição.
+                        </p>
+                        <p> Retorno: MedicoCrmResponseDto ou mensagem de MedLinkedException</p>
+                    </li>
+                    <li><h4>Retornar Médicos:</h4>
+                        <p> Método HTTP: GET </p>
+                        <p>
+                            Rota: /medico
+                        </p>
+                        <p style="text-align:justify;">
+                            Busca registros de médicos e os retorna em uma lista de Medico.
+                        </p>
+                        <p> Retorno: List de Medico</p>
+                    </li>
+                    <li><h4>Retornar Médico:</h4>
+                        <p> Método HTTP: GET </p>
+                        <p>
+                            Rota: /medico/{idMedico}
+                        </p>
+                        <p style="text-align:justify;">
+                            Utilizando constructor expression é criado um novo MedicoCrmResponseDto, que é retornado na 
+                            requisição.
+                        </p>
+                        <p> Retorno: MedicoCrmResponseDto ou mensagem de MedLinkedException</p>
+                    </li>
+                    <li><h4>Alterar Médico:</h4>
+                        <p> Método HTTP: PUT </p>
+                        <p>
+                            Rota: /medico/update/{idMedico}
+                        </p>
+                        <p style="text-align:justify;">
+                            Valida o CRM do médico para não permitir duplicidade, e se existem mais de duas especialidades
+                            a serem associadas. Obtém o objeto Medico correspondente ao idMedico fornecido, caso não seja
+                            possível é lançada uma exceção. Atualiza as informações da Pessoa associada ao médico 
+                            utilizando verificações de cpf, e email para impedir duplicidade. Atualiza o registro do 
+                            médico e posteriormente as informações relacionadas a seu crm armazenadas em tb_medico_crm.
+                            Retorna MedicoCrmResponseDto construído por meio de constructor expression.
+                        </p>
+                        <p> Retorno: MedicoCrmResponseDto ou mensagem de MedLinkedException</p>
+                    </li>
+                    <li><h4>Deletar Médico:</h4>
+                        <p> Método HTTP: DELETE </p>
+                        <p>
+                            Rota: /medico/delete/{idMedico}
+                        </p>
+                        <p style="text-align:justify;">
+                            Busca Medico utilizando idMedico informado, caso não seja encontrado, lança exceção. 
+                            Remove vínculos com todos os planos de saúde, e secretárias. Deleta agendamentos e os dados
+                            relacionados ao CRM daquele médico, incluindo a informação de quais especialidades ele
+                            atendia. Em seguida, o registro em tb_medico é deletado e caso não exista mais nenhum 
+                            outro tipo de pessoa com as informações de Pessoa desse médico, o registro em tb_pessoa
+                            também é excluido.
                         </p>
                         <p> Retorno: Mensagem de sucesso ou mensagem de MedLinkedException</p>
                     </li>
