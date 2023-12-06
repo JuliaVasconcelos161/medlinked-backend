@@ -16,6 +16,7 @@
                     <li><h4><a style="text-decoration:none; color:white;" href="#medico">MedicoController</a></h4></li>
                     <li><h4><a style="text-decoration:none; color:white;" href="#pessoa">PessoaController</a></h4></li>
                     <li><h4><a style="text-decoration:none; color:white;" href="#planosaude-paciente">PlanoSaudePacienteController</a></h4></li>
+                    <li><h4><a style="text-decoration:none; color:white;" href="#planosaude-medico">PlanoSaudeMedicoController</a></h4></li>
                 </ul>
             </li>
         </ul>
@@ -460,6 +461,66 @@
                             Busca planos de saúde que médico e paciente, cujos ids foram informados, possuem em comum.
                         </p>
                         <p> Retorno: List de PlanoSaude</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3 id="planosaude-medico">PlanoSaudeMedicoController</h3>
+                <ul>
+                    <li><h4>Associar Planos de Saúde a Médico:</h4>
+                        <p> Método HTTP: PUT </p>
+                        <p>
+                            Rota: /plano-saude/medico/associate/{idMedico}
+                        </p>
+                        <p>RequestBody: MedicoPlanoSaudeDto</p>
+                        <p style="text-align:justify;">
+                            Busca o Medico utilizando idMedico informado, caso não seja encontrado, é lançada exceção.
+                            Para cada idPlanoSaude enviado no dto é buscado o PlanoSaude correspondente, o medico
+                            anteriormente encontrado é adicionado a lista de médicos desse plano de saúde, e o plano
+                            é adicionado a lista de planos de médico, essa atualização é salva, criando um novo registro
+                            em tb_medico_plano_saude. É retornada a lista com planos de saúde, que foram recém-associados 
+                            ao médico.
+                        </p>
+                        <p> Retorno: List de PlanoSaude ou mensagem de MedLinkedException</p>
+                    </li>
+                    <li><h4>Desassociar Planos de Saúde de Médico:</h4>
+                        <p> Método HTTP: PUT </p>
+                        <p>
+                            Rota: /plano-saude/medico/disassociate/{idMedico}/{idPlanoSaude}
+                        </p>
+                        <p style="text-align:justify;">
+                            Busca o Medico utilizando idMedico informado, caso não seja encontrado, é lançada exceção.
+                            Para cada idPlanoSaude enviado no dto é buscado o PlanoSaude correspondente, o medico
+                            anteriormente encontrado é adicionado a lista de médicos desse plano de saúde, e o plano
+                            é adicionado a lista de planos de médico, essa atualização é salva, criando um novo registro
+                            em tb_medico_plano_saude. É retornada a lista com planos de saúde, que foram recém-associados 
+                            ao médico.
+                        </p>
+                        <p> Retorno: List de PlanoSaude ou mensagem de MedLinkedException</p>
+                    </li>
+                    <li><h4>Retornar Planos de Saúde Médico com Paginação:</h4>
+                        <p> Método HTTP: GET </p>
+                        <p>
+                            Rota: /plano-saude/medico/{idMedico}
+                        </p>
+                        <p>RequestParams:</p>
+                        <ul>
+                            <li>page</li>
+                            <ul>
+                                <li>required = true</li>
+                                <li>defaultValue = "0"</li>
+                            </ul>
+                            <li>pageSize</li>
+                            <ul>
+                                <li>required = true</li>
+                                <li>defaultValue = "10"</li>
+                            </ul>
+                        </ul>
+                        <p style="text-align:justify;">
+                            Busca registros de planos de saúde vinculados a um médico utilizando idMedico informado,
+                            e os retorna numa lista de PlanoSaude paginada.
+                        </p>
+                        <p> Retorno: Page de PlanoSaude</p>
                     </li>
                 </ul>
             </li>
