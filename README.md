@@ -13,6 +13,9 @@
                     <li><h4><a style="text-decoration:none; color:white;" href="#usuario">UsuarioController</a></h4></li>
                     <li><h4><a style="text-decoration:none; color:white;" href="#planosaude">PlanoSaudeController</a></h4></li>
                     <li><h4><a style="text-decoration:none; color:white;" href="#paciente">PacienteController</a></h4></li>
+                    <li><h4><a style="text-decoration:none; color:white;" href="#medico">MedicoController</a></h4></li>
+                    <li><h4><a style="text-decoration:none; color:white;" href="#pessoa">PessoaController</a></h4></li>
+                    <li><h4><a style="text-decoration:none; color:white;" href="#planosaude-paciente">PlanoSaudePacienteController</a></h4></li>
                 </ul>
             </li>
         </ul>
@@ -249,6 +252,7 @@
                         <p>
                             Rota: /paciente/update/{idPaciente}
                         </p>
+                        <p>RequestBody: PacienteDto</p>
                         <p style="text-align:justify;">
                             Busca o Paciente utilizando idPaciente informado, caso não seja encontrado, lança exceção. Como o Paciente
                             em si não possui outras informações além das de Pessoa, é chamado um método que altera as informações de Pessoa 
@@ -366,6 +370,7 @@
                         <p>
                             Rota: /medico/update/{idMedico}
                         </p>
+                        <p>RequestBody: MedicoDto</p>
                         <p style="text-align:justify;">
                             Valida o CRM do médico para não permitir duplicidade, e se existem mais de duas especialidades
                             a serem associadas. Obtém o objeto Medico correspondente ao idMedico fornecido, caso não seja
@@ -390,6 +395,71 @@
                             também é excluido.
                         </p>
                         <p> Retorno: Mensagem de sucesso ou mensagem de MedLinkedException</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3 id="pessoa">PessoaController:</h3> 
+                <ul>
+                    <li><h4>Procurar Pessoa por CPF:</h4>
+                        <p> Método HTTP: POST </p>
+                        <p>
+                            Rota: /pessoa/cpf
+                        </p>
+                        <p>RequestBody: PessoaCpfDto</p>
+                        <p style="text-align:justify;">
+                            Busca Pessoa utilizando CPF informado, caso não seja encontrada retorna null.
+                        </p>
+                        <p> Retorno: Pessoa ou null.</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3 id="planosaude-paciente">PlanoSaudePacienteController</h3>
+                <ul>
+                    <li><h4>Associar Plano de Saúde a Paciente:</h4>
+                        <p> Método HTTP: PUT </p>
+                        <p>
+                            Rota: /plano-saude/paciente/associate/{idPaciente}/{idPlanoSaude}
+                        </p>
+                        <p>RequestBody: PlanoSaudePacienteDto</p>
+                        <p style="text-align:justify;">
+                            Busca o PlanoSaude e Paciente utilizando idPaciente e idPlanoSaude informados, caso não sejam encontrados, é lançada exceção.
+                            Baseado no idTipoPlanoSaude informado no dto, é realizada uma busca no TipoPlanoSaude correspondente.
+                            É construído um PlanoSaudePaciente e as informações são salvas em tb_plano_saude_paciente.
+                        </p>
+                        <p> Retorno: PlanoSaudePaciente ou mensagem de MedLinkedException</p>
+                    </li>
+                    <li><h4>Desassociar Plano de Saúde de Paciente:</h4>
+                        <p> Método HTTP: PUT </p>
+                        <p>
+                            Rota: /plano-saude/paciente/disassociate/{idPaciente}/{idPlanoSaude}
+                        </p>
+                        <p style="text-align:justify;">
+                            Deleta registro de PlanoSaudePaciente em tb_plano_saude_paciente.
+                        </p>
+                        <p> Retorno: Não possui retorno ou mensagem de MedLinkedException</p>
+                    </li>
+                     <li><h4>Retornar Planos de Saúde de Paciente:</h4>
+                        <p> Método HTTP: GET </p>
+                        <p>
+                            Rota: /plano-saude/paciente/{idPaciente}
+                        </p>
+                        <p style="text-align:justify;">
+                            Busca o Paciente utilizando idPaciente informado, caso não seja encontrado, é lançada exceção.
+                            Constrói PacientePlanosSaudeResponseDto utilizando constructor expression e o retorna.
+                        </p>
+                        <p> Retorno: PacientePlanosSaudeResponseDto ou mensagem de MedLinkedException</p>
+                    </li>
+                    <li><h4>Retornar Planos de Saúde de Paciente:</h4>
+                        <p> Método HTTP: GET </p>
+                        <p>
+                            Rota: /plano-saude/paciente/medico/{idPaciente}/{idMedico}
+                        </p>
+                        <p style="text-align:justify;">
+                            Busca planos de saúde que médico e paciente, cujos ids foram informados, possuem em comum.
+                        </p>
+                        <p> Retorno: List de PlanoSaude</p>
                     </li>
                 </ul>
             </li>
