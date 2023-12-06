@@ -438,7 +438,7 @@
                         <p style="text-align:justify;">
                             Deleta registro de PlanoSaudePaciente em tb_plano_saude_paciente.
                         </p>
-                        <p> Retorno: Não possui retorno ou mensagem de MedLinkedException</p>
+                        <p> Retorno: Não possui retorno</p>
                     </li>
                      <li><h4>Retornar Planos de Saúde de Paciente:</h4>
                         <p> Método HTTP: GET </p>
@@ -451,7 +451,7 @@
                         </p>
                         <p> Retorno: PacientePlanosSaudeResponseDto ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Retornar Planos de Saúde de Paciente:</h4>
+                    <li><h4>Retornar Planos de Saúde de Paciente em comum com Médico:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /plano-saude/paciente/medico/{idPaciente}/{idMedico}
