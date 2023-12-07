@@ -69,7 +69,7 @@ public class AgendamentoServiceImpl implements AgendamentoService {
                 .planoSaude(planoSaude)
                 .build();
         agendamento = agendamentoRepository.saveAgendamento(agendamento);
-        emailService.sendEmailAgendamentoConfirmacao(agendamento);
+        this.enviaEmailCasoPacienteExistente(agendamento);
         return agendamento;
     }
 
@@ -101,8 +101,9 @@ public class AgendamentoServiceImpl implements AgendamentoService {
                     : null;
             agendamento.setPlanoSaude(planoSaude);
         }
+        agendamento =  agendamentoRepository.updateAgendamento(agendamento);
         this.enviaEmailCasoPacienteExistente(agendamento);
-        return agendamentoRepository.updateAgendamento(agendamento);
+        return agendamento;
     }
 
     @Override
