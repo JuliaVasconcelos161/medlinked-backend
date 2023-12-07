@@ -524,6 +524,142 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <h3 id="agendamento">AgendamentoController</h3>
+                <ul>
+                    <li><h4>Criar Agendamento Único:</h4>
+                        <p> Método HTTP: POST </p>
+                        <p>
+                            Rota: /agendamento
+                        </p>
+                        <p>RequestBody: AgendamentoDto</p>
+                        <p style="text-align:justify;">
+                            Valida horário de agendamento para confirmar se o horario passado no dto para aquele médico está
+                            disponível, caso não esteja é lançada exceção. Busca Medico, Paciente, e PlanoSaude, utilizando
+                            ids correspondentes passados no dto, caso não sejam encontrados, é lançada exceção. O Agendamento
+                            é construído, com os dados fornecidos, e salvo. Após o salvamento é chamado um serviço de email
+                            para que seja enviado um email de confirmação com informações do agendamento para o paciente.
+                        </p>
+                        <p> Retorno: Agendamento ou mensagem de MedLinkedException</p>
+                    </li>
+                    <li><h4>Alterar Agendamento:</h4>
+                        <p> Método HTTP: PUT </p>
+                        <p>
+                            Rota: /agendamento/update/{idAgendamento}
+                        </p>
+                        <p>RequestBody: AgendamentoDto</p>
+                        <p style="text-align:justify;">
+                            Valida horário de agendamento para confirmar se o horario passado no dto para aquele médico está
+                            disponível, caso não esteja é lançada exceção. O agendamento é buscado pelo idAgendamento informado,
+                            se não encontrado é lançada exceção. Dados vindos do dto são vinculados ao agendamento por meio 
+                            de setters. Verifica-se idMedico, idPaciente e idPlanoSaude passados no
+                            dto, se diferentes daqueles já vinculados ao agendamento existente, são feitas buscas de Medico, Paciente, e PlanoSaude,
+                            e os objetos encontrados são vinculados ao agendamento por meio de setters. 
+                            As alterações são salvas e caso o paciente do agendamento não seja null, é chamado um serviço de email 
+                            para que seja enviado um email de confirmação com informações do agendamento para o paciente.
+                        </p>
+                        <p> Retorno: Agendamento ou mensagem de MedLinkedException</p>
+                    </li>
+                    <li><h4>Retornar Agendamento:</h4>
+                        <p> Método HTTP: GET </p>
+                        <p>
+                            Rota: /agendamento/detalhes/{idAgendamento}
+                        </p>
+                        <p style="text-align:justify;">
+                            Busca Agendamento utilizando idAgendamento informado, caso não seja encontrado, lança exceção.
+                        </p>
+                        <p> Retorno: Agendamento ou mensagem de MedLinkedException</p>
+                    </li>
+                    <li><h4>Retornar Agendamentos de Médicos de uma Secretária com Paginação:</h4>
+                        <p> Método HTTP: GET </p>
+                        <p>
+                            Rota: /agendamento/{idSecretaria}
+                        </p>
+                        <p>RequestParams:</p>
+                        <ul>
+                            <li>idMedico</li>
+                            <ul>
+                                <li>required = false</li>
+                            </ul>
+                            <li>idPaciente</li>
+                            <ul>
+                                <li>required = false</li>
+                            </ul>
+                            <li>mes</li>
+                            <ul>
+                                <li>required = false</li>
+                            </ul>
+                            <li>ano</li>
+                            <ul>
+                                <li>required = false</li>
+                            </ul>
+                            <li>dia</li>
+                            <ul>
+                                <li>required = false</li>
+                            </ul>
+                            <li>tipoAgendamento</li>
+                            <ul>
+                                <li>required = false</li>
+                            </ul>
+                            <li>page</li>
+                            <ul>
+                                <li>required = true</li>
+                                <li>defaultValue = "0"</li>
+                            </ul>
+                            <li>pageSize</li>
+                            <ul>
+                                <li>required = true</li>
+                                <li>defaultValue = "10"</li>
+                            </ul>
+                        </ul>
+                        <p style="text-align:justify;">
+                            Busca registros de agendamentos de médicos da Secretária utilizando idSecretaria informado,
+                            podendo ser filtrados por idMedico, idPaciente, mes, ano, dia, e tipoAgendamento,
+                            e os retorna numa lista de Agendamento paginada.
+                        </p>
+                        <p>Retorno: Page de Agendamento</p>
+                    </li>
+                    <li><h4>Retornar Agendamentos de Médicos de uma Secretária sem Paginação:</h4>
+                        <p> Método HTTP: GET </p>
+                        <p>
+                            Rota: /agendamento/paginado/{idSecretaria}
+                        </p>
+                        <p>RequestParams:</p>
+                        <ul>
+                            <li>idMedico</li>
+                            <ul>
+                                <li>required = false</li>
+                            </ul>
+                            <li>idPaciente</li>
+                            <ul>
+                                <li>required = false</li>
+                            </ul>
+                            <li>mes</li>
+                            <ul>
+                                <li>required = false</li>
+                            </ul>
+                            <li>ano</li>
+                            <ul>
+                                <li>required = false</li>
+                            </ul>
+                            <li>dia</li>
+                            <ul>
+                                <li>required = false</li>
+                            </ul>
+                            <li>tipoAgendamento</li>
+                            <ul>
+                                <li>required = false</li>
+                            </ul>
+                        </ul>
+                        <p style="text-align:justify;">
+                            Busca registros de agendamentos de médicos da Secretária utilizando idSecretaria informado,
+                            podendo ser filtrados por idMedico, idPaciente, mes, ano, dia, e tipoAgendamento,
+                            e os retorna numa lista de Agendamento.
+                        </p>
+                        <p>Retorno: List de Agendamento</p>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </body>
 </html>
