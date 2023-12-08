@@ -15,6 +15,7 @@
                     <li><h4><a style="text-decoration:none; color:white;" href="#paciente">PacienteController</a></h4></li>
                     <li><h4><a style="text-decoration:none; color:white;" href="#medico">MedicoController</a></h4></li>
                     <li><h4><a style="text-decoration:none; color:white;" href="#pessoa">PessoaController</a></h4></li>
+                    <li><h4><a style="text-decoration:none; color:white;" href="#agendamento-automatico">AgendamentoAutomaticoController</a></h4></li>
                     <li><h4><a style="text-decoration:none; color:white;" href="#agendamento">AgendamentoController</a></h4></li>
                     <li><h4><a style="text-decoration:none; color:white;" href="#planosaude-paciente">PlanoSaudePacienteController</a></h4></li>
                     <li><h4><a style="text-decoration:none; color:white;" href="#planosaude-medico">PlanoSaudeMedicoController</a></h4></li>
@@ -417,12 +418,63 @@
                 </ul>
             </li>
             <li>
+                <h3 id="agendamento-automatico">AgendamentoAutomaticoController:</h3> 
+                <ul>
+                    <li><h4>Criar Agenda(Agendamentos Automáticos):</h4>
+                        <p> Método HTTP: POST </p>
+                        <p>
+                            Rota: /agendamento-automatico/create
+                        </p>
+                        <p>RequestBody: AgendamentoAutomaticoDto</p>
+                        <p style="text-align:justify;">
+                            Inicialmente, é buscado o médico utilizando idMedico passado no dto. A dataInicio, dataFim
+                            são parseadas para LocalDate, e horaInicio e horaFim da geração são parseados para LocalDateTime.
+                            Cria-se uma variável diaHorarioAgendamento do tipo LocalDateTime que é inicializada utilizando
+                            o horario e o dia de início da geração dos agendamentos. Verifica-se o tempo inicio para 
+                            que seja diferente do fim.
+                        </p>
+                        <br>
+                        <p style="text-align:justify;">
+                            Um laço de repetição inicia e se repete até que o diaHorarioAgendamento
+                            seja menor que o dia e horario final de geração, dentro dele outro laço de repetição
+                            atua enquanto o diaHorarioAgendamento for menor que um LocalDateTime composto pelo LocalDate do
+                            diaHorarioAgendamento e o horario fim da geração menos tempo de intervalo menos um. Isso
+                            ocorre para não serem gerados agendamentos os quais o horário de término ultrapasse
+                            o horarioFim definido no dto.
+                        </p>
+                        <br>
+                        <p style="text-align:justify;">
+                            O laço interno verifica se existe conflito de horário
+                            entre algum agendamento existente e o que será gerado, caso exista será lançada uma exceção
+                            e no seu catch esse agendamento não gerado será adicionado a uma lista que posteriormente será
+                            retornada para indicar quais agendamentos não foram gerados devido ao conflito de horários.
+                            Ainda dentro do catch o diaHorarioAgendamento é incrementado com o tempoIntervalo e utiliza-se
+                            o continue para que o resto do código do laço não seja executado e seja passada para a próxima
+                            iteração.
+                        </p>
+                        <br>
+                        <p style="text-align:justify;">
+                            Caso não exista conflito de horários, o agendamento será construído e salvo. A variável 
+                            diaHorarioAgendamento será incrementada com o tempoIntervalo e será passada para a próxima iteração.
+                        </p>
+                        <p style="text-align:justify;">
+                            Ao final do laço de repetição interno, diaHorarioAgendamento é incrementado com dias, caso
+                            a geração seja feita para apenas de segunda a sexta e diaHorarioAgendamento seja sexta-feira
+                            são adicionados 3 dias, caso contrário, é adicionado um dia, e é passada para a próxima iteração
+                            do laço de repetição externo. Após todas as iterações, é retornada uma lista de AgendamentoAutomaticoFalhoDto
+                            que demonstra as informações de agendamentos que não foram criados por conflito de horários.
+                        </p>
+                        <p> Retorno: List de AgendamentoAutomaticoFalhoDto ou mensagem de MedLinkedException</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
                 <h3 id="agendamento">AgendamentoController</h3>
                 <ul>
                     <li><h4>Criar Agendamento Único:</h4>
                         <p> Método HTTP: POST </p>
                         <p>
-                            Rota: /agendamento
+                            Rota: /agendamento/create
                         </p>
                         <p>RequestBody: AgendamentoDto</p>
                         <p style="text-align:justify;">
