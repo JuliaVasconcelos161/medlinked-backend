@@ -433,7 +433,6 @@
                             o horario e o dia de início da geração dos agendamentos. Verifica-se o tempo inicio para 
                             que seja diferente do fim.
                         </p>
-                        <br>
                         <p style="text-align:justify;">
                             Um laço de repetição inicia e se repete até que o diaHorarioAgendamento
                             seja menor que o dia e horario final de geração, dentro dele outro laço de repetição
@@ -442,7 +441,6 @@
                             ocorre para não serem gerados agendamentos os quais o horário de término ultrapasse
                             o horarioFim definido no dto.
                         </p>
-                        <br>
                         <p style="text-align:justify;">
                             O laço interno verifica se existe conflito de horário
                             entre algum agendamento existente e o que será gerado, caso exista será lançada uma exceção
@@ -452,7 +450,6 @@
                             o continue para que o resto do código do laço não seja executado e seja passada para a próxima
                             iteração.
                         </p>
-                        <br>
                         <p style="text-align:justify;">
                             Caso não exista conflito de horários, o agendamento será construído e salvo. A variável 
                             diaHorarioAgendamento será incrementada com o tempoIntervalo e será passada para a próxima iteração.
