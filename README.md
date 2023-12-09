@@ -19,6 +19,7 @@
                     <li><h4><a style="text-decoration:none; color:white;" href="#agendamento">AgendamentoController</a></h4></li>
                     <li><h4><a style="text-decoration:none; color:white;" href="#planosaude-paciente">PlanoSaudePacienteController</a></h4></li>
                     <li><h4><a style="text-decoration:none; color:white;" href="#planosaude-medico">PlanoSaudeMedicoController</a></h4></li>
+                    <li><h4><a style="text-decoration:none; color:white;" href="#secretaria-medico">SecretariaMedicoController</a></h4></li>
                 </ul>
             </li>
         </ul>
@@ -514,7 +515,7 @@
                     <li><h4>Retornar Agendamentos de Médicos de uma Secretária com Paginação:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
-                            Rota: /agendamento/{idSecretaria}
+                            Rota: /agendamento/paginado/{idSecretaria} 
                         </p>
                         <p>RequestParams:</p>
                         <ul>
@@ -563,7 +564,7 @@
                     <li><h4>Retornar Agendamentos de Médicos de uma Secretária sem Paginação:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
-                            Rota: /agendamento/paginado/{idSecretaria}
+                            Rota: /agendamento/{idSecretaria}
                         </p>
                         <p>RequestParams:</p>
                         <ul>
@@ -718,6 +719,77 @@
                             e os retorna numa lista de PlanoSaude paginada.
                         </p>
                         <p> Retorno: Page de PlanoSaude</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3 id="secretaria-medico">SecretariaMedicoController</h3>
+                <ul>
+                    <li><h4>Associar Secretária ao Médico:</h4>
+                        <p> Método HTTP: PUT </p>
+                        <p>
+                            Rota: /secretaria/medico/associate/{idSecretaria}/{idMedico}
+                        </p>
+                        <p style="text-align:justify;">
+                            Busca o médico e a secretária que cujos ids foram passados como PathVariable, caso
+                            não sejam encontrados é lançada exceção. Como a entidade Secretaria é aquela na qual
+                            a relação entre médicos e secretarias foi mapeada, para criar um registro em tb_medico_secretaria
+                            é necessário apenas adicionar o médico a lista de médicos da secretária e salvar a alteração.
+                        </p>
+                        <p> Retorno: Mensagem de sucesso ou mensagem de MedLinkedException</p>
+                    </li>
+                    <li><h4>Desassociar Secretária de Médico:</h4>
+                        <p> Método HTTP: PUT </p>
+                        <p>
+                            Rota: /secretaria/medico/disassociate/{idSecretaria}/{idMedico}
+                        </p>
+                        <p style="text-align:justify;">
+                            Busca o médico e a secretária que cujos ids foram passados como PathVariable, caso
+                            não sejam encontrados é lançada exceção. Como a entidade Secretaria é aquela na qual
+                            a relação entre médicos e secretarias foi mapeada, para remover um registro em tb_medico_secretaria
+                            é necessário apenas remover o médico da lista de médicos da secretária e salvar a alteração.
+                            Após isso, é verificado se aquele médico possui vínculo com outras secretárias, caso
+                            não possua, ele é deletado.
+                        </p>
+                        <p> Retorno: Mensagem de sucesso ou mensagem de MedLinkedException</p>
+                    </li>
+                    <li><h4>Retornar Médicos de uma Secretária com Paginação:</h4>
+                        <p> Método HTTP: GET </p>
+                        <p>
+                            Rota: /secretaria/medico/{idSecretaria}/paginado
+                        </p>
+                        <p>RequestParams:</p>
+                        <ul>
+                            <li>page</li>
+                            <ul>
+                                <li>required = true</li>
+                                <li>defaultValue = "0"</li>
+                            </ul>
+                            <li>pageSize</li>
+                            <ul>
+                                <li>required = true</li>
+                                <li>defaultValue = "10"</li>
+                            </ul>
+                        </ul>
+                        <p style="text-align:justify;">
+                            Busca registros de médicos vinculados a uma secretária utilizando idSecretaria informado,
+                            é criado MedicoCrmResponseDto utilizando constructor expression, para cada médico são
+                            populadas suas especialidades e os seus vínculos com planos de saúde. É retornado Page de
+                            MedicoCrmResponseDto.
+                        </p>
+                        <p> Retorno: Page de MedicoCrmResponseDto</p>
+                    </li>
+                    <li><h4>Retornar Médicos de uma Secretária sem Paginação:</h4>
+                        <p> Método HTTP: GET </p>
+                        <p>
+                            Rota: /secretaria/medico/{idSecretaria}
+                        </p>
+                        <p style="text-align:justify;">
+                            Busca registros de médicos vinculados a uma secretária utilizando idSecretaria informado,
+                            é criado MedicoCrmResponseDto utilizando constructor expression. É retornado Page de
+                            MedicoCrmResponseDto.
+                        </p>
+                        <p> Retorno: List de MedicoCrmResponseDto</p>
                     </li>
                 </ul>
             </li>
