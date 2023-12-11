@@ -3,24 +3,24 @@
         <h1>Medlinked</h1>
         <h3>Índice:</h3>
         <ul>
-            <li><h4><a style="text-decoration:none; color:white;" href="#descricao_projeto">Descrição Projeto</a></h4></li>
-            <li><h4><a style="text-decoration:none; color:white;" href="#tecnologias">Tecnologias Utilizadas</a></h4></li>
-            <li><h4><a style="text-decoration:none; color:white;" href="#modelo">Modelo de Banco de Dados do Projeto</a></h4></li>
+            <li><p><a style="text-decoration:none; color:white;" href="#descricao_projeto">Descrição Projeto</a></p></li>
+            <li><p><a style="text-decoration:none; color:white;" href="#tecnologias">Tecnologias Utilizadas</a></p></li>
+            <li><p><a style="text-decoration:none; color:white;" href="#modelo">Modelo de Banco de Dados do Projeto</a></p></li>
             <li>
-                <h4><a style="text-decoration:none; color:white;" href="#funcionalidades">Funcionalidades implementadas</a></h4>
+                <p><a style="text-decoration:none; color:white;" href="#funcionalidades">Funcionalidades implementadas</a></p>
                 <ul>
-                    <li><h4><a style="text-decoration:none; color:white;" href="#secretaria">SecretariaController</a></h4></li>
-                    <li><h4><a style="text-decoration:none; color:white;" href="#usuario">UsuarioController</a></h4></li>
-                    <li><h4><a style="text-decoration:none; color:white;" href="#planosaude">PlanoSaudeController</a></h4></li>
-                    <li><h4><a style="text-decoration:none; color:white;" href="#paciente">PacienteController</a></h4></li>
-                    <li><h4><a style="text-decoration:none; color:white;" href="#medico">MedicoController</a></h4></li>
-                    <li><h4><a style="text-decoration:none; color:white;" href="#pessoa">PessoaController</a></h4></li>
-                    <li><h4><a style="text-decoration:none; color:white;" href="#agendamento-automatico">AgendamentoAutomaticoController</a></h4></li>
-                    <li><h4><a style="text-decoration:none; color:white;" href="#agendamento">AgendamentoController</a></h4></li>
-                    <li><h4><a style="text-decoration:none; color:white;" href="#planosaude-paciente">PlanoSaudePacienteController</a></h4></li>
-                    <li><h4><a style="text-decoration:none; color:white;" href="#planosaude-medico">PlanoSaudeMedicoController</a></h4></li>
-                    <li><h4><a style="text-decoration:none; color:white;" href="#secretaria-medico">SecretariaMedicoController</a></h4></li>
-                    <li><h4><a style="text-decoration:none; color:white;" href="#passwordresettoken">PasswordResetTokenController</a></h4></li>
+                    <li><p><a style="text-decoration:none; color:white;" href="#secretaria">SecretariaController</a></p></li>
+                    <li><p><a style="text-decoration:none; color:white;" href="#usuario">UsuarioController</a></p></li>
+                    <li><p><a style="text-decoration:none; color:white;" href="#planosaude">PlanoSaudeController</a></p></li>
+                    <li><p><a style="text-decoration:none; color:white;" href="#paciente">PacienteController</a></p></li>
+                    <li><p><a style="text-decoration:none; color:white;" href="#medico">MedicoController</a></p></li>
+                    <li><p><a style="text-decoration:none; color:white;" href="#pessoa">PessoaController</a></p></li>
+                    <li><p><a style="text-decoration:none; color:white;" href="#agendamento-automatico">AgendamentoAutomaticoController</a></p></li>
+                    <li><p><a style="text-decoration:none; color:white;" href="#agendamento">AgendamentoController</a></p></li>
+                    <li><p><a style="text-decoration:none; color:white;" href="#planosaude-paciente">PlanoSaudePacienteController</a></p></li>
+                    <li><p><a style="text-decoration:none; color:white;" href="#planosaude-medico">PlanoSaudeMedicoController</a></p></li>
+                    <li><p><a style="text-decoration:none; color:white;" href="#secretaria-medico">SecretariaMedicoController</a></p></li>
+                    <li><p><a style="text-decoration:none; color:white;" href="#passwordresettoken">PasswordResetTokenController</a></p></li>
                 </ul>
             </li>
         </ul>
