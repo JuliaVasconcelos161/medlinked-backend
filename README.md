@@ -20,6 +20,7 @@
                     <li><h4><a style="text-decoration:none; color:white;" href="#planosaude-paciente">PlanoSaudePacienteController</a></h4></li>
                     <li><h4><a style="text-decoration:none; color:white;" href="#planosaude-medico">PlanoSaudeMedicoController</a></h4></li>
                     <li><h4><a style="text-decoration:none; color:white;" href="#secretaria-medico">SecretariaMedicoController</a></h4></li>
+                    <li><h4><a style="text-decoration:none; color:white;" href="#passwordresettoken">PasswordResetTokenController</a></h4></li>
                 </ul>
             </li>
         </ul>
@@ -790,6 +791,65 @@
                             MedicoCrmResponseDto.
                         </p>
                         <p> Retorno: List de MedicoCrmResponseDto</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3 id="passwordresettoken">PasswordResetTokenController</h3>
+                <ul>
+                    <li><h4>Enviar email para redefinir senha:</h4>
+                        <p> Método HTTP: POST </p>
+                        <p>
+                            Rota: /password/reset
+                        </p>
+                        <p>RequestParams:</p>
+                        <ul>
+                            <li>username</li>
+                            <ul>
+                                <li>required = true</li>
+                            </ul>
+                        </ul>
+                        <p style="text-align:justify;">
+                            Busca o usuário cujo username foi informado, caso não seja encontrado é lançada exceção.
+                            Um token UUID é formado, é buscado um registro em tb_password_reset para aquele usuário,
+                            caso exista, o token do registro é atualizado para o que foi gerado, caso contrário é feito
+                            um novo registro é criado atribuindo o token formado ao usuário cujo username foi informado.
+                            o serviço de email envia um email com uma url para que o usuário acesse e troque sua senha e na
+                            requisição o token enviado é retornado.
+                        </p>
+                        <p> Retorno: Token ou mensagem de MedLinkedException</p>
+                    </li>
+                    <li><h4>Verificar token para redefinir senha:</h4>
+                        <p> Método HTTP: GET </p>
+                        <p>
+                            Rota: /password/change
+                        </p>
+                        <p>RequestParams:</p>
+                        <ul>
+                            <li>token</li>
+                            <ul>
+                                <li>required = true</li>
+                            </ul>
+                        </ul>
+                        <p style="text-align:justify;">
+                            Busca o PasswordResetToken utilizando token informado, caso não seja encontrado é lançada exceção.
+                            Verifica se o token está expirado ou é inválido. Caso algo está errado, é lançada exceção, caso
+                            contrário é devolvida mensagem de sucesso.
+                        </p>
+                        <p> Retorno: Mensagem de sucesso ou mensagem de MedLinkedException</p>
+                    </li>
+                    <li><h4>Salvar nova senha de usuário utilizando token:</h4>
+                        <p> Método HTTP: POST </p>
+                        <p>
+                            Rota: /password/save
+                        </p>
+                        <p>RequestBody: PasswordResetDto</p>
+                        <p style="text-align:justify;">
+                            Verifica o token para confirmar que é válido, caso não seja lança exceção. 
+                            Por meio do token informado no dto, busca-se o PasswordResetToken e através dele
+                            encontra-se o usuário. A senha do usuário é atualizada e é retornado as informações de usuário.
+                        </p>
+                        <p> Retorno: Usuário ou mensagem de MedLinkedException</p>
                     </li>
                 </ul>
             </li>
