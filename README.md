@@ -9,18 +9,133 @@
             <li>
                 <p><a style="text-decoration:none; color:white;" href="#funcionalidades">Funcionalidades implementadas</a></p>
                 <ul>
-                    <li><p><a style="text-decoration:none; color:white;" href="#secretaria">SecretariaController</a></p></li>
-                    <li><p><a style="text-decoration:none; color:white;" href="#usuario">UsuarioController</a></p></li>
-                    <li><p><a style="text-decoration:none; color:white;" href="#planosaude">PlanoSaudeController</a></p></li>
-                    <li><p><a style="text-decoration:none; color:white;" href="#paciente">PacienteController</a></p></li>
-                    <li><p><a style="text-decoration:none; color:white;" href="#medico">MedicoController</a></p></li>
-                    <li><p><a style="text-decoration:none; color:white;" href="#pessoa">PessoaController</a></p></li>
-                    <li><p><a style="text-decoration:none; color:white;" href="#agendamento-automatico">AgendamentoAutomaticoController</a></p></li>
-                    <li><p><a style="text-decoration:none; color:white;" href="#agendamento">AgendamentoController</a></p></li>
-                    <li><p><a style="text-decoration:none; color:white;" href="#planosaude-paciente">PlanoSaudePacienteController</a></p></li>
-                    <li><p><a style="text-decoration:none; color:white;" href="#planosaude-medico">PlanoSaudeMedicoController</a></p></li>
-                    <li><p><a style="text-decoration:none; color:white;" href="#secretaria-medico">SecretariaMedicoController</a></p></li>
-                    <li><p><a style="text-decoration:none; color:white;" href="#passwordresettoken">PasswordResetTokenController</a></p></li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#secretaria">SecretariaController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#create-secretaria">Criar Secretária</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#update-secretaria">Editar Secretária</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-secretaria">Retornar Secretária</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#delete-secretaria">Deletar Secretária</a></p></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#usuario">UsuarioController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#autenticar-usuario">Autenticar Usuário</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#alterar-senha">Alterar Senha Usuário</a></p></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#planosaude">PlanoSaudeController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#create-plano">Criar Plano de Saúde</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-planos">Retornar Planos de Saúde sem Paginação</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-planos-paginado">Retornar Planos de Saúde com Paginação</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#delete-plano">Deletar Plano de Saúde</a></p></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#paciente">PacienteController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#create-paciente">Criar Paciente</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-paciente">Retornar Paciente</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#update-paciente">Alterar Paciente</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-pacientes">Retornar Pacientes sem Paginação</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-pacientes-paginado">Retornar Pacientes com Paginação</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#delete-paciente">Deletar Paciente</a></p></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#medico">MedicoController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#create-medico">Criar Médico</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-medicos">Retornar Médicos</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-medico">Retornar Médico</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#update-medico">Alterar Médico</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#delete-medico">Deletar Médico</a></p></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#pessoa">PessoaController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#pessoa-cpf">Procurar Pessoa por CPF</a></p></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#agendamento-automatico">AgendamentoAutomaticoController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#create-agenda">Criar Agenda(Agendamentos Automáticos)</a></p></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#agendamento">AgendamentoController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#create-agendamento">Criar Agendamento Único</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#update-agendamento">Alterar Agendamento</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-agendamento">Retornar Agendamento</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-agendamentos-paginado">Retornar Agendamentos de Médicos de uma Secretária com Paginação</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-agendamentos">Retornar Agendamentos de Médicos de uma Secretária sem Paginação</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#delete-agendamento">Deletar Agendamento</a></p></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#planosaude-paciente">PlanoSaudePacienteController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#associate-plano-paciente">Associar Plano de Saúde a Paciente</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#disassociate-plano-paciente">Desassociar Plano de Saúde de Paciente</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-planos-paciente">Retornar Planos de Saúde de Paciente</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-planos-paciente-medico">Retornar Planos de Saúde de Paciente em comum com Médico</a></p></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#planosaude-medico">PlanoSaudeMedicoController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#associate-plano-medico">Associar Planos de Saúde a Médico</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#disassociate-plano-medico">Desassociar Planos de Saúde de Médico</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-planos-medico-paginado">Retornar Planos de Saúde Médico com Paginação</a></p></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#secretaria-medico">SecretariaMedicoController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#associate-secretaria-medico">Associar Secretária ao Médico</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#disassociate-secretaria-medico">Desassociar Secretária de Médico</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-secretaria-medicos-paginado">Retornar Médicos de uma Secretária com Paginação</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-secretaria-medicos">Retornar Médicos de uma Secretária sem Paginação</a></p></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#passwordresettoken">PasswordResetTokenController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#email-senha">Enviar email para redefinir senha</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#verifica-token">Verificar token para redefinir senha</a></p></li>
+                            <li><p><a style="text-decoration:none; color:white;" href="#salva-senha-token">Salvar nova senha de usuário utilizando token</a></p></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#especialidade">EspecialidadeController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-especialidades">Retornar todas as Especialidades</a></p></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#estado">EstadoController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-estados">Retornar todos os Estados</a></p></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#tipo-agendamento">TipoAgendamentoController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-tipos-agendamento">Retornar todos os Tipos de Agendamento</a></p></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <p><a style="text-decoration:none; color:white;" href="#tipo-plano-saude">TipoPlanoSaudeController</a></p>
+                        <ul>
+                            <li><p><a style="text-decoration:none; color:white;" href="#get-tipos-plano-saude">Retornar todos os Tipos de Plano de Saúde</a></p></li>
+                        </ul>
+                    </li>
                 </ul>
             </li>
         </ul>
@@ -54,7 +169,7 @@
             <li>
                 <h3 id="secretaria">SecretariaController:</h3>
                 <ul>
-                    <li><h4>Criar Secretária:</h4>
+                    <li><h4 id="create-secretaria">Criar Secretária:</h4>
                     <p> Método HTTP: POST </p>
                     <p>
                         Rota: /secretaria/create
@@ -75,7 +190,7 @@
                     </p>
                     <p> Retorno: UsuarioResponseDto ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Editar Secretária:</h4>
+                    <li><h4 id="update-secretaria">Editar Secretária:</h4>
                         <p> Método HTTP: PUT </p>
                         <p>
                             Rota: /secretaria/update/{idSecretaria}
@@ -93,7 +208,7 @@
                         </p>
                         <p> Retorno: Secretaria ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Retornar Secretária:</h4>
+                    <li><h4 id="get-secretaria">Retornar Secretária:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /secretaria/{idSecretaria}
@@ -104,7 +219,7 @@
                         </p>
                         <p> Retorno: Secretaria ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Deletar Secretária:</h4>
+                    <li><h4 id="delete-secretaria">Deletar Secretária:</h4>
                         <p> Método HTTP: DELETE </p>
                         <p>
                             Rota: /secretaria/delete/{idSecretaria}
@@ -124,7 +239,7 @@
             <li>
                 <h3 id="usuario">UsuarioController:</h3>
                 <ul>
-                    <li><h4>Autenticar Usuário:</h4>
+                    <li><h4 id="autenticar-usuario">Autenticar Usuário:</h4>
                         <p> Método HTTP: POST </p>
                         <p>
                             Rota: /usuario/authenticate
@@ -138,7 +253,7 @@
                         </p>
                         <p> Retorno: UsuarioResponseDto ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Alterar Senha Usuário:</h4>
+                    <li><h4 id="alterar-senha">Alterar Senha Usuário:</h4>
                         <p> Método HTTP: PUT </p>
                         <p>
                             Rota: /usuario/update-senha/{idUsuario}
@@ -158,7 +273,7 @@
             <li>
                 <h3 id="planosaude">PlanoSaudeController:</h3>
                 <ul>
-                    <li><h4>Criar Plano de Saúde:</h4>
+                    <li><h4 id="create-plano">Criar Plano de Saúde:</h4>
                         <p> Método HTTP: POST </p>
                         <p>
                             Rota: /plano-saude/create
@@ -172,7 +287,7 @@
                         </p>
                         <p> Retorno: PlanoSaude ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Retornar Planos de Saúde sem Paginação:</h4>
+                    <li><h4 id="get-planos">Retornar Planos de Saúde sem Paginação:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /plano-saude
@@ -182,7 +297,7 @@
                         </p>
                         <p> Retorno: List de PlanoSaude</p>
                     </li>
-                    <li><h4>Retornar Planos de Saúde com Paginação:</h4>
+                    <li><h4 id="get-planos-paginado">Retornar Planos de Saúde com Paginação:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /plano-saude/paginado
@@ -205,7 +320,7 @@
                         </p>
                         <p> Retorno: Page de PlanoSaude</p>
                     </li>
-                    <li><h4>Deletar Plano de Saúde:</h4>
+                    <li><h4 id="delete-plano">Deletar Plano de Saúde:</h4>
                         <p> Método HTTP: DELETE </p>
                         <p>
                             Rota: /plano-saude/delete/{idPlanoSaude}
@@ -222,7 +337,7 @@
             <li>
                 <h3 id="paciente">PacienteController:</h3>
                 <ul>
-                     <li><h4>Criar Paciente:</h4>
+                     <li><h4 id="create-paciente">Criar Paciente:</h4>
                         <p> Método HTTP: POST </p>
                         <p>
                             Rota: /paciente/create
@@ -241,7 +356,7 @@
                         </p>
                         <p> Retorno: PacienteResponseDto ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Retornar Paciente:</h4>
+                    <li><h4 id="get-paciente">Retornar Paciente:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /paciente/{idPaciente}
@@ -252,7 +367,7 @@
                         </p>
                         <p> Retorno: PacienteResponseDto ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Alterar Paciente:</h4>
+                    <li><h4 id="update-paciente">Alterar Paciente:</h4>
                         <p> Método HTTP: PUT </p>
                         <p>
                             Rota: /paciente/update/{idPaciente}
@@ -267,7 +382,7 @@
                         </p>
                         <p> Retorno: PacienteResponseDto ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Retornar Pacientes sem Paginação:</h4>
+                    <li><h4 id="get-pacientes">Retornar Pacientes sem Paginação:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /paciente
@@ -277,7 +392,7 @@
                         </p>
                         <p> Retorno: List de Paciente</p>
                     </li>
-                    <li><h4>Retornar Pacientes com Paginação:</h4>
+                    <li><h4 id="get-pacientes-paginado">Retornar Pacientes com Paginação:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /paciente/paginado
@@ -309,7 +424,7 @@
                         </p>
                         <p> Retorno: Page de Paciente</p>
                     </li>
-                    <li><h4>Deletar Paciente:</h4>
+                    <li><h4 id="delete-paciente">Deletar Paciente:</h4>
                         <p> Método HTTP: DELETE </p>
                         <p>
                             Rota: /paciente/delete/{idPaciente}
@@ -327,7 +442,7 @@
             <li>
                 <h3 id="medico">MedicoController:</h3>
                 <ul>
-                     <li><h4>Criar Médico:</h4>
+                     <li><h4 id="create-medico">Criar Médico:</h4>
                         <p> Método HTTP: POST </p>
                         <p>
                             Rota: /medico/create/{idSecretaria}
@@ -349,7 +464,7 @@
                         </p>
                         <p> Retorno: MedicoCrmResponseDto ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Retornar Médicos:</h4>
+                    <li><h4 id="get-medicos">Retornar Médicos:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /medico
@@ -359,7 +474,7 @@
                         </p>
                         <p> Retorno: List de Medico</p>
                     </li>
-                    <li><h4>Retornar Médico:</h4>
+                    <li><h4 id="get-medico">Retornar Médico:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /medico/{idMedico}
@@ -370,7 +485,7 @@
                         </p>
                         <p> Retorno: MedicoCrmResponseDto ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Alterar Médico:</h4>
+                    <li><h4 id="update-medico">Alterar Médico:</h4>
                         <p> Método HTTP: PUT </p>
                         <p>
                             Rota: /medico/update/{idMedico}
@@ -386,7 +501,7 @@
                         </p>
                         <p> Retorno: MedicoCrmResponseDto ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Deletar Médico:</h4>
+                    <li><h4 id="delete-medico">Deletar Médico:</h4>
                         <p> Método HTTP: DELETE </p>
                         <p>
                             Rota: /medico/delete/{idMedico}
@@ -406,7 +521,7 @@
             <li>
                 <h3 id="pessoa">PessoaController:</h3> 
                 <ul>
-                    <li><h4>Procurar Pessoa por CPF:</h4>
+                    <li><h4 id="pessoa-cpf">Procurar Pessoa por CPF:</h4>
                         <p> Método HTTP: POST </p>
                         <p>
                             Rota: /pessoa/cpf
@@ -422,7 +537,7 @@
             <li>
                 <h3 id="agendamento-automatico">AgendamentoAutomaticoController:</h3> 
                 <ul>
-                    <li><h4>Criar Agenda(Agendamentos Automáticos):</h4>
+                    <li><h4 id="create-agenda">Criar Agenda(Agendamentos Automáticos):</h4>
                         <p> Método HTTP: POST </p>
                         <p>
                             Rota: /agendamento-automatico/create
@@ -470,7 +585,7 @@
             <li>
                 <h3 id="agendamento">AgendamentoController</h3>
                 <ul>
-                    <li><h4>Criar Agendamento Único:</h4>
+                    <li><h4 id="create-agendamento">Criar Agendamento Único:</h4>
                         <p> Método HTTP: POST </p>
                         <p>
                             Rota: /agendamento/create
@@ -485,7 +600,7 @@
                         </p>
                         <p> Retorno: Agendamento ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Alterar Agendamento:</h4>
+                    <li><h4 id="update-agendamento">Alterar Agendamento:</h4>
                         <p> Método HTTP: PUT </p>
                         <p>
                             Rota: /agendamento/update/{idAgendamento}
@@ -503,7 +618,7 @@
                         </p>
                         <p> Retorno: Agendamento ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Retornar Agendamento:</h4>
+                    <li><h4 id="get-agendamento">Retornar Agendamento:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /agendamento/detalhes/{idAgendamento}
@@ -513,7 +628,7 @@
                         </p>
                         <p> Retorno: Agendamento ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Retornar Agendamentos de Médicos de uma Secretária com Paginação:</h4>
+                    <li><h4 id="get-agendamentos-paginado">Retornar Agendamentos de Médicos de uma Secretária com Paginação:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /agendamento/paginado/{idSecretaria} 
@@ -562,7 +677,7 @@
                         </p>
                         <p>Retorno: Page de Agendamento</p>
                     </li>
-                    <li><h4>Retornar Agendamentos de Médicos de uma Secretária sem Paginação:</h4>
+                    <li><h4 id="get-agendamentos">Retornar Agendamentos de Médicos de uma Secretária sem Paginação:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /agendamento/{idSecretaria}
@@ -601,7 +716,7 @@
                         </p>
                         <p>Retorno: List de Agendamento</p>
                     </li>
-                    <li><h4>Deletar Agendamento:</h4>
+                    <li><h4 id="delete-agendamento">Deletar Agendamento:</h4>
                        <p> Método HTTP: DELETE </p>
                         <p>
                             Rota: /agendamento/delete/{idAgendamento}
@@ -617,7 +732,7 @@
             <li>
                 <h3 id="planosaude-paciente">PlanoSaudePacienteController</h3>
                 <ul>
-                    <li><h4>Associar Plano de Saúde a Paciente:</h4>
+                    <li><h4 id="associate-plano-paciente">Associar Plano de Saúde a Paciente:</h4>
                         <p> Método HTTP: PUT </p>
                         <p>
                             Rota: /plano-saude/paciente/associate/{idPaciente}/{idPlanoSaude}
@@ -630,7 +745,7 @@
                         </p>
                         <p> Retorno: PlanoSaudePaciente ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Desassociar Plano de Saúde de Paciente:</h4>
+                    <li><h4 id="disassociate-plano-paciente">Desassociar Plano de Saúde de Paciente:</h4>
                         <p> Método HTTP: PUT </p>
                         <p>
                             Rota: /plano-saude/paciente/disassociate/{idPaciente}/{idPlanoSaude}
@@ -640,7 +755,7 @@
                         </p>
                         <p> Retorno: Não possui retorno</p>
                     </li>
-                     <li><h4>Retornar Planos de Saúde de Paciente:</h4>
+                     <li><h4 id="get-planos-paciente">Retornar Planos de Saúde de Paciente:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /plano-saude/paciente/{idPaciente}
@@ -651,7 +766,7 @@
                         </p>
                         <p> Retorno: PacientePlanosSaudeResponseDto ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Retornar Planos de Saúde de Paciente em comum com Médico:</h4>
+                    <li><h4 id="get-planos-paciente-medico">Retornar Planos de Saúde de Paciente em comum com Médico:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /plano-saude/paciente/medico/{idPaciente}/{idMedico}
@@ -666,7 +781,7 @@
             <li>
                 <h3 id="planosaude-medico">PlanoSaudeMedicoController</h3>
                 <ul>
-                    <li><h4>Associar Planos de Saúde a Médico:</h4>
+                    <li><h4 id="associate-plano-medico">Associar Planos de Saúde a Médico:</h4>
                         <p> Método HTTP: PUT </p>
                         <p>
                             Rota: /plano-saude/medico/associate/{idMedico}
@@ -682,7 +797,7 @@
                         </p>
                         <p> Retorno: List de PlanoSaude ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Desassociar Planos de Saúde de Médico:</h4>
+                    <li><h4 id="disassociate-plano-medico">Desassociar Planos de Saúde de Médico:</h4>
                         <p> Método HTTP: PUT </p>
                         <p>
                             Rota: /plano-saude/medico/disassociate/{idMedico}/{idPlanoSaude}
@@ -697,7 +812,7 @@
                         </p>
                         <p> Retorno: List de PlanoSaude ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Retornar Planos de Saúde Médico com Paginação:</h4>
+                    <li><h4 id="get-planos-medico-paginado">Retornar Planos de Saúde Médico com Paginação:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /plano-saude/medico/{idMedico}
@@ -726,7 +841,7 @@
             <li>
                 <h3 id="secretaria-medico">SecretariaMedicoController</h3>
                 <ul>
-                    <li><h4>Associar Secretária ao Médico:</h4>
+                    <li><h4 id="associate-secretaria-medico">Associar Secretária ao Médico:</h4>
                         <p> Método HTTP: PUT </p>
                         <p>
                             Rota: /secretaria/medico/associate/{idSecretaria}/{idMedico}
@@ -739,7 +854,7 @@
                         </p>
                         <p> Retorno: Mensagem de sucesso ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Desassociar Secretária de Médico:</h4>
+                    <li><h4 id="disassociate-secretaria-medico">Desassociar Secretária de Médico:</h4>
                         <p> Método HTTP: PUT </p>
                         <p>
                             Rota: /secretaria/medico/disassociate/{idSecretaria}/{idMedico}
@@ -754,7 +869,7 @@
                         </p>
                         <p> Retorno: Mensagem de sucesso ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Retornar Médicos de uma Secretária com Paginação:</h4>
+                    <li><h4 id="get-secretaria-medicos-paginado">Retornar Médicos de uma Secretária com Paginação:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /secretaria/medico/{idSecretaria}/paginado
@@ -780,7 +895,7 @@
                         </p>
                         <p> Retorno: Page de MedicoCrmResponseDto</p>
                     </li>
-                    <li><h4>Retornar Médicos de uma Secretária sem Paginação:</h4>
+                    <li><h4 id="get-secretaria-medicos">Retornar Médicos de uma Secretária sem Paginação:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /secretaria/medico/{idSecretaria}
@@ -797,7 +912,7 @@
             <li>
                 <h3 id="passwordresettoken">PasswordResetTokenController</h3>
                 <ul>
-                    <li><h4>Enviar email para redefinir senha:</h4>
+                    <li><h4 id="email-senha">Enviar email para redefinir senha:</h4>
                         <p> Método HTTP: POST </p>
                         <p>
                             Rota: /password/reset
@@ -819,7 +934,7 @@
                         </p>
                         <p> Retorno: Token ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Verificar token para redefinir senha:</h4>
+                    <li><h4 id="verifica-token">Verificar token para redefinir senha:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /password/change
@@ -838,7 +953,7 @@
                         </p>
                         <p> Retorno: Mensagem de sucesso ou mensagem de MedLinkedException</p>
                     </li>
-                    <li><h4>Salvar nova senha de usuário utilizando token:</h4>
+                    <li><h4 id="salva-senha-token">Salvar nova senha de usuário utilizando token:</h4>
                         <p> Método HTTP: POST </p>
                         <p>
                             Rota: /password/save
@@ -856,7 +971,7 @@
             <li>
                 <h3 id="especialidade">EspecialidadeController</h3>
                 <ul>
-                    <li><h4>Retornar todas as Especialidades:</h4>
+                    <li><h4 id="get-especialidades">Retornar todas as Especialidades:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /especialidade
@@ -872,7 +987,7 @@
             <li>
                 <h3 id="estado">EstadoController</h3>
                 <ul>
-                    <li><h4>Retornar todos os Estados:</h4>
+                    <li><h4 id="get-estados">Retornar todos os Estados:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /estado
@@ -888,7 +1003,7 @@
             <li>
                 <h3 id="tipo-agendamento">TipoAgendamentoController</h3>
                 <ul>
-                    <li><h4>Retornar todos os Tipos de Agendamento:</h4>
+                    <li><h4 id="get-tipos-agendamento">Retornar todos os Tipos de Agendamento:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /tipo-agendamento
@@ -903,7 +1018,7 @@
             <li>
                 <h3 id="tipo-plano-saude">TipoPlanoSaudeController</h3>
                 <ul>
-                    <li><h4>Retornar todos os Tipos de Plano de Saúde:</h4>
+                    <li><h4 id="get-tipos-plano-saude">Retornar todos os Tipos de Plano de Saúde:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
                             Rota: /tipo-plano-saude
