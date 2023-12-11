@@ -853,6 +853,69 @@
                     </li>
                 </ul>
             </li>
+            <li>
+                <h3 id="especialidade">EspecialidadeController</h3>
+                <ul>
+                    <li><h4>Retornar todas as Especialidades:</h4>
+                        <p> Método HTTP: GET </p>
+                        <p>
+                            Rota: /especialidade
+                        </p>
+                        <p style="text-align:justify;">
+                            Busca todas as especialidades cadastradas e as retorna numa lista ordenada
+                            por suas descrições.
+                        </p>
+                        <p> Retorno: List de Especialidade</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3 id="estado">EstadoController</h3>
+                <ul>
+                    <li><h4>Retornar todos os Estados:</h4>
+                        <p> Método HTTP: GET </p>
+                        <p>
+                            Rota: /estado
+                        </p>
+                        <p style="text-align:justify;">
+                            Busca todos os estados cadastrados e os retorna numa lista ordenada
+                            por suas descrições.
+                        </p>
+                        <p> Retorno: List de Estado</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3 id="tipo-agendamento">TipoAgendamentoController</h3>
+                <ul>
+                    <li><h4>Retornar todos os Tipos de Agendamento:</h4>
+                        <p> Método HTTP: GET </p>
+                        <p>
+                            Rota: /tipo-agendamento
+                        </p>
+                        <p style="text-align:justify;">
+                            Busca todos os valores do enum TipoAgendamento e os retorna em uma lista.
+                        </p>
+                        <p> Retorno: List de TipoAgendamento</p>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <h3 id="tipo-plano-saude">TipoPlanoSaudeController</h3>
+                <ul>
+                    <li><h4>Retornar todos os Tipos de Plano de Saúde:</h4>
+                        <p> Método HTTP: GET </p>
+                        <p>
+                            Rota: /tipo-plano-saude
+                        </p>
+                        <p style="text-align:justify;">
+                            Busca todos os tipos de plano de saúde cadastrados e os retorna em uma lista
+                            ordenada por suas descrições.
+                        </p>
+                        <p> Retorno: List de TipoPlanoSaude</p>
+                    </li>
+                </ul>
+            </li>
         </ul>
     </body>
 </html>
