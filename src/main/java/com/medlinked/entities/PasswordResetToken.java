@@ -14,7 +14,7 @@ import java.util.Date;
 @Builder
 public class PasswordResetToken {
 
-    private static final int EXPIRATION = 60 * 24;
+    private static final int EXPIRATION = 1000 * 60 * 15;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
