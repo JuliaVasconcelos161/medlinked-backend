@@ -47,15 +47,23 @@ public class SecretariaMedicoController {
             @PathVariable Integer idSecretaria,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "pageSize", defaultValue = "10") Integer pageSize) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(secretariaMedicoService.getAllMedicosSecretariaPaginado(idSecretaria, page, pageSize));
+        try{
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(secretariaMedicoService.getAllMedicosSecretariaPaginado(idSecretaria, page, pageSize));
+        }catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
     }
 
     @Operation(summary = "Retorna todos os médicos de uma secretária.")
     @GetMapping("/{idSecretaria}")
     public ResponseEntity<Object> getAllMedicosSecretaria(
             @PathVariable Integer idSecretaria) {
-        return ResponseEntity.status(HttpStatus.OK)
-                .body(secretariaMedicoService.getAllMedicosSecretaria(idSecretaria));
+        try{
+            return ResponseEntity.status(HttpStatus.OK)
+                    .body(secretariaMedicoService.getAllMedicosSecretaria(idSecretaria));
+        }catch (MedLinkedException e) {
+            return ResponseEntity.status(e.getHttpStatus()).body(e.getMessage());
+        }
     }
 }
