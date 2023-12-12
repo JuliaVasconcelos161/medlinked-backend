@@ -42,7 +42,7 @@ public class SecretariaMedicoController {
     }
 
     @Operation(summary = "Retorna todos os médicos de uma secretária de forma paginada.")
-    @GetMapping("/{idSecretaria}/paginado")
+    @GetMapping("/paginado/{idSecretaria}")
     public ResponseEntity<Object> getAllMedicosSecretariaPaginado(
             @PathVariable Integer idSecretaria,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
