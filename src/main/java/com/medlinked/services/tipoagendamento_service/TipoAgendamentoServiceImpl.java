@@ -10,9 +10,9 @@ public class TipoAgendamentoServiceImpl implements TipoAgendamentoService {
     @Override
     public List<TipoAgendamento> getAllTipoAgendamento() {
         List<TipoAgendamento> tiposAgendamento = new ArrayList<>();
+        tiposAgendamento.add(TipoAgendamento.AUTOMATICO);
         tiposAgendamento.add(TipoAgendamento.REGULAR);
         tiposAgendamento.add(TipoAgendamento.RETORNO);
-        tiposAgendamento.add(TipoAgendamento.AUTOMATICO);
         return tiposAgendamento;
     }
 }
