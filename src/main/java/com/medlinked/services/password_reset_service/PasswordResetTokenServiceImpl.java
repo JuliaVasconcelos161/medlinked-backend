@@ -75,19 +75,13 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     @Override
     public void validatePasswordResetToken(String token) {
         final PasswordResetToken passToken = passwordResetTokenRepository.getPasswordResetTokenByToken(token);
-        String response = BooleanUtils.isFalse(isTokenFound(passToken)) ? "Token inválido"
-                : BooleanUtils.isTrue(isTokenExpired(passToken)) ? "Token expirado"
-                : null;
+        String response = BooleanUtils.isTrue(isTokenExpired(passToken)) ? "Token expirado." : null;
         if(response != null)
             throw new MedLinkedException(response, HttpStatus.BAD_REQUEST);
     }
 
-    private boolean isTokenFound(PasswordResetToken passToken) {
-        return passToken != null;
-    }
-
     private boolean isTokenExpired(PasswordResetToken passToken) {
-        return passToken.getExpiryDate().after(new Date());
+        return passToken.getExpiryDate().before(new Date());
     }
 
     private void createPasswordResetTokenForUsuario(Usuario usuario, String token) {
@@ -95,8 +89,9 @@ public class PasswordResetTokenServiceImpl implements PasswordResetTokenService 
     }
 
     private void updatePasswordResetTokenForUsuario(PasswordResetToken passwordResetToken, String token) {
+        final int EXPIRATION = 1000 * 60 * 15;
         passwordResetToken.setToken(token);
-        passwordResetToken.setExpiryDate(new Date());
+        passwordResetToken.setExpiryDate(new Date(System.currentTimeMillis() + EXPIRATION));
         passwordResetTokenRepository.updatePasswordResetToken(passwordResetToken);
     }
 }
