@@ -19,7 +19,7 @@ public class Pessoa {
     @Column(length = 120, nullable = false)
     private String nome;
 
-    @Column(nullable = false, unique = true, columnDefinition = "bigint")
+    @Column(nullable = false, unique = true)
     private Long cpf;
 
     @Column(length = 120, unique = true, nullable = false)

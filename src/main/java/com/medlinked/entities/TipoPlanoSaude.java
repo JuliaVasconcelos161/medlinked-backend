@@ -13,7 +13,6 @@ import lombok.*;
 public class TipoPlanoSaude {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "smallint")
     private Integer idTipoPlanoSaude;
 
     @Column(nullable = false, length = 100, unique = true)

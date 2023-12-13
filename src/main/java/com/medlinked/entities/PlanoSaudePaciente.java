@@ -40,7 +40,7 @@ public class PlanoSaudePaciente {
     private Long numeroCarteirinha;
 
     @ManyToOne
-    @JoinColumn(name = "id_tipo_plano_saude")
+    @JoinColumn(name = "id_tipo_plano_saude", nullable = false)
     private TipoPlanoSaude tipoPlanoSaude;
 
 }
