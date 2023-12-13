@@ -164,7 +164,7 @@
             <li>PostgreSQL</li>
         </ul>
         <h3 id="modelo">Modelo de Banco de Dados do Projeto:</h3>
-        <img src="imagem-banco-medlinked.png" alt="Imagem Modelo Banco de Dados">
+        <img src="modelo-medlinked.png" alt="Imagem Modelo Banco de Dados">
         <h3 id="funcionalidades">Funcionalidades implementadas:</h3>
         <ul>
             <li>
