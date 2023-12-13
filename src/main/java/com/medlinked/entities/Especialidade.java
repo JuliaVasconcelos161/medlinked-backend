@@ -18,7 +18,6 @@ import java.util.Set;
 public class Especialidade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "smallint")
     private Integer idEspecialidade;
 
     @Column(nullable = false, length = 60, unique = true)

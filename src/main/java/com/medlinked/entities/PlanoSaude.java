@@ -18,7 +18,6 @@ public class PlanoSaude {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(columnDefinition = "smallint")
     private Integer idPlanoSaude;
 
     @Column(nullable = false, length = 130, unique = true)

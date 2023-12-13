@@ -27,7 +27,7 @@ public class Usuario implements UserDetails {
     @JoinColumn(name = "id_usuario")
     private Pessoa pessoa;
 
-    @Column(nullable = false, length = 120)
+    @Column(nullable = false, length = 120, unique = true)
     private String username;
 
     @JsonIgnore
