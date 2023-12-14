@@ -157,6 +157,7 @@
             caso haja algum imprevisto ou um agendamento tenha ocorrido de forma mais rápida que o esperado
             também é possível editar o agendamento, alterando suas informações e também incluir um agendamento único.
         </p>
+        <p id="front-projeto">Front-end do Projeto: <a style="text-decoration:none; color:white;" href="https://github.com/LucasCCA/MedLinked-Frontend">Link para o repositório com o front-end desse projeto.</a></p>
         <h3 id="tecnologias">Tecnologias utilizadas:</h3>
         <ul>
             <li>Java</li>
@@ -233,7 +234,7 @@
                             será verificada a existência de outro tipo de cadastro de Pessoa com esses dados,
                             caso não exista, também será deletado o registro em tb_pessoa.
                         </p>
-                        <p> Retorno: Não possui retorno ou mensagem de MedLinkedException</p>
+                        <p> Retorno: Mensagem de sucesso ou mensagem de MedLinkedException</p>
                     </li>
                 </ul>
             </li>
@@ -249,7 +250,7 @@
                             RequestBody: UsuarioRegisterDto
                         </p>
                         <p style="text-align:justify;">
-                            Autentica um usuário, e retorna UsuárioResponseDto que carrega um JWT, o qual é construido
+                            Autentica um usuário, e retorna UsuarioResponseDto que carrega um JWT, o qual é construido
                             adicionando claims, nome e idUsuário, que serão obtidas através de Pessoa.
                         </p>
                         <p> Retorno: UsuarioResponseDto ou mensagem de MedLinkedException</p>
@@ -459,7 +460,7 @@
                             tiverem sido enviadas mais de duas especialidades para serem salvas, também será estourada uma exceção.
                             Caso seja necessário criar uma pessoa no sistema será verificado se já existe alguma outra pessoa com cpf ou
                             email informado, caso exista estoura exceção. O médico criado é salvo, é criado um vínculo
-                            com a secretária cujo idSecretaria foi passado na url, um registro em tb_medico_crm com
+                            com a secretária cujo idSecretaria foi passado na url, um registro em tb_crm com
                             dados referentes ao crm e especialidades a serem vinculadas àquele médico. Por meio de
                             constructor expression cria-se um MedicoCrmResponseDto, que é retornado na requisição.
                         </p>
@@ -493,11 +494,11 @@
                         </p>
                         <p>RequestBody: MedicoDto</p>
                         <p style="text-align:justify;">
-                            Valida o CRM do médico para não permitir duplicidade, e se existem mais de duas especialidades
+                            Valida o CRM do médico para não permitir duplicidade, e também se existem mais de duas especialidades
                             a serem associadas. Obtém o objeto Medico correspondente ao idMedico fornecido, caso não seja
                             possível é lançada uma exceção. Atualiza as informações da Pessoa associada ao médico 
                             utilizando verificações de cpf, e email para impedir duplicidade. Atualiza o registro do 
-                            médico e posteriormente as informações relacionadas a seu crm armazenadas em tb_medico_crm.
+                            médico e posteriormente as informações relacionadas a seu crm armazenadas em tb_crm.
                             Retorna MedicoCrmResponseDto construído por meio de constructor expression.
                         </p>
                         <p> Retorno: MedicoCrmResponseDto ou mensagem de MedLinkedException</p>
@@ -546,14 +547,14 @@
                         <p>RequestBody: AgendamentoAutomaticoDto</p>
                         <p style="text-align:justify;">
                             Inicialmente, é buscado o médico utilizando idMedico passado no dto. A dataInicio, dataFim
-                            são parseadas para LocalDate, e horaInicio e horaFim da geração são parseados para LocalDateTime.
+                            são parseadas para LocalDate, e horaInicio e horaFim da geração são parseados para LocalTime.
                             Cria-se uma variável diaHorarioAgendamento do tipo LocalDateTime que é inicializada utilizando
                             o horario e o dia de início da geração dos agendamentos. Verifica-se o tempo inicio para 
-                            que seja diferente do fim.
+                            que seja antes do fim.
                         </p>
                         <p style="text-align:justify;">
                             Um laço de repetição inicia e se repete até que o diaHorarioAgendamento
-                            seja menor que o dia e horario final de geração, dentro dele outro laço de repetição
+                            seja maior ou igual que o dia e horario final de geração, dentro dele outro laço de repetição
                             atua enquanto o diaHorarioAgendamento for menor que um LocalDateTime composto pelo LocalDate do
                             diaHorarioAgendamento e o horario fim da geração menos tempo de intervalo menos um. Isso
                             ocorre para não serem gerados agendamentos os quais o horário de término ultrapasse
@@ -596,8 +597,8 @@
                             Valida horário de agendamento para confirmar se o horario passado no dto para aquele médico está
                             disponível, caso não esteja é lançada exceção. Busca Medico, Paciente, e PlanoSaude, utilizando
                             ids correspondentes passados no dto, caso não sejam encontrados, é lançada exceção. O Agendamento
-                            é construído, com os dados fornecidos, e salvo. Após o salvamento é chamado um serviço de email
-                            para que seja enviado um email de confirmação com informações do agendamento para o paciente.
+                            é construído, com os dados fornecidos, e salvo. Após o salvamento, caso o paciente seja diferente de null,
+                            é chamado um serviço de email para que seja enviado um email de confirmação com informações do agendamento para o paciente.
                         </p>
                         <p> Retorno: Agendamento ou mensagem de MedLinkedException</p>
                     </li>
@@ -672,7 +673,7 @@
                             </ul>
                         </ul>
                         <p style="text-align:justify;">
-                            Busca registros de agendamentos de médicos da Secretária utilizando idSecretaria informado,
+                            Busca registros de agendamentos de médicos da secretária utilizando idSecretaria informado,
                             podendo ser filtrados por idMedico, idPaciente, mes, ano, dia, e tipoAgendamento,
                             e os retorna numa lista de Agendamento paginada.
                         </p>
@@ -711,7 +712,7 @@
                             </ul>
                         </ul>
                         <p style="text-align:justify;">
-                            Busca registros de agendamentos de médicos da Secretária utilizando idSecretaria informado,
+                            Busca registros de agendamentos de médicos da secretária utilizando idSecretaria informado,
                             podendo ser filtrados por idMedico, idPaciente, mes, ano, dia, e tipoAgendamento,
                             e os retorna numa lista de Agendamento.
                         </p>
@@ -754,7 +755,7 @@
                         <p style="text-align:justify;">
                             Deleta registro de PlanoSaudePaciente em tb_plano_saude_paciente.
                         </p>
-                        <p> Retorno: Não possui retorno</p>
+                        <p> Retorno: Mensagem de sucesso</p>
                     </li>
                      <li><h4 id="get-planos-paciente">Retornar Planos de Saúde de Paciente:</h4>
                         <p> Método HTTP: GET </p>
@@ -804,12 +805,10 @@
                             Rota: /plano-saude/medico/disassociate/{idMedico}/{idPlanoSaude}
                         </p>
                         <p style="text-align:justify;">
-                            Busca o Medico utilizando idMedico informado, caso não seja encontrado, é lançada exceção.
-                            Para cada idPlanoSaude enviado no dto é buscado o PlanoSaude correspondente, o medico
-                            anteriormente encontrado é adicionado a lista de médicos desse plano de saúde, e o plano
-                            é adicionado a lista de planos de médico, essa atualização é salva, criando um novo registro
-                            em tb_medico_plano_saude. É retornada a lista com planos de saúde, que foram recém-associados 
-                            ao médico.
+                            Busca o Medico e PlanoSaude utilizando idMedico e idPlanoSaude informados, caso não sejam 
+                            encontrados, é lançada exceção. O plano de saúde encontrado é removido da lista de planos de
+                            saúde do médico e o médico é removido da lista de médicos do plano de saúde, essa alteração 
+                            é salva e é retornada a lista de planos de saúde do médico.
                         </p>
                         <p> Retorno: List de PlanoSaude ou mensagem de MedLinkedException</p>
                     </li>
@@ -873,7 +872,7 @@
                     <li><h4 id="get-secretaria-medicos-paginado">Retornar Médicos de uma Secretária com Paginação:</h4>
                         <p> Método HTTP: GET </p>
                         <p>
-                            Rota: /secretaria/medico/{idSecretaria}/paginado
+                            Rota: /secretaria/medico/paginado/{idSecretaria}
                         </p>
                         <p>RequestParams:</p>
                         <ul>
@@ -894,7 +893,7 @@
                             populadas suas especialidades e os seus vínculos com planos de saúde. É retornado Page de
                             MedicoCrmResponseDto.
                         </p>
-                        <p> Retorno: Page de MedicoCrmResponseDto</p>
+                        <p> Retorno: Page de MedicoCrmResponseDto ou mensagem de MedLinkedException</p>
                     </li>
                     <li><h4 id="get-secretaria-medicos">Retornar Médicos de uma Secretária sem Paginação:</h4>
                         <p> Método HTTP: GET </p>
@@ -903,7 +902,7 @@
                         </p>
                         <p style="text-align:justify;">
                             Busca registros de médicos vinculados a uma secretária utilizando idSecretaria informado,
-                            é criado MedicoCrmResponseDto utilizando constructor expression. É retornado Page de
+                            é criado MedicoCrmResponseDto utilizando constructor expression. É retornado List de
                             MedicoCrmResponseDto.
                         </p>
                         <p> Retorno: List de MedicoCrmResponseDto</p>
@@ -928,12 +927,12 @@
                         <p style="text-align:justify;">
                             Busca o usuário cujo username foi informado, caso não seja encontrado é lançada exceção.
                             Um token UUID é formado, é buscado um registro em tb_password_reset para aquele usuário,
-                            caso exista, o token do registro é atualizado para o que foi gerado, caso contrário é feito
-                            um novo registro é criado atribuindo o token formado ao usuário cujo username foi informado.
-                            o serviço de email envia um email com uma url para que o usuário acesse e troque sua senha e na
+                            caso exista, o token do registro é atualizado para o que foi gerado, caso contrário é criado
+                            um novo registro atribuindo o token formado ao usuário cujo username foi informado.
+                            O serviço de email envia um email com uma url para que o usuário acesse e troque sua senha e na
                             requisição o token enviado é retornado.
                         </p>
-                        <p> Retorno: Token ou mensagem de MedLinkedException</p>
+                        <p> Retorno: String(Token) ou mensagem de MedLinkedException</p>
                     </li>
                     <li><h4 id="verifica-token">Verificar token para redefinir senha:</h4>
                         <p> Método HTTP: GET </p>
@@ -949,7 +948,7 @@
                         </ul>
                         <p style="text-align:justify;">
                             Busca o PasswordResetToken utilizando token informado, caso não seja encontrado é lançada exceção.
-                            Verifica se o token está expirado ou é inválido. Caso algo está errado, é lançada exceção, caso
+                            Verifica se o token está expirado, se estiver é lançada exceção, caso
                             contrário é devolvida mensagem de sucesso.
                         </p>
                         <p> Retorno: Mensagem de sucesso ou mensagem de MedLinkedException</p>
