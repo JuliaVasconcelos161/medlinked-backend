@@ -905,7 +905,7 @@
                             é criado MedicoCrmResponseDto utilizando constructor expression. É retornado List de
                             MedicoCrmResponseDto.
                         </p>
-                        <p> Retorno: List de MedicoCrmResponseDto</p>
+                        <p> Retorno: List de MedicoCrmResponseDto ou mensagem de MedLinkedException</p>
                     </li>
                 </ul>
             </li>
